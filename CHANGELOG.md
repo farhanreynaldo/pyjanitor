@@ -8,6 +8,8 @@
 -   [INF] Updated black version in github actions code-checks to match pre-commit hooks. @nvamsikrishna05
 -   [ENH] Updated `label_encode` to use pandas factorize instead of scikit-learn LabelEncoder. @nvamsikrishna05
 -   [INF] Removed the scikit-learn package from the dependencies from environment-dev.yml and base.in files. @nvamsikrishna05
+-   [ENH] `complete` now uses *columns, allowing for variable number of columns. @samukweku
+-   [ENH] Add function to remove constant columsn. @fireddd
 -   [ENH] Add function to remove constant columns. @fireddd
 -   [ENH] Added `factorize_columns` method which will deprecate the `label_encode` method in future release. @nvamsikrishna05
 
@@ -25,7 +27,6 @@
     to provide a simpler selection without the need for lists. - @samukweku
 -   [ENH] `encode_categoricals` refactored to use generic functions
     via `functools.dispatch`. - @samukweku
--   [ENH] `complete` now uses *columns, allowing for variable number of columns. @samukweku
 -   [ENH] Updated convert_excel_date to throw meaningful error when values contain non-numeric. @nvamsikrishna05
 
 ## [v0.20.14] - 2021-03-25
