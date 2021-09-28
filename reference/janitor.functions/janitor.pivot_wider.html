@@ -1,0 +1,421 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>janitor.pivot_wider &#8212; pyjanitor  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="janitor.conditional_join" href="janitor.conditional_join.html" />
+    <link rel="prev" title="janitor.pivot_longer" href="janitor.pivot_longer.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="janitor-pivot-wider">
+<h1>janitor.pivot_wider<a class="headerlink" href="#janitor-pivot-wider" title="Permalink to this headline">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="janitor.pivot_wider">
+<span class="sig-prename descclassname"><span class="pre">janitor.</span></span><span class="sig-name descname"><span class="pre">pivot_wider</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.3.3)"><span class="pre">pandas.core.frame.DataFrame</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">,</span> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names_from</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">,</span> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values_from</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">,</span> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names_sort</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><span class="pre">bool</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">levels_order</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><span class="pre">list</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flatten_levels</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><span class="pre">bool</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names_sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'_'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names_glue</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Callable</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.3.3)"><span class="pre">pandas.core.frame.DataFrame</span></a></span></span><a class="reference internal" href="../../_modules/janitor/functions.html#pivot_wider"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#janitor.pivot_wider" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reshapes data from ‘long’ to ‘wide’ form.</p>
+<p>The number of columns are increased, while decreasing
+the number of rows. It is the inverse of the <cite>pivot_longer</cite>
+method, and is a wrapper around <cite>pd.DataFrame.pivot</cite> method.</p>
+<p>This method does not mutate the original DataFrame.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Column selection in <cite>index</cite>, <cite>names_from</cite>
+and <cite>values_from</cite> is possible using the
+<cite>janitor.select_columns</cite> syntax.</p>
+</div>
+<p>Reshaping to wide form :</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>     <span class="n">name</span> <span class="n">variable</span>  <span class="n">value</span>
+<span class="mi">0</span>   <span class="n">Alice</span>      <span class="n">wk1</span>      <span class="mi">5</span>
+<span class="mi">1</span>   <span class="n">Alice</span>      <span class="n">wk2</span>      <span class="mi">9</span>
+<span class="mi">2</span>   <span class="n">Alice</span>      <span class="n">wk3</span>     <span class="mi">20</span>
+<span class="mi">3</span>   <span class="n">Alice</span>      <span class="n">wk4</span>     <span class="mi">22</span>
+<span class="mi">4</span>     <span class="n">Bob</span>      <span class="n">wk1</span>      <span class="mi">7</span>
+<span class="mi">5</span>     <span class="n">Bob</span>      <span class="n">wk2</span>     <span class="mi">11</span>
+<span class="mi">6</span>     <span class="n">Bob</span>      <span class="n">wk3</span>     <span class="mi">17</span>
+<span class="mi">7</span>     <span class="n">Bob</span>      <span class="n">wk4</span>     <span class="mi">33</span>
+<span class="mi">8</span>   <span class="n">Carla</span>      <span class="n">wk1</span>      <span class="mi">6</span>
+<span class="mi">9</span>   <span class="n">Carla</span>      <span class="n">wk2</span>     <span class="mi">13</span>
+<span class="mi">10</span>  <span class="n">Carla</span>      <span class="n">wk3</span>     <span class="mi">39</span>
+<span class="mi">11</span>  <span class="n">Carla</span>      <span class="n">wk4</span>     <span class="mi">40</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">pivot_wider</span><span class="p">(</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+        <span class="n">names_from</span> <span class="o">=</span> <span class="s2">&quot;variable&quot;</span><span class="p">,</span>
+        <span class="n">values_from</span> <span class="o">=</span> <span class="s2">&quot;value&quot;</span>
+    <span class="p">)</span>
+
+     <span class="n">name</span>    <span class="n">wk1</span>   <span class="n">wk2</span>   <span class="n">wk3</span>   <span class="n">wk4</span>
+<span class="mi">0</span>    <span class="n">Alice</span>     <span class="mi">5</span>     <span class="mi">9</span>    <span class="mi">20</span>    <span class="mi">22</span>
+<span class="mi">1</span>    <span class="n">Bob</span>       <span class="mi">7</span>    <span class="mi">11</span>    <span class="mi">17</span>    <span class="mi">33</span>
+<span class="mi">2</span>    <span class="n">Carla</span>     <span class="mi">6</span>    <span class="mi">13</span>    <span class="mi">39</span>    <span class="mi">40</span>
+</pre></div>
+</div>
+<p>Pivoting on multiple columns is possible :</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="n">name</span>    <span class="n">n</span>  <span class="n">pct</span>
+<span class="mi">0</span>     <span class="mi">1</span>  <span class="mf">10.0</span>  <span class="mf">0.1</span>
+<span class="mi">1</span>     <span class="mi">2</span>  <span class="mf">20.0</span>  <span class="mf">0.2</span>
+<span class="mi">2</span>     <span class="mi">3</span>  <span class="mf">30.0</span>  <span class="mf">0.3</span>
+
+<span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">num</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+   <span class="o">.</span><span class="n">pivot_wider</span><span class="p">(</span>
+      <span class="n">index</span> <span class="o">=</span> <span class="s2">&quot;num&quot;</span><span class="p">,</span>
+      <span class="n">names_from</span> <span class="o">=</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+      <span class="n">values_from</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;n&quot;</span><span class="p">,</span> <span class="s2">&quot;pct&quot;</span><span class="p">],</span>
+      <span class="n">names_sep</span> <span class="o">=</span> <span class="s2">&quot;_&quot;</span>
+      <span class="p">)</span>
+<span class="p">)</span>
+
+    <span class="n">num</span> <span class="n">n_1</span>  <span class="n">n_2</span>  <span class="n">n_3</span>  <span class="n">pct_1</span>  <span class="n">pct_2</span>  <span class="n">pct_3</span>
+<span class="mi">0</span>   <span class="mi">0</span>   <span class="mi">10</span>   <span class="mi">20</span>   <span class="mi">30</span>   <span class="mf">0.1</span>    <span class="mf">0.2</span>    <span class="mf">0.3</span>
+</pre></div>
+</div>
+<p>You may choose not to flatten the columns,
+by setting <cite>flatten_levels</cite> to False:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span>
+
+   <span class="n">dependent_variable</span>  <span class="n">step</span>   <span class="n">a</span>   <span class="n">b</span>
+<span class="mi">0</span>                 <span class="mf">5.5</span>     <span class="mi">1</span>  <span class="mi">20</span>  <span class="mi">30</span>
+<span class="mi">1</span>                 <span class="mf">5.5</span>     <span class="mi">2</span>  <span class="mi">25</span>  <span class="mi">37</span>
+<span class="mi">2</span>                 <span class="mf">6.1</span>     <span class="mi">1</span>  <span class="mi">22</span>  <span class="mi">19</span>
+<span class="mi">3</span>                 <span class="mf">6.1</span>     <span class="mi">2</span>  <span class="mi">18</span>  <span class="mi">29</span>
+
+
+<span class="n">df</span><span class="o">.</span><span class="n">pivot_wider</span><span class="p">(</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="s2">&quot;dep*&quot;</span><span class="p">,</span>
+    <span class="n">names_from</span>  <span class="o">=</span> <span class="s1">&#39;step&#39;</span><span class="p">,</span>
+    <span class="n">flatten_levels</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="p">)</span>
+
+                     <span class="n">a</span>       <span class="n">b</span>
+<span class="n">step</span>                 <span class="mi">1</span>   <span class="mi">2</span>   <span class="mi">1</span>   <span class="mi">2</span>
+<span class="n">dependent_variable</span>
+<span class="mf">5.5</span>                 <span class="mi">20</span>  <span class="mi">25</span>  <span class="mi">30</span>  <span class="mi">37</span>
+<span class="mf">6.1</span>                 <span class="mi">22</span>  <span class="mi">18</span>  <span class="mi">19</span>  <span class="mi">29</span>
+</pre></div>
+</div>
+<p>The order of the levels can be changed with the <cite>levels_order</cite>
+parameter, which internally uses <cite>pd.DataFrame.reorder_levels</cite>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">pivot_wider</span><span class="p">(</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="s2">&quot;dep*&quot;</span><span class="p">,</span>
+    <span class="n">names_from</span>  <span class="o">=</span> <span class="s1">&#39;step&#39;</span><span class="p">,</span>
+    <span class="n">flatten_levels</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">levels_order</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;step&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+    <span class="p">)</span>
+
+<span class="n">step</span>                 <span class="mi">1</span>   <span class="mi">2</span>   <span class="mi">1</span>   <span class="mi">2</span>
+                     <span class="n">a</span>   <span class="n">a</span>   <span class="n">b</span>   <span class="n">b</span>
+<span class="n">dependent_variable</span>
+<span class="mf">5.5</span>                 <span class="mi">20</span>  <span class="mi">25</span>  <span class="mi">30</span>  <span class="mi">37</span>
+<span class="mf">6.1</span>                 <span class="mi">22</span>  <span class="mi">18</span>  <span class="mi">19</span>  <span class="mi">29</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">pivot_wider</span><span class="p">(</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">],</span>
+    <span class="n">names_from</span> <span class="o">=</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span>
+    <span class="n">flatten_levels</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+
+   <span class="n">dependent_variable</span>  <span class="n">a_1</span>  <span class="n">a_2</span>  <span class="n">b_1</span>  <span class="n">b_2</span>
+<span class="mi">0</span>                 <span class="mf">5.5</span>   <span class="mi">20</span>   <span class="mi">25</span>   <span class="mi">30</span>   <span class="mi">37</span>
+<span class="mi">1</span>                 <span class="mf">6.1</span>   <span class="mi">22</span>   <span class="mi">18</span>   <span class="mi">19</span>   <span class="mi">29</span>
+
+
+<span class="n">df</span><span class="o">.</span><span class="n">pivot_wider</span><span class="p">(</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">],</span>
+    <span class="n">names_from</span> <span class="o">=</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span>
+    <span class="n">flatten_levels</span><span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">levels_order</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;step&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+    <span class="p">)</span>
+
+   <span class="n">dependent_variable</span>  <span class="mi">1</span><span class="n">_a</span>  <span class="mi">2</span><span class="n">_a</span>  <span class="mi">1</span><span class="n">_b</span>  <span class="mi">2</span><span class="n">_b</span>
+<span class="mi">0</span>                 <span class="mf">5.5</span>   <span class="mi">20</span>   <span class="mi">25</span>   <span class="mi">30</span>   <span class="mi">37</span>
+<span class="mi">1</span>                 <span class="mf">6.1</span>   <span class="mi">22</span>   <span class="mi">18</span>   <span class="mi">19</span>   <span class="mi">29</span>
+</pre></div>
+</div>
+<p><cite>names_sep</cite> and <cite>names_glue</cite> come in handy in situations where <cite>names_from</cite>
+and/or <cite>values_from</cite> contain multiple variables; it is used primarily when
+the columns are flattened. The default value for <cite>names_sep</cite> is <cite>_</cite>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># default value of names_sep is &#39;_&#39;</span>
+<span class="n">df</span><span class="o">.</span><span class="n">pivot_wider</span><span class="p">(</span><span class="n">index</span> <span class="o">=</span> <span class="s2">&quot;dep*&quot;</span><span class="p">,</span> <span class="n">names_from</span> <span class="o">=</span> <span class="s2">&quot;step&quot;</span><span class="p">)</span>
+
+   <span class="n">dependent_variable</span>  <span class="n">a_1</span>  <span class="n">a_2</span>  <span class="n">b_1</span>  <span class="n">b_2</span>
+<span class="mi">0</span>                 <span class="mf">5.5</span>   <span class="mi">20</span>   <span class="mi">25</span>   <span class="mi">30</span>   <span class="mi">37</span>
+<span class="mi">1</span>                 <span class="mf">6.1</span>   <span class="mi">22</span>   <span class="mi">18</span>   <span class="mi">19</span>   <span class="mi">29</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">pivot_wider</span><span class="p">(</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="s2">&quot;dep*&quot;</span><span class="p">,</span>
+    <span class="n">names_from</span> <span class="o">=</span> <span class="s2">&quot;step&quot;</span><span class="p">,</span>
+    <span class="n">names_sep</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+   <span class="n">dependent_variable</span>  <span class="n">a1</span>  <span class="n">a2</span>  <span class="n">b1</span>  <span class="n">b2</span>
+<span class="mi">0</span>                 <span class="mf">5.5</span>  <span class="mi">20</span>  <span class="mi">25</span>  <span class="mi">30</span>  <span class="mi">37</span>
+<span class="mi">1</span>                 <span class="mf">6.1</span>  <span class="mi">22</span>  <span class="mi">18</span>  <span class="mi">19</span>  <span class="mi">29</span>
+</pre></div>
+</div>
+<p>With <cite>names_glue</cite> you can <cite>glue</cite> the individual levels (if MultiIndex)
+into one (similar to <cite>names_sep</cite>), or you can modify the final columns,
+as long as it can be passed to <cite>pd.Index.map</cite>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># replicate `names_sep`</span>
+<span class="n">df</span><span class="o">.</span><span class="n">pivot_wider</span><span class="p">(</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="s2">&quot;dep*&quot;</span><span class="p">,</span>
+    <span class="n">names_from</span> <span class="o">=</span> <span class="s2">&quot;step&quot;</span><span class="p">,</span>
+    <span class="n">names_sep</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">names_glue</span> <span class="o">=</span> <span class="s2">&quot;_&quot;</span><span class="o">.</span><span class="n">join</span>
+    <span class="p">)</span>
+
+   <span class="n">dependent_variable</span>  <span class="n">a_1</span>  <span class="n">a_2</span>  <span class="n">b_1</span>  <span class="n">b_2</span>
+<span class="mi">0</span>                 <span class="mf">5.5</span>   <span class="mi">20</span>   <span class="mi">25</span>   <span class="mi">30</span>   <span class="mi">37</span>
+<span class="mi">1</span>                 <span class="mf">6.1</span>   <span class="mi">22</span>   <span class="mi">18</span>   <span class="mi">19</span>   <span class="mi">29</span>
+
+<span class="c1"># going beyond names_sep</span>
+<span class="n">df</span><span class="o">.</span><span class="n">pivot_wider</span><span class="p">(</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="s2">&quot;dep*&quot;</span><span class="p">,</span>
+    <span class="n">names_from</span> <span class="o">=</span> <span class="s2">&quot;step&quot;</span><span class="p">,</span>
+    <span class="n">names_sep</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">names_glue</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">col</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">col</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">_step</span><span class="si">{</span><span class="n">col</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="p">)</span>
+
+   <span class="n">dependent_variable</span>  <span class="n">a_step1</span>  <span class="n">a_step2</span>  <span class="n">b_step1</span>  <span class="n">b_step2</span>
+<span class="mi">0</span>                 <span class="mf">5.5</span>       <span class="mi">20</span>       <span class="mi">25</span>       <span class="mi">30</span>       <span class="mi">37</span>
+<span class="mi">1</span>                 <span class="mf">6.1</span>       <span class="mi">22</span>       <span class="mi">18</span>       <span class="mi">19</span>       <span class="mi">29</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>A ValueError is raised if the combination
+of the <cite>index</cite> and <cite>names_from</cite> is not unique.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>By default, values from <cite>values_from</cite> are always
+at the top level if the columns are not flattened.
+If flattened, the values from <cite>values_from</cite> are usually
+at the start of each label in the columns.</p>
+</div>
+<p>Functional usage syntax:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">janitor</span> <span class="k">as</span> <span class="nn">jn</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">jn</span><span class="o">.</span><span class="n">pivot_wider</span><span class="p">(</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">,</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="n">column1</span><span class="p">,</span> <span class="n">column2</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span>
+    <span class="n">names_from</span> <span class="o">=</span> <span class="p">[</span><span class="n">column3</span><span class="p">,</span> <span class="n">column4</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span>
+    <span class="n">value_from</span> <span class="o">=</span> <span class="p">[</span><span class="n">column5</span><span class="p">,</span> <span class="n">column6</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span>
+    <span class="n">names_sort</span> <span class="o">=</span> <span class="kc">True</span><span class="o">/</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">levels_order</span> <span class="o">=</span> <span class="kc">None</span><span class="o">/</span><span class="nb">list</span><span class="p">,</span>
+    <span class="n">flatten_levels</span> <span class="o">=</span> <span class="kc">True</span><span class="o">/</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">names_sep</span><span class="o">=</span><span class="s1">&#39;_&#39;</span><span class="p">,</span>
+    <span class="n">names_glue</span><span class="o">=</span> <span class="n">Callable</span>
+
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Method chaining syntax:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">pivot_wider</span><span class="p">(</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="n">column1</span><span class="p">,</span> <span class="n">column2</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span>
+        <span class="n">names_from</span> <span class="o">=</span> <span class="p">[</span><span class="n">column3</span><span class="p">,</span> <span class="n">column4</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span>
+        <span class="n">value_from</span> <span class="o">=</span> <span class="p">[</span><span class="n">column5</span><span class="p">,</span> <span class="n">column6</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span>
+        <span class="n">names_sort</span> <span class="o">=</span> <span class="kc">True</span><span class="o">/</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">levels_order</span> <span class="o">=</span> <span class="kc">None</span><span class="o">/</span><span class="nb">list</span><span class="p">,</span>
+        <span class="n">flatten_levels</span> <span class="o">=</span> <span class="kc">True</span><span class="o">/</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">names_sep</span><span class="o">=</span><span class="s1">&#39;_&#39;</span><span class="p">,</span>
+        <span class="n">names_glue</span><span class="o">=</span> <span class="n">Callable</span>
+        <span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> – A pandas dataframe.</p></li>
+<li><p><strong>index</strong> – Name(s) of columns to use as identifier variables.
+Should be either a single column name, or a list of column names.
+The <cite>janitor.select_columns</cite> syntax is supported here,
+allowing for flexible and dynamic column selection.
+If <cite>index</cite> is not provided, the dataframe’s index is used.</p></li>
+<li><p><strong>names_from</strong> – Name(s) of column(s) to use to make the new
+dataframe’s columns. Should be either a single column name, or a
+list of column names.
+The <cite>janitor.select_columns</cite> syntax is supported here,
+allowing for flexible and dynamic column selection.
+A label or labels must be provided for <code class="docutils literal notranslate"><span class="pre">names_from</span></code>.</p></li>
+<li><p><strong>values_from</strong> – Name(s) of column(s) that will be used for populating
+the new dataframe’s values.
+The <cite>janitor.select_columns</cite> syntax is supported here,
+allowing for flexible and dynamic column selection.
+If <code class="docutils literal notranslate"><span class="pre">values_from</span></code> is not specified,  all remaining columns
+will be used. Note that values from <cite>values_from</cite> are usually at
+the top level, the dataframe’s columns is not flattened, or the
+start of each label in the columns, if flattened.</p></li>
+<li><p><strong>names_sort</strong> – Default is <cite>True</cite>. Sorts columns by order of
+appearance.</p></li>
+<li><p><strong>levels_order</strong> – Applicable if there are multiple <cite>names_from</cite>
+and/or <cite>values_from</cite>. Reorders the levels. Accepts a list of strings.
+If there are multiple <cite>values_from</cite>, pass a None to represent that
+level.</p></li>
+<li><p><strong>flatten_levels</strong> – Default is <cite>True</cite>. If <cite>False</cite>, the dataframe stays
+as a MultiIndex.</p></li>
+<li><p><strong>names_sep</strong> – If <code class="docutils literal notranslate"><span class="pre">names_from</span></code> or <code class="docutils literal notranslate"><span class="pre">values_from</span></code> contain multiple
+variables, this will be used to join their values into a single string
+to use as a column name. Default is <code class="docutils literal notranslate"><span class="pre">_</span></code>.
+Applicable only if <code class="docutils literal notranslate"><span class="pre">flatten_levels</span></code> is <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
+<li><p><strong>names_glue</strong> – A callable to control the output
+of the flattened columns. Applicable only if
+<code class="docutils literal notranslate"><span class="pre">flatten_levels</span></code> is <code class="docutils literal notranslate"><span class="pre">True</span></code>. Function should be
+acceptable to pandas’ <cite>map</cite> function.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A pandas DataFrame that has been unpivoted from long to wide
+form.</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – if <cite>names_from</cite> is None.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.9)"><strong>TypeError</strong></a> – if <cite>flatten_levels</cite> is not a boolean.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/logo_title.svg" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../notebooks.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">API Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../biology.html">Biology</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chemistry.html">Chemistry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../engineering.html">Engineering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../finance.html">Finance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ml.html">Machine Learning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../timeseries.html">Time Series</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../general_functions.html">General Functions</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../general_functions.html#modify-columns">Modify columns</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../general_functions.html#modify-values">Modify values</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../general_functions.html#filtering">Filtering</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../general_functions.html#preprocessing">Preprocessing</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../general_functions.html#other">Other</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="janitor.then.html">janitor.then</a></li>
+<li class="toctree-l4"><a class="reference internal" href="janitor.also.html">janitor.also</a></li>
+<li class="toctree-l4"><a class="reference internal" href="janitor.shuffle.html">janitor.shuffle</a></li>
+<li class="toctree-l4"><a class="reference internal" href="janitor.count_cumulative_unique.html">janitor.count_cumulative_unique</a></li>
+<li class="toctree-l4"><a class="reference internal" href="janitor.sort_naturally.html">janitor.sort_naturally</a></li>
+<li class="toctree-l4"><a class="reference internal" href="janitor.expand_grid.html">janitor.expand_grid</a></li>
+<li class="toctree-l4"><a class="reference internal" href="janitor.flag_nulls.html">janitor.flag_nulls</a></li>
+<li class="toctree-l4"><a class="reference internal" href="janitor.move.html">janitor.move</a></li>
+<li class="toctree-l4"><a class="reference internal" href="janitor.toset.html">janitor.toset</a></li>
+<li class="toctree-l4"><a class="reference internal" href="janitor.unionize_dataframe_categories.html">janitor.unionize_dataframe_categories</a></li>
+<li class="toctree-l4"><a class="reference internal" href="janitor.groupby_topk.html">janitor.groupby_topk</a></li>
+<li class="toctree-l4"><a class="reference internal" href="janitor.complete.html">janitor.complete</a></li>
+<li class="toctree-l4"><a class="reference internal" href="janitor.pivot_longer.html">janitor.pivot_longer</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">janitor.pivot_wider</a></li>
+<li class="toctree-l4"><a class="reference internal" href="janitor.conditional_join.html">janitor.conditional_join</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../pyspark.html">General PySpark Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../xarray.html">General XArray Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../authors.html">Contributors</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">API Documentation</a><ul>
+  <li><a href="../general_functions.html">General Functions</a><ul>
+      <li>Previous: <a href="janitor.pivot_longer.html" title="previous chapter">janitor.pivot_longer</a></li>
+      <li>Next: <a href="janitor.conditional_join.html" title="next chapter">janitor.conditional_join</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, PyJanitor devs.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../_sources/reference/janitor.functions/janitor.pivot_wider.md.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

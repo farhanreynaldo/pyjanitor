@@ -1,0 +1,499 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>&lt;no title&gt; &#8212; pyjanitor  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="&lt;no title&gt;" href="medium_franchise.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="groupby_agg.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <dl>
+<dt>{</dt><dd><dl>
+<dt>“cells”: [</dt><dd><dl>
+<dt>{</dt><dd><p>“cell_type”: “markdown”,
+“metadata”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“nbsphinx”: {</dt><dd><p>“execute”: “never”</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>},
+“source”: [</p>
+<blockquote>
+<div><p>“# Inflating and Converting Currency”</p>
+</div></blockquote>
+<p>]</p>
+</dd>
+</dl>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“metadata”: {},
+“source”: [</p>
+<blockquote>
+<div><p>“## Noticen”,
+“n”,
+“This notebook’s section on <cite>convert_currency</cite> has been disabled, as <cite>exchangeratesapi.io</cite> has disabled pinging of its API without an API key.”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“metadata”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“nbsphinx”: {</dt><dd><p>“execute”: “never”</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>},
+“source”: [</p>
+<blockquote>
+<div><p>“## Background”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“metadata”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“nbsphinx”: {</dt><dd><p>“execute”: “never”</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>},
+“source”: [</p>
+<blockquote>
+<div><p>“This notebook serves to show a brief and simple example of how to use the <cite>convert_currency()</cite> and <cite>inflate_currency()</cite> methods from pyjanitor’s finance submodule.n”,
+“n”,
+“The data for this example notebook come from the [United States Department of Agriculture Economic Research Service](<a class="reference external" href="https://www.ers.usda.gov/data-products/food-expenditure-series/">https://www.ers.usda.gov/data-products/food-expenditure-series/</a>), and we are specifically going to download the data of nominal food and alcohol expenditures, with taxes and tips, for all purchasers.  The data set includes nominal expenditures for 1997-2018, and the expenditures are provided in <strong>millions</strong> of U.S. dollars for the year in the which the expenditures were made.  For example, the expenditure values for 1997 are in units of 1997 U.S. dollars, whereas expenditures for 2018 are in 2018 U.S. dollars.”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“metadata”: {},
+“source”: [</p>
+<blockquote>
+<div><p>“## Getting and Cleaning the Data”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: null,
+“metadata”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“nbsphinx”: {</dt><dd><p>“execute”: “never”</p>
+</dd>
+</dl>
+<p>},
+“tags”: []</p>
+</div></blockquote>
+<p>},
+“outputs”: [],
+“source”: [</p>
+<blockquote>
+<div><p>“import pandas as pdn”,
+“import janitorn”,
+“import os”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: null,
+“metadata”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“nbsphinx”: {</dt><dd><p>“execute”: “never”</p>
+</dd>
+</dl>
+<p>},
+“tags”: []</p>
+</div></blockquote>
+<p>},
+“outputs”: [],
+“source”: [</p>
+<blockquote>
+<div><p>“url = (n”,
+”    &quot;<a class="reference external" href="https://www.ers.usda.gov/webdocs/DataFiles/50606/nominal_expenditures.csv?v=9289.4">https://www.ers.usda.gov/webdocs/DataFiles/50606/nominal_expenditures.csv?v=9289.4</a>&quot;n”,
+“)n”,
+“# 1) Read in the data from .csv filen”,
+“# 2) Clean up the column namesn”,
+“# 3) Remove any empty rows or columnsn”,
+“# 4) Melt the dataframe (from wide to long) to obtain &quot;tidy&quot; formatn”,
+“data = (n”,
+”    pd.read_csv(n”,
+”        url,n”,
+”        usecols=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9],n”,
+”        nrows=22,n”,
+”        thousands=’,’n”,
+”    )n”,
+”        .clean_names()n”,
+”    .remove_empty()n”,
+”    .melt(id_vars=[‘year’], var_name=’store_type’, value_name=’expenditure’)n”,
+“n”,
+”    )n”,
+“data.head()”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“metadata”: {},
+“source”: [</p>
+<blockquote>
+<div><p>“## Use inflate_currency() to Inflate All Values to 2018$”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: null,
+“metadata”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“nbsphinx”: {</dt><dd><p>“execute”: “never”</p>
+</dd>
+</dl>
+<p>},
+“tags”: []</p>
+</div></blockquote>
+<p>},
+“outputs”: [],
+“source”: [</p>
+<blockquote>
+<div><p>“from janitor.finance import inflate_currency, convert_currencyn”,
+“n”,
+“# Use split-apply-combine strategy to obtain 2018$ valuesn”,
+“# Group the data frame by yearn”,
+“grouped = data.groupby([‘year’])n”,
+“# Apply the inflate_currency() method to each groupn”,
+“# (Note that each group comes with a name; in this case,n”,
+“#  the name corresponds to the year)n”,
+“data_constant_dollar = grouped.apply(n”,
+”    lambda x: x.inflate_currency(n”,
+”        column_name=’expenditure’,n”,
+”        country=’USA’,n”,
+”        currency_year=int(x.name),n”,
+”        to_year=2018,n”,
+”        make_new_column=Truen”,
+”    )n”,
+“)n”,
+“data_constant_dollar.head()”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“metadata”: {},
+“source”: [</p>
+<blockquote>
+<div><p>“## Plot Time Series to Observe Currency Inflation”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: null,
+“metadata”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“nbsphinx”: {</dt><dd><p>“execute”: “never”</p>
+</dd>
+</dl>
+<p>},
+“tags”: []</p>
+</div></blockquote>
+<p>},
+“outputs”: [],
+“source”: [</p>
+<blockquote>
+<div><p>“# Plot time series of nominal and real (2018$) expenditures for grocery storesn”,
+“# Note that the 2018 values for both series should be equaln”,
+“(n”,
+”    data_constant_dollarn”,
+”    .loc[data_constant_dollar[‘store_type’].str.contains(‘grocery_stores’), :]n”,
+”    .set_index(‘year’)n”,
+”    .drop(columns=’store_type’)n”,
+”    .plot()n”,
+“n”,
+“)”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“metadata”: {},
+“source”: [</p>
+<blockquote>
+<div><p>“## Use convert_currency() to Convert USD to British Poundsn”,
+“n”,
+“_Note: Disabled and commented out due to <cite>exchangeratesapi.io</cite> policies.n”,
+“We are working through the deprecation of the API._”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: null,
+“metadata”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“nbsphinx”: {</dt><dd><p>“execute”: “never”</p>
+</dd>
+</dl>
+<p>},
+“tags”: []</p>
+</div></blockquote>
+<p>},
+“outputs”: [],
+“source”: [</p>
+<blockquote>
+<div><p>“from datetime import daten”,
+“n”,
+“# # Apply the convert_currency() method to the ‘expenditure_2018’ columnn”,
+“# # Use the exchange rate from Dec. 31, 2018, since our data are in 2018$n”,
+“# data_constant_pounds = (n”,
+“#     data_constant_dollarn”,
+“#     .convert_currency(n”,
+“#         api_key=&quot;a8ef744de81e4bd3908e2acf5a137c3a&quot;,n”,
+“#         column_name=’expenditure_2018’,n”,
+“#         from_currency=’USD’,n”,
+“#         to_currency=’GBP’,n”,
+“#         historical_date=date(2018, 12, 31),n”,
+“#         make_new_column=Truen”,
+“#     )n”,
+“# )n”,
+“# data_constant_pounds.head()                    “</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“metadata”: {},
+“source”: [</p>
+<blockquote>
+<div><p>“## Plot Time Series to Observe Currency Conversion”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: null,
+“metadata”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“nbsphinx”: {</dt><dd><p>“execute”: “never”</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>},
+“outputs”: [],
+“source”: [</p>
+<blockquote>
+<div><p>“# # You can see from this plot that GBP were worth more than USD on Dec. 31, 2018n”,
+“# # (by about 1.3x, it appears)n”,
+“# (n”,
+“#     data_constant_poundsn”,
+“#     .loc[data_constant_pounds[‘store_type’].str.contains(‘grocery_stores’), :]n”,
+“#     .set_index(‘year’)n”,
+“#     .drop(columns=’store_type’)n”,
+“#     .plot()n”,
+“# )”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: null,
+“metadata”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“nbsphinx”: {</dt><dd><p>“execute”: “never”</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>},
+“outputs”: [],
+“source”: []</p>
+</div></blockquote>
+<p>}</p>
+</dd>
+</dl>
+<p>],
+“metadata”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“kernelspec”: {</dt><dd><p>“display_name”: “pyjanitor-dev”,
+“language”: “python”,
+“name”: “pyjanitor-dev”</p>
+</dd>
+</dl>
+<p>},
+“language_info”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“codemirror_mode”: {</dt><dd><p>“name”: “ipython”,
+“version”: 3</p>
+</dd>
+</dl>
+<p>},
+“file_extension”: “.py”,
+“mimetype”: “text/x-python”,
+“name”: “python”,
+“nbconvert_exporter”: “python”,
+“pygments_lexer”: “ipython3”,
+“version”: “3.8.8”</p>
+</div></blockquote>
+<p>},
+“nbsphinx”: {</p>
+<blockquote>
+<div><p>“execute”: “never”</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>},
+“nbformat”: 4,
+“nbformat_minor”: 4</p>
+</dd>
+</dl>
+<p>}</p>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo_title.svg" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../authors.html">Contributors</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../notebooks.html">Examples</a><ul>
+      <li>Previous: <a href="groupby_agg.html" title="previous chapter">&lt;no title&gt;</a></li>
+      <li>Next: <a href="medium_franchise.html" title="next chapter">&lt;no title&gt;</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, PyJanitor devs.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/notebooks/inflating_converting_currency.ipynb.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

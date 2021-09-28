@@ -1,0 +1,1655 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>&lt;no title&gt; &#8212; pyjanitor  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="&lt;no title&gt;" href="expand_grid.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="case_when.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <dl>
+<dt>{</dt><dd><dl>
+<dt>“cells”: [</dt><dd><dl>
+<dt>{</dt><dd><p>“cell_type”: “markdown”,
+“source”: [</p>
+<blockquote>
+<div><p>“# Processing Dirty Data”</p>
+</div></blockquote>
+<p>],
+“metadata”: {}</p>
+</dd>
+</dl>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“source”: [</p>
+<blockquote>
+<div><p>“## Background n”,
+“n”,
+“This is fake data generated to demonstrate the capabilities of <cite>pyjanitor</cite>.  It contains a bunch of common problems that we regularly encounter when working with data.  Let’s go fix it!”</p>
+</div></blockquote>
+<p>],
+“metadata”: {}</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“source”: [</p>
+<blockquote>
+<div><p>“### Load Packagesn”,
+“n”,
+“Importing <cite>pyjanitor</cite> is all that’s needed to give Pandas Dataframes extra methods to work with your data.”</p>
+</div></blockquote>
+<p>],
+“metadata”: {}</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 1,
+“source”: [</p>
+<blockquote>
+<div><p>“import pandas as pdn”,
+“import janitor”</p>
+</div></blockquote>
+<p>],
+“outputs”: [],
+“metadata”: {}</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“source”: [</p>
+<blockquote>
+<div><p>“## Load Data”</p>
+</div></blockquote>
+<p>],
+“metadata”: {}</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 2,
+“source”: [</p>
+<blockquote>
+<div><p>“df = pd.read_excel(‘dirty_data.xlsx’, engine=’openpyxl’)n”,
+“df”</p>
+</div></blockquote>
+<p>],
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><p>“output_type”: “execute_result”,
+“data”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“text/plain”: [</dt><dd><p>”      First Name Last Name Employee Status     Subject  Hire Date  \n”,
+“0          Jason    Bourne         Teacher          PE    39690.0   n”,
+“1          Jason    Bourne         Teacher    Drafting    39690.0   n”,
+“2         Alicia      Keys         Teacher       Music    37118.0   n”,
+“3            Ada  Lovelace         Teacher         NaN    27515.0   n”,
+“4          Desus      Nice  Administration        Dean    41431.0   n”,
+“5   Chien-Shiung        Wu         Teacher     Physics    11037.0   n”,
+“6   Chien-Shiung        Wu         Teacher   Chemistry    11037.0   n”,
+“7            NaN       NaN             NaN         NaN        NaN   n”,
+“8          James     Joyce         Teacher     English    32994.0   n”,
+“9           Hedy    Lamarr         Teacher     Science    27919.0   n”,
+“10        Carlos    Boozer           Coach  Basketball    42221.0   n”,
+“11         Young    Boozer           Coach         NaN    34700.0   n”,
+“12       Micheal    Larsen         Teacher     English    40071.0   n”,
+“n”,
+”    % Allocated Full time?  do not edit! —&gt; Certification Certification.1  \n”,
+“0          0.75        Yes                NaN   Physical ed         Theater   n”,
+“1          0.25        Yes                NaN   Physical ed         Theater   n”,
+“2          1.00        Yes                NaN  Instr. music     Vocal music   n”,
+“3          1.00        Yes                NaN       PENDING       Computers   n”,
+“4          1.00        Yes                NaN       PENDING             NaN   n”,
+“5          0.50        Yes                NaN  Science 6-12         Physics   n”,
+“6          0.50        Yes                NaN  Science 6-12         Physics   n”,
+“7           NaN        NaN                NaN           NaN             NaN   n”,
+“8          0.50         No                NaN           NaN    English 6-12   n”,
+“9          0.50         No                NaN       PENDING             NaN   n”,
+“10          NaN         No                NaN   Physical ed             NaN   n”,
+“11          NaN         No                NaN           NaN  Political sci.   n”,
+“12         0.80         No                NaN   Vocal music         English   n”,
+“n”,
+”    Certification.2  n”,
+“0               NaN  n”,
+“1               NaN  n”,
+“2               NaN  n”,
+“3               NaN  n”,
+“4               NaN  n”,
+“5               NaN  n”,
+“6               NaN  n”,
+“7               NaN  n”,
+“8               NaN  n”,
+“9               NaN  n”,
+“10              NaN  n”,
+“11              NaN  n”,
+“12              NaN  “</p>
+</dd>
+</dl>
+<p>],
+“text/html”: [</p>
+<blockquote>
+<div><p>“&lt;div&gt;n”,
+“&lt;style scoped&gt;n”,
+”    .dataframe tbody tr th:only-of-type {n”,
+”        vertical-align: middle;n”,
+”    }n”,
+“n”,
+”    .dataframe tbody tr th {n”,
+”        vertical-align: top;n”,
+”    }n”,
+“n”,
+”    .dataframe thead th {n”,
+”        text-align: right;n”,
+”    }n”,
+“&lt;/style&gt;n”,
+“&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;n”,
+”  &lt;thead&gt;n”,
+”    &lt;tr style=&quot;text-align: right;&quot;&gt;n”,
+”      &lt;th&gt;&lt;/th&gt;n”,
+”      &lt;th&gt;First Name&lt;/th&gt;n”,
+”      &lt;th&gt;Last Name&lt;/th&gt;n”,
+”      &lt;th&gt;Employee Status&lt;/th&gt;n”,
+”      &lt;th&gt;Subject&lt;/th&gt;n”,
+”      &lt;th&gt;Hire Date&lt;/th&gt;n”,
+”      &lt;th&gt;% Allocated&lt;/th&gt;n”,
+”      &lt;th&gt;Full time?&lt;/th&gt;n”,
+”      &lt;th&gt;do not edit! —&amp;gt;&lt;/th&gt;n”,
+”      &lt;th&gt;Certification&lt;/th&gt;n”,
+”      &lt;th&gt;Certification.1&lt;/th&gt;n”,
+”      &lt;th&gt;Certification.2&lt;/th&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/thead&gt;n”,
+”  &lt;tbody&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;0&lt;/th&gt;n”,
+”      &lt;td&gt;Jason&lt;/td&gt;n”,
+”      &lt;td&gt;Bourne&lt;/td&gt;n”,
+”      &lt;td&gt;Teacher&lt;/td&gt;n”,
+”      &lt;td&gt;PE&lt;/td&gt;n”,
+”      &lt;td&gt;39690.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.75&lt;/td&gt;n”,
+”      &lt;td&gt;Yes&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;Physical ed&lt;/td&gt;n”,
+”      &lt;td&gt;Theater&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;1&lt;/th&gt;n”,
+”      &lt;td&gt;Jason&lt;/td&gt;n”,
+”      &lt;td&gt;Bourne&lt;/td&gt;n”,
+”      &lt;td&gt;Teacher&lt;/td&gt;n”,
+”      &lt;td&gt;Drafting&lt;/td&gt;n”,
+”      &lt;td&gt;39690.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.25&lt;/td&gt;n”,
+”      &lt;td&gt;Yes&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;Physical ed&lt;/td&gt;n”,
+”      &lt;td&gt;Theater&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;2&lt;/th&gt;n”,
+”      &lt;td&gt;Alicia&lt;/td&gt;n”,
+”      &lt;td&gt;Keys&lt;/td&gt;n”,
+”      &lt;td&gt;Teacher&lt;/td&gt;n”,
+”      &lt;td&gt;Music&lt;/td&gt;n”,
+”      &lt;td&gt;37118.0&lt;/td&gt;n”,
+”      &lt;td&gt;1.00&lt;/td&gt;n”,
+”      &lt;td&gt;Yes&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;Instr. music&lt;/td&gt;n”,
+”      &lt;td&gt;Vocal music&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;3&lt;/th&gt;n”,
+”      &lt;td&gt;Ada&lt;/td&gt;n”,
+”      &lt;td&gt;Lovelace&lt;/td&gt;n”,
+”      &lt;td&gt;Teacher&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;27515.0&lt;/td&gt;n”,
+”      &lt;td&gt;1.00&lt;/td&gt;n”,
+”      &lt;td&gt;Yes&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;PENDING&lt;/td&gt;n”,
+”      &lt;td&gt;Computers&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;4&lt;/th&gt;n”,
+”      &lt;td&gt;Desus&lt;/td&gt;n”,
+”      &lt;td&gt;Nice&lt;/td&gt;n”,
+”      &lt;td&gt;Administration&lt;/td&gt;n”,
+”      &lt;td&gt;Dean&lt;/td&gt;n”,
+”      &lt;td&gt;41431.0&lt;/td&gt;n”,
+”      &lt;td&gt;1.00&lt;/td&gt;n”,
+”      &lt;td&gt;Yes&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;PENDING&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;5&lt;/th&gt;n”,
+”      &lt;td&gt;Chien-Shiung&lt;/td&gt;n”,
+”      &lt;td&gt;Wu&lt;/td&gt;n”,
+”      &lt;td&gt;Teacher&lt;/td&gt;n”,
+”      &lt;td&gt;Physics&lt;/td&gt;n”,
+”      &lt;td&gt;11037.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.50&lt;/td&gt;n”,
+”      &lt;td&gt;Yes&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;Science 6-12&lt;/td&gt;n”,
+”      &lt;td&gt;Physics&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;6&lt;/th&gt;n”,
+”      &lt;td&gt;Chien-Shiung&lt;/td&gt;n”,
+”      &lt;td&gt;Wu&lt;/td&gt;n”,
+”      &lt;td&gt;Teacher&lt;/td&gt;n”,
+”      &lt;td&gt;Chemistry&lt;/td&gt;n”,
+”      &lt;td&gt;11037.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.50&lt;/td&gt;n”,
+”      &lt;td&gt;Yes&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;Science 6-12&lt;/td&gt;n”,
+”      &lt;td&gt;Physics&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;7&lt;/th&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;8&lt;/th&gt;n”,
+”      &lt;td&gt;James&lt;/td&gt;n”,
+”      &lt;td&gt;Joyce&lt;/td&gt;n”,
+”      &lt;td&gt;Teacher&lt;/td&gt;n”,
+”      &lt;td&gt;English&lt;/td&gt;n”,
+”      &lt;td&gt;32994.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.50&lt;/td&gt;n”,
+”      &lt;td&gt;No&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;English 6-12&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;9&lt;/th&gt;n”,
+”      &lt;td&gt;Hedy&lt;/td&gt;n”,
+”      &lt;td&gt;Lamarr&lt;/td&gt;n”,
+”      &lt;td&gt;Teacher&lt;/td&gt;n”,
+”      &lt;td&gt;Science&lt;/td&gt;n”,
+”      &lt;td&gt;27919.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.50&lt;/td&gt;n”,
+”      &lt;td&gt;No&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;PENDING&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;10&lt;/th&gt;n”,
+”      &lt;td&gt;Carlos&lt;/td&gt;n”,
+”      &lt;td&gt;Boozer&lt;/td&gt;n”,
+”      &lt;td&gt;Coach&lt;/td&gt;n”,
+”      &lt;td&gt;Basketball&lt;/td&gt;n”,
+”      &lt;td&gt;42221.0&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;No&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;Physical ed&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;11&lt;/th&gt;n”,
+”      &lt;td&gt;Young&lt;/td&gt;n”,
+”      &lt;td&gt;Boozer&lt;/td&gt;n”,
+”      &lt;td&gt;Coach&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;34700.0&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;No&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;Political sci.&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;12&lt;/th&gt;n”,
+”      &lt;td&gt;Micheal&lt;/td&gt;n”,
+”      &lt;td&gt;Larsen&lt;/td&gt;n”,
+”      &lt;td&gt;Teacher&lt;/td&gt;n”,
+”      &lt;td&gt;English&lt;/td&gt;n”,
+”      &lt;td&gt;40071.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.80&lt;/td&gt;n”,
+”      &lt;td&gt;No&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;Vocal music&lt;/td&gt;n”,
+”      &lt;td&gt;English&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/tbody&gt;n”,
+“&lt;/table&gt;n”,
+“&lt;/div&gt;”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+“metadata”: {},
+“execution_count”: 2</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“metadata”: {}</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“source”: [</p>
+<blockquote>
+<div><p>“## Cleaning Column Namesn”,
+“n”,
+“There are a bunch of problems with this data. Firstly, the column names are not lowercase, and they have spaces. This will make it cumbersome to use in a programmatic function. To solve this, we can use the <cite>clean_names()</cite> method.”</p>
+</div></blockquote>
+<p>],
+“metadata”: {}</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 3,
+“source”: [</p>
+<blockquote>
+<div><p>“df_clean = df.clean_names()n”,
+“df_clean.head(2)”</p>
+</div></blockquote>
+<p>],
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><p>“output_type”: “execute_result”,
+“data”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“text/plain”: [</dt><dd><p>”  first_name last_name employee_status   subject  hire_date  %_allocated  \n”,
+“0      Jason    Bourne         Teacher        PE    39690.0         0.75   n”,
+“1      Jason    Bourne         Teacher  Drafting    39690.0         0.25   n”,
+“n”,
+”  <a href="#id1"><span class="problematic" id="id2">full_time_</span></a>  do_not_edit!_&gt; certification certification_1  certification_2  n”,
+“0        Yes             NaN   Physical ed         Theater              NaN  n”,
+“1        Yes             NaN   Physical ed         Theater              NaN  “</p>
+</dd>
+</dl>
+<p>],
+“text/html”: [</p>
+<blockquote>
+<div><p>“&lt;div&gt;n”,
+“&lt;style scoped&gt;n”,
+”    .dataframe tbody tr th:only-of-type {n”,
+”        vertical-align: middle;n”,
+”    }n”,
+“n”,
+”    .dataframe tbody tr th {n”,
+”        vertical-align: top;n”,
+”    }n”,
+“n”,
+”    .dataframe thead th {n”,
+”        text-align: right;n”,
+”    }n”,
+“&lt;/style&gt;n”,
+“&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;n”,
+”  &lt;thead&gt;n”,
+”    &lt;tr style=&quot;text-align: right;&quot;&gt;n”,
+”      &lt;th&gt;&lt;/th&gt;n”,
+”      &lt;th&gt;first_name&lt;/th&gt;n”,
+”      &lt;th&gt;last_name&lt;/th&gt;n”,
+”      &lt;th&gt;employee_status&lt;/th&gt;n”,
+”      &lt;th&gt;subject&lt;/th&gt;n”,
+”      &lt;th&gt;hire_date&lt;/th&gt;n”,
+”      &lt;th&gt;%_allocated&lt;/th&gt;n”,
+”      &lt;th&gt;full_time_&lt;/th&gt;n”,
+”      &lt;th&gt;do_not_edit!_&amp;gt;&lt;/th&gt;n”,
+”      &lt;th&gt;certification&lt;/th&gt;n”,
+”      &lt;th&gt;certification_1&lt;/th&gt;n”,
+”      &lt;th&gt;certification_2&lt;/th&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/thead&gt;n”,
+”  &lt;tbody&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;0&lt;/th&gt;n”,
+”      &lt;td&gt;Jason&lt;/td&gt;n”,
+”      &lt;td&gt;Bourne&lt;/td&gt;n”,
+”      &lt;td&gt;Teacher&lt;/td&gt;n”,
+”      &lt;td&gt;PE&lt;/td&gt;n”,
+”      &lt;td&gt;39690.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.75&lt;/td&gt;n”,
+”      &lt;td&gt;Yes&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;Physical ed&lt;/td&gt;n”,
+”      &lt;td&gt;Theater&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;1&lt;/th&gt;n”,
+”      &lt;td&gt;Jason&lt;/td&gt;n”,
+”      &lt;td&gt;Bourne&lt;/td&gt;n”,
+”      &lt;td&gt;Teacher&lt;/td&gt;n”,
+”      &lt;td&gt;Drafting&lt;/td&gt;n”,
+”      &lt;td&gt;39690.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.25&lt;/td&gt;n”,
+”      &lt;td&gt;Yes&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;Physical ed&lt;/td&gt;n”,
+”      &lt;td&gt;Theater&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/tbody&gt;n”,
+“&lt;/table&gt;n”,
+“&lt;/div&gt;”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+“metadata”: {},
+“execution_count”: 3</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“metadata”: {}</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“source”: [</p>
+<blockquote>
+<div><p>“Notice now how the column names have been made better.”</p>
+</div></blockquote>
+<p>],
+“metadata”: {}</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“source”: [</p>
+<blockquote>
+<div><p>“If you squint at the unclean dataset, you’ll notice one row and one column of data that are missing. We can also fix this! Building on top of the code block from above, let’s now remove those empty columns using the <cite>remove_empty()</cite> method:”</p>
+</div></blockquote>
+<p>],
+“metadata”: {}</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 4,
+“source”: [</p>
+<blockquote>
+<div><p>“df_clean = df.clean_names().remove_empty()n”,
+“df_clean.head(9).tail(4)”</p>
+</div></blockquote>
+<p>],
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><p>“output_type”: “execute_result”,
+“data”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“text/plain”: [</dt><dd><p>”     first_name last_name employee_status    subject  hire_date  %_allocated  \n”,
+“5  Chien-Shiung        Wu         Teacher    Physics    11037.0          0.5   n”,
+“6  Chien-Shiung        Wu         Teacher  Chemistry    11037.0          0.5   n”,
+“7         James     Joyce         Teacher    English    32994.0          0.5   n”,
+“8          Hedy    Lamarr         Teacher    Science    27919.0          0.5   n”,
+“n”,
+”  <a href="#id3"><span class="problematic" id="id4">full_time_</span></a> certification certification_1  n”,
+“5        Yes  Science 6-12         Physics  n”,
+“6        Yes  Science 6-12         Physics  n”,
+“7         No           NaN    English 6-12  n”,
+“8         No       PENDING             NaN  “</p>
+</dd>
+</dl>
+<p>],
+“text/html”: [</p>
+<blockquote>
+<div><p>“&lt;div&gt;n”,
+“&lt;style scoped&gt;n”,
+”    .dataframe tbody tr th:only-of-type {n”,
+”        vertical-align: middle;n”,
+”    }n”,
+“n”,
+”    .dataframe tbody tr th {n”,
+”        vertical-align: top;n”,
+”    }n”,
+“n”,
+”    .dataframe thead th {n”,
+”        text-align: right;n”,
+”    }n”,
+“&lt;/style&gt;n”,
+“&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;n”,
+”  &lt;thead&gt;n”,
+”    &lt;tr style=&quot;text-align: right;&quot;&gt;n”,
+”      &lt;th&gt;&lt;/th&gt;n”,
+”      &lt;th&gt;first_name&lt;/th&gt;n”,
+”      &lt;th&gt;last_name&lt;/th&gt;n”,
+”      &lt;th&gt;employee_status&lt;/th&gt;n”,
+”      &lt;th&gt;subject&lt;/th&gt;n”,
+”      &lt;th&gt;hire_date&lt;/th&gt;n”,
+”      &lt;th&gt;%_allocated&lt;/th&gt;n”,
+”      &lt;th&gt;full_time_&lt;/th&gt;n”,
+”      &lt;th&gt;certification&lt;/th&gt;n”,
+”      &lt;th&gt;certification_1&lt;/th&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/thead&gt;n”,
+”  &lt;tbody&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;5&lt;/th&gt;n”,
+”      &lt;td&gt;Chien-Shiung&lt;/td&gt;n”,
+”      &lt;td&gt;Wu&lt;/td&gt;n”,
+”      &lt;td&gt;Teacher&lt;/td&gt;n”,
+”      &lt;td&gt;Physics&lt;/td&gt;n”,
+”      &lt;td&gt;11037.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.5&lt;/td&gt;n”,
+”      &lt;td&gt;Yes&lt;/td&gt;n”,
+”      &lt;td&gt;Science 6-12&lt;/td&gt;n”,
+”      &lt;td&gt;Physics&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;6&lt;/th&gt;n”,
+”      &lt;td&gt;Chien-Shiung&lt;/td&gt;n”,
+”      &lt;td&gt;Wu&lt;/td&gt;n”,
+”      &lt;td&gt;Teacher&lt;/td&gt;n”,
+”      &lt;td&gt;Chemistry&lt;/td&gt;n”,
+”      &lt;td&gt;11037.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.5&lt;/td&gt;n”,
+”      &lt;td&gt;Yes&lt;/td&gt;n”,
+”      &lt;td&gt;Science 6-12&lt;/td&gt;n”,
+”      &lt;td&gt;Physics&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;7&lt;/th&gt;n”,
+”      &lt;td&gt;James&lt;/td&gt;n”,
+”      &lt;td&gt;Joyce&lt;/td&gt;n”,
+”      &lt;td&gt;Teacher&lt;/td&gt;n”,
+”      &lt;td&gt;English&lt;/td&gt;n”,
+”      &lt;td&gt;32994.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.5&lt;/td&gt;n”,
+”      &lt;td&gt;No&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;English 6-12&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;8&lt;/th&gt;n”,
+”      &lt;td&gt;Hedy&lt;/td&gt;n”,
+”      &lt;td&gt;Lamarr&lt;/td&gt;n”,
+”      &lt;td&gt;Teacher&lt;/td&gt;n”,
+”      &lt;td&gt;Science&lt;/td&gt;n”,
+”      &lt;td&gt;27919.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.5&lt;/td&gt;n”,
+”      &lt;td&gt;No&lt;/td&gt;n”,
+”      &lt;td&gt;PENDING&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/tbody&gt;n”,
+“&lt;/table&gt;n”,
+“&lt;/div&gt;”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+“metadata”: {},
+“execution_count”: 4</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“metadata”: {}</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“source”: [</p>
+<blockquote>
+<div><p>“Now this is starting to shape up well!”</p>
+</div></blockquote>
+<p>],
+“metadata”: {}</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“source”: [</p>
+<blockquote>
+<div><p>“## Renaming Individual Columnsn”,
+“n”,
+“Next, let’s rename some of the columns. <cite>%_allocated</cite> and <cite>full_time?</cite> contain non-alphanumeric characters, so they make it a bit harder to use. We can rename them using the <code class="xref py py-meth docutils literal notranslate"><span class="pre">rename_column()</span></code> method:”</p>
+</div></blockquote>
+<p>],
+“metadata”: {}</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 5,
+“source”: [</p>
+<blockquote>
+<div><p>“df_clean = (n”,
+”    dfn”,
+”    .clean_names()n”,
+”    .remove_empty()n”,
+”    .rename_column(&quot;%_allocated&quot;, &quot;percent_allocated&quot;)n”,
+”    .rename_column(&quot;<a href="#id5"><span class="problematic" id="id6">full_time_</span></a>&quot;, &quot;full_time&quot;)n”,
+“)n”,
+“n”,
+“df_clean.head(5)”</p>
+</div></blockquote>
+<p>],
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><p>“output_type”: “execute_result”,
+“data”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“text/plain”: [</dt><dd><p>”  first_name last_name employee_status   subject  hire_date  \n”,
+“0      Jason    Bourne         Teacher        PE    39690.0   n”,
+“1      Jason    Bourne         Teacher  Drafting    39690.0   n”,
+“2     Alicia      Keys         Teacher     Music    37118.0   n”,
+“3        Ada  Lovelace         Teacher       NaN    27515.0   n”,
+“4      Desus      Nice  Administration      Dean    41431.0   n”,
+“n”,
+”   percent_allocated full_time certification certification_1  n”,
+“0               0.75       Yes   Physical ed         Theater  n”,
+“1               0.25       Yes   Physical ed         Theater  n”,
+“2               1.00       Yes  Instr. music     Vocal music  n”,
+“3               1.00       Yes       PENDING       Computers  n”,
+“4               1.00       Yes       PENDING             NaN  “</p>
+</dd>
+</dl>
+<p>],
+“text/html”: [</p>
+<blockquote>
+<div><p>“&lt;div&gt;n”,
+“&lt;style scoped&gt;n”,
+”    .dataframe tbody tr th:only-of-type {n”,
+”        vertical-align: middle;n”,
+”    }n”,
+“n”,
+”    .dataframe tbody tr th {n”,
+”        vertical-align: top;n”,
+”    }n”,
+“n”,
+”    .dataframe thead th {n”,
+”        text-align: right;n”,
+”    }n”,
+“&lt;/style&gt;n”,
+“&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;n”,
+”  &lt;thead&gt;n”,
+”    &lt;tr style=&quot;text-align: right;&quot;&gt;n”,
+”      &lt;th&gt;&lt;/th&gt;n”,
+”      &lt;th&gt;first_name&lt;/th&gt;n”,
+”      &lt;th&gt;last_name&lt;/th&gt;n”,
+”      &lt;th&gt;employee_status&lt;/th&gt;n”,
+”      &lt;th&gt;subject&lt;/th&gt;n”,
+”      &lt;th&gt;hire_date&lt;/th&gt;n”,
+”      &lt;th&gt;percent_allocated&lt;/th&gt;n”,
+”      &lt;th&gt;full_time&lt;/th&gt;n”,
+”      &lt;th&gt;certification&lt;/th&gt;n”,
+”      &lt;th&gt;certification_1&lt;/th&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/thead&gt;n”,
+”  &lt;tbody&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;0&lt;/th&gt;n”,
+”      &lt;td&gt;Jason&lt;/td&gt;n”,
+”      &lt;td&gt;Bourne&lt;/td&gt;n”,
+”      &lt;td&gt;Teacher&lt;/td&gt;n”,
+”      &lt;td&gt;PE&lt;/td&gt;n”,
+”      &lt;td&gt;39690.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.75&lt;/td&gt;n”,
+”      &lt;td&gt;Yes&lt;/td&gt;n”,
+”      &lt;td&gt;Physical ed&lt;/td&gt;n”,
+”      &lt;td&gt;Theater&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;1&lt;/th&gt;n”,
+”      &lt;td&gt;Jason&lt;/td&gt;n”,
+”      &lt;td&gt;Bourne&lt;/td&gt;n”,
+”      &lt;td&gt;Teacher&lt;/td&gt;n”,
+”      &lt;td&gt;Drafting&lt;/td&gt;n”,
+”      &lt;td&gt;39690.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.25&lt;/td&gt;n”,
+”      &lt;td&gt;Yes&lt;/td&gt;n”,
+”      &lt;td&gt;Physical ed&lt;/td&gt;n”,
+”      &lt;td&gt;Theater&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;2&lt;/th&gt;n”,
+”      &lt;td&gt;Alicia&lt;/td&gt;n”,
+”      &lt;td&gt;Keys&lt;/td&gt;n”,
+”      &lt;td&gt;Teacher&lt;/td&gt;n”,
+”      &lt;td&gt;Music&lt;/td&gt;n”,
+”      &lt;td&gt;37118.0&lt;/td&gt;n”,
+”      &lt;td&gt;1.00&lt;/td&gt;n”,
+”      &lt;td&gt;Yes&lt;/td&gt;n”,
+”      &lt;td&gt;Instr. music&lt;/td&gt;n”,
+”      &lt;td&gt;Vocal music&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;3&lt;/th&gt;n”,
+”      &lt;td&gt;Ada&lt;/td&gt;n”,
+”      &lt;td&gt;Lovelace&lt;/td&gt;n”,
+”      &lt;td&gt;Teacher&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;27515.0&lt;/td&gt;n”,
+”      &lt;td&gt;1.00&lt;/td&gt;n”,
+”      &lt;td&gt;Yes&lt;/td&gt;n”,
+”      &lt;td&gt;PENDING&lt;/td&gt;n”,
+”      &lt;td&gt;Computers&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;4&lt;/th&gt;n”,
+”      &lt;td&gt;Desus&lt;/td&gt;n”,
+”      &lt;td&gt;Nice&lt;/td&gt;n”,
+”      &lt;td&gt;Administration&lt;/td&gt;n”,
+”      &lt;td&gt;Dean&lt;/td&gt;n”,
+”      &lt;td&gt;41431.0&lt;/td&gt;n”,
+”      &lt;td&gt;1.00&lt;/td&gt;n”,
+”      &lt;td&gt;Yes&lt;/td&gt;n”,
+”      &lt;td&gt;PENDING&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/tbody&gt;n”,
+“&lt;/table&gt;n”,
+“&lt;/div&gt;”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+“metadata”: {},
+“execution_count”: 5</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“metadata”: {}</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“source”: [</p>
+<blockquote>
+<div><p>“Note how now we have really nice column names! You might be wondering why I’m not modifying the two certifiation columns – that is the next thing we’ll tackle.”</p>
+</div></blockquote>
+<p>],
+“metadata”: {}</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“source”: [</p>
+<blockquote>
+<div><p>“## Coalescing Columnsn”,
+“n”,
+“If we look more closely at the two <cite>certification</cite> columns, we’ll see that they look like this:”</p>
+</div></blockquote>
+<p>],
+“metadata”: {}</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 6,
+“source”: [</p>
+<blockquote>
+<div><p>“df_clean[[‘certification’, ‘certification_1’]]”</p>
+</div></blockquote>
+<p>],
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><p>“output_type”: “execute_result”,
+“data”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“text/plain”: [</dt><dd><p>”   certification certification_1n”,
+“0    Physical ed         Theatern”,
+“1    Physical ed         Theatern”,
+“2   Instr. music     Vocal musicn”,
+“3        PENDING       Computersn”,
+“4        PENDING             NaNn”,
+“5   Science 6-12         Physicsn”,
+“6   Science 6-12         Physicsn”,
+“7            NaN    English 6-12n”,
+“8        PENDING             NaNn”,
+“9    Physical ed             NaNn”,
+“10           NaN  Political sci.n”,
+“11   Vocal music         English”</p>
+</dd>
+</dl>
+<p>],
+“text/html”: [</p>
+<blockquote>
+<div><p>“&lt;div&gt;n”,
+“&lt;style scoped&gt;n”,
+”    .dataframe tbody tr th:only-of-type {n”,
+”        vertical-align: middle;n”,
+”    }n”,
+“n”,
+”    .dataframe tbody tr th {n”,
+”        vertical-align: top;n”,
+”    }n”,
+“n”,
+”    .dataframe thead th {n”,
+”        text-align: right;n”,
+”    }n”,
+“&lt;/style&gt;n”,
+“&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;n”,
+”  &lt;thead&gt;n”,
+”    &lt;tr style=&quot;text-align: right;&quot;&gt;n”,
+”      &lt;th&gt;&lt;/th&gt;n”,
+”      &lt;th&gt;certification&lt;/th&gt;n”,
+”      &lt;th&gt;certification_1&lt;/th&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/thead&gt;n”,
+”  &lt;tbody&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;0&lt;/th&gt;n”,
+”      &lt;td&gt;Physical ed&lt;/td&gt;n”,
+”      &lt;td&gt;Theater&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;1&lt;/th&gt;n”,
+”      &lt;td&gt;Physical ed&lt;/td&gt;n”,
+”      &lt;td&gt;Theater&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;2&lt;/th&gt;n”,
+”      &lt;td&gt;Instr. music&lt;/td&gt;n”,
+”      &lt;td&gt;Vocal music&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;3&lt;/th&gt;n”,
+”      &lt;td&gt;PENDING&lt;/td&gt;n”,
+”      &lt;td&gt;Computers&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;4&lt;/th&gt;n”,
+”      &lt;td&gt;PENDING&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;5&lt;/th&gt;n”,
+”      &lt;td&gt;Science 6-12&lt;/td&gt;n”,
+”      &lt;td&gt;Physics&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;6&lt;/th&gt;n”,
+”      &lt;td&gt;Science 6-12&lt;/td&gt;n”,
+”      &lt;td&gt;Physics&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;7&lt;/th&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;English 6-12&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;8&lt;/th&gt;n”,
+”      &lt;td&gt;PENDING&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;9&lt;/th&gt;n”,
+”      &lt;td&gt;Physical ed&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;10&lt;/th&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;Political sci.&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;11&lt;/th&gt;n”,
+”      &lt;td&gt;Vocal music&lt;/td&gt;n”,
+”      &lt;td&gt;English&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/tbody&gt;n”,
+“&lt;/table&gt;n”,
+“&lt;/div&gt;”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+“metadata”: {},
+“execution_count”: 6</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“metadata”: {}</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“source”: [</p>
+<blockquote>
+<div><p>“Rows 8 and 11 have NaN in the left certification column, but have a value in the right certification column. Let’s assume for a moment that the left certification column is intended to record the first certification that a teacher had obtained. In this case, the values in the right certification column on rows 8 and 11 should be moved to the first column. Let’s do that with Janitor, using the <cite>coalesce()</cite> method, which does the following:”</p>
+</div></blockquote>
+<p>],
+“metadata”: {}</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 7,
+“source”: [</p>
+<blockquote>
+<div><p>“df_clean = (n”,
+”    dfn”,
+”    .clean_names()n”,
+”    .remove_empty()n”,
+”    .rename_column(&quot;%_allocated&quot;, &quot;percent_allocated&quot;)n”,
+”    .rename_column(&quot;<a href="#id7"><span class="problematic" id="id8">full_time_</span></a>&quot;, &quot;full_time&quot;)n”,
+”    .coalesce(n”,
+”        ‘certification’, ‘certification_1’,n”,
+”        new_column_name=’certification’n”,
+”    )n”,
+“)n”,
+“n”,
+“df_clean”</p>
+</div></blockquote>
+<p>],
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><p>“output_type”: “execute_result”,
+“data”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“text/plain”: [</dt><dd><p>”      first_name last_name employee_status     subject  hire_date  \n”,
+“0          Jason    Bourne         Teacher          PE    39690.0   n”,
+“1          Jason    Bourne         Teacher    Drafting    39690.0   n”,
+“2         Alicia      Keys         Teacher       Music    37118.0   n”,
+“3            Ada  Lovelace         Teacher         NaN    27515.0   n”,
+“4          Desus      Nice  Administration        Dean    41431.0   n”,
+“5   Chien-Shiung        Wu         Teacher     Physics    11037.0   n”,
+“6   Chien-Shiung        Wu         Teacher   Chemistry    11037.0   n”,
+“7          James     Joyce         Teacher     English    32994.0   n”,
+“8           Hedy    Lamarr         Teacher     Science    27919.0   n”,
+“9         Carlos    Boozer           Coach  Basketball    42221.0   n”,
+“10         Young    Boozer           Coach         NaN    34700.0   n”,
+“11       Micheal    Larsen         Teacher     English    40071.0   n”,
+“n”,
+”    percent_allocated full_time   certification certification_1  n”,
+“0                0.75       Yes     Physical ed         Theater  n”,
+“1                0.25       Yes     Physical ed         Theater  n”,
+“2                1.00       Yes    Instr. music     Vocal music  n”,
+“3                1.00       Yes         PENDING       Computers  n”,
+“4                1.00       Yes         PENDING             NaN  n”,
+“5                0.50       Yes    Science 6-12         Physics  n”,
+“6                0.50       Yes    Science 6-12         Physics  n”,
+“7                0.50        No    English 6-12    English 6-12  n”,
+“8                0.50        No         PENDING             NaN  n”,
+“9                 NaN        No     Physical ed             NaN  n”,
+“10                NaN        No  Political sci.  Political sci.  n”,
+“11               0.80        No     Vocal music         English  “</p>
+</dd>
+</dl>
+<p>],
+“text/html”: [</p>
+<blockquote>
+<div><p>“&lt;div&gt;n”,
+“&lt;style scoped&gt;n”,
+”    .dataframe tbody tr th:only-of-type {n”,
+”        vertical-align: middle;n”,
+”    }n”,
+“n”,
+”    .dataframe tbody tr th {n”,
+”        vertical-align: top;n”,
+”    }n”,
+“n”,
+”    .dataframe thead th {n”,
+”        text-align: right;n”,
+”    }n”,
+“&lt;/style&gt;n”,
+“&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;n”,
+”  &lt;thead&gt;n”,
+”    &lt;tr style=&quot;text-align: right;&quot;&gt;n”,
+”      &lt;th&gt;&lt;/th&gt;n”,
+”      &lt;th&gt;first_name&lt;/th&gt;n”,
+”      &lt;th&gt;last_name&lt;/th&gt;n”,
+”      &lt;th&gt;employee_status&lt;/th&gt;n”,
+”      &lt;th&gt;subject&lt;/th&gt;n”,
+”      &lt;th&gt;hire_date&lt;/th&gt;n”,
+”      &lt;th&gt;percent_allocated&lt;/th&gt;n”,
+”      &lt;th&gt;full_time&lt;/th&gt;n”,
+”      &lt;th&gt;certification&lt;/th&gt;n”,
+”      &lt;th&gt;certification_1&lt;/th&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/thead&gt;n”,
+”  &lt;tbody&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;0&lt;/th&gt;n”,
+”      &lt;td&gt;Jason&lt;/td&gt;n”,
+”      &lt;td&gt;Bourne&lt;/td&gt;n”,
+”      &lt;td&gt;Teacher&lt;/td&gt;n”,
+”      &lt;td&gt;PE&lt;/td&gt;n”,
+”      &lt;td&gt;39690.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.75&lt;/td&gt;n”,
+”      &lt;td&gt;Yes&lt;/td&gt;n”,
+”      &lt;td&gt;Physical ed&lt;/td&gt;n”,
+”      &lt;td&gt;Theater&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;1&lt;/th&gt;n”,
+”      &lt;td&gt;Jason&lt;/td&gt;n”,
+”      &lt;td&gt;Bourne&lt;/td&gt;n”,
+”      &lt;td&gt;Teacher&lt;/td&gt;n”,
+”      &lt;td&gt;Drafting&lt;/td&gt;n”,
+”      &lt;td&gt;39690.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.25&lt;/td&gt;n”,
+”      &lt;td&gt;Yes&lt;/td&gt;n”,
+”      &lt;td&gt;Physical ed&lt;/td&gt;n”,
+”      &lt;td&gt;Theater&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;2&lt;/th&gt;n”,
+”      &lt;td&gt;Alicia&lt;/td&gt;n”,
+”      &lt;td&gt;Keys&lt;/td&gt;n”,
+”      &lt;td&gt;Teacher&lt;/td&gt;n”,
+”      &lt;td&gt;Music&lt;/td&gt;n”,
+”      &lt;td&gt;37118.0&lt;/td&gt;n”,
+”      &lt;td&gt;1.00&lt;/td&gt;n”,
+”      &lt;td&gt;Yes&lt;/td&gt;n”,
+”      &lt;td&gt;Instr. music&lt;/td&gt;n”,
+”      &lt;td&gt;Vocal music&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;3&lt;/th&gt;n”,
+”      &lt;td&gt;Ada&lt;/td&gt;n”,
+”      &lt;td&gt;Lovelace&lt;/td&gt;n”,
+”      &lt;td&gt;Teacher&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;27515.0&lt;/td&gt;n”,
+”      &lt;td&gt;1.00&lt;/td&gt;n”,
+”      &lt;td&gt;Yes&lt;/td&gt;n”,
+”      &lt;td&gt;PENDING&lt;/td&gt;n”,
+”      &lt;td&gt;Computers&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;4&lt;/th&gt;n”,
+”      &lt;td&gt;Desus&lt;/td&gt;n”,
+”      &lt;td&gt;Nice&lt;/td&gt;n”,
+”      &lt;td&gt;Administration&lt;/td&gt;n”,
+”      &lt;td&gt;Dean&lt;/td&gt;n”,
+”      &lt;td&gt;41431.0&lt;/td&gt;n”,
+”      &lt;td&gt;1.00&lt;/td&gt;n”,
+”      &lt;td&gt;Yes&lt;/td&gt;n”,
+”      &lt;td&gt;PENDING&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;5&lt;/th&gt;n”,
+”      &lt;td&gt;Chien-Shiung&lt;/td&gt;n”,
+”      &lt;td&gt;Wu&lt;/td&gt;n”,
+”      &lt;td&gt;Teacher&lt;/td&gt;n”,
+”      &lt;td&gt;Physics&lt;/td&gt;n”,
+”      &lt;td&gt;11037.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.50&lt;/td&gt;n”,
+”      &lt;td&gt;Yes&lt;/td&gt;n”,
+”      &lt;td&gt;Science 6-12&lt;/td&gt;n”,
+”      &lt;td&gt;Physics&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;6&lt;/th&gt;n”,
+”      &lt;td&gt;Chien-Shiung&lt;/td&gt;n”,
+”      &lt;td&gt;Wu&lt;/td&gt;n”,
+”      &lt;td&gt;Teacher&lt;/td&gt;n”,
+”      &lt;td&gt;Chemistry&lt;/td&gt;n”,
+”      &lt;td&gt;11037.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.50&lt;/td&gt;n”,
+”      &lt;td&gt;Yes&lt;/td&gt;n”,
+”      &lt;td&gt;Science 6-12&lt;/td&gt;n”,
+”      &lt;td&gt;Physics&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;7&lt;/th&gt;n”,
+”      &lt;td&gt;James&lt;/td&gt;n”,
+”      &lt;td&gt;Joyce&lt;/td&gt;n”,
+”      &lt;td&gt;Teacher&lt;/td&gt;n”,
+”      &lt;td&gt;English&lt;/td&gt;n”,
+”      &lt;td&gt;32994.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.50&lt;/td&gt;n”,
+”      &lt;td&gt;No&lt;/td&gt;n”,
+”      &lt;td&gt;English 6-12&lt;/td&gt;n”,
+”      &lt;td&gt;English 6-12&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;8&lt;/th&gt;n”,
+”      &lt;td&gt;Hedy&lt;/td&gt;n”,
+”      &lt;td&gt;Lamarr&lt;/td&gt;n”,
+”      &lt;td&gt;Teacher&lt;/td&gt;n”,
+”      &lt;td&gt;Science&lt;/td&gt;n”,
+”      &lt;td&gt;27919.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.50&lt;/td&gt;n”,
+”      &lt;td&gt;No&lt;/td&gt;n”,
+”      &lt;td&gt;PENDING&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;9&lt;/th&gt;n”,
+”      &lt;td&gt;Carlos&lt;/td&gt;n”,
+”      &lt;td&gt;Boozer&lt;/td&gt;n”,
+”      &lt;td&gt;Coach&lt;/td&gt;n”,
+”      &lt;td&gt;Basketball&lt;/td&gt;n”,
+”      &lt;td&gt;42221.0&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;No&lt;/td&gt;n”,
+”      &lt;td&gt;Physical ed&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;10&lt;/th&gt;n”,
+”      &lt;td&gt;Young&lt;/td&gt;n”,
+”      &lt;td&gt;Boozer&lt;/td&gt;n”,
+”      &lt;td&gt;Coach&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;34700.0&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;No&lt;/td&gt;n”,
+”      &lt;td&gt;Political sci.&lt;/td&gt;n”,
+”      &lt;td&gt;Political sci.&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;11&lt;/th&gt;n”,
+”      &lt;td&gt;Micheal&lt;/td&gt;n”,
+”      &lt;td&gt;Larsen&lt;/td&gt;n”,
+”      &lt;td&gt;Teacher&lt;/td&gt;n”,
+”      &lt;td&gt;English&lt;/td&gt;n”,
+”      &lt;td&gt;40071.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.80&lt;/td&gt;n”,
+”      &lt;td&gt;No&lt;/td&gt;n”,
+”      &lt;td&gt;Vocal music&lt;/td&gt;n”,
+”      &lt;td&gt;English&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/tbody&gt;n”,
+“&lt;/table&gt;n”,
+“&lt;/div&gt;”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+“metadata”: {},
+“execution_count”: 7</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“metadata”: {}</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“source”: [</p>
+<blockquote>
+<div><p>“Awesome stuff! Now we don’t have two columns of scattered data, we have one column of densely populated data.`”</p>
+</div></blockquote>
+<p>],
+“metadata”: {}</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“source”: [</p>
+<blockquote>
+<div><p>“## Dealing with Excel Datesn”,
+“n”,
+“Finally, notice how the <cite>hire_date</cite> column isn’t date formatted. It’s got this weird Excel serialization.n”,
+“To clean up this data, we can use the <code class="xref py py-meth docutils literal notranslate"><span class="pre">convert_excel_date()</span></code> method.”</p>
+</div></blockquote>
+<p>],
+“metadata”: {}</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 8,
+“source”: [</p>
+<blockquote>
+<div><p>“df_clean = (n”,
+”    dfn”,
+”    .clean_names()n”,
+”    .remove_empty()n”,
+”    .rename_column(‘%_allocated’, ‘percent_allocated’)n”,
+”    .rename_column(’<a href="#id9"><span class="problematic" id="id10">full_time_</span></a>’, ‘full_time’)n”,
+”    .coalesce(‘certification’, ‘certification_1’, target_column_name = ‘certification’)n”,
+”    .convert_excel_date(‘hire_date’)n”,
+“)n”,
+“df_clean”</p>
+</div></blockquote>
+<p>],
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><p>“output_type”: “execute_result”,
+“data”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“text/plain”: [</dt><dd><p>”      first_name last_name employee_status     subject  hire_date  \n”,
+“0          Jason    Bourne         Teacher          PE 2008-08-30   n”,
+“1          Jason    Bourne         Teacher    Drafting 2008-08-30   n”,
+“2         Alicia      Keys         Teacher       Music 2001-08-15   n”,
+“3            Ada  Lovelace         Teacher         NaN 1975-05-01   n”,
+“4          Desus      Nice  Administration        Dean 2013-06-06   n”,
+“5   Chien-Shiung        Wu         Teacher     Physics 1930-03-20   n”,
+“6   Chien-Shiung        Wu         Teacher   Chemistry 1930-03-20   n”,
+“7          James     Joyce         Teacher     English 1990-05-01   n”,
+“8           Hedy    Lamarr         Teacher     Science 1976-06-08   n”,
+“9         Carlos    Boozer           Coach  Basketball 2015-08-05   n”,
+“10         Young    Boozer           Coach         NaN 1995-01-01   n”,
+“11       Micheal    Larsen         Teacher     English 2009-09-15   n”,
+“n”,
+”    percent_allocated full_time   certification certification_1  n”,
+“0                0.75       Yes     Physical ed         Theater  n”,
+“1                0.25       Yes     Physical ed         Theater  n”,
+“2                1.00       Yes    Instr. music     Vocal music  n”,
+“3                1.00       Yes         PENDING       Computers  n”,
+“4                1.00       Yes         PENDING             NaN  n”,
+“5                0.50       Yes    Science 6-12         Physics  n”,
+“6                0.50       Yes    Science 6-12         Physics  n”,
+“7                0.50        No    English 6-12    English 6-12  n”,
+“8                0.50        No         PENDING             NaN  n”,
+“9                 NaN        No     Physical ed             NaN  n”,
+“10                NaN        No  Political sci.  Political sci.  n”,
+“11               0.80        No     Vocal music         English  “</p>
+</dd>
+</dl>
+<p>],
+“text/html”: [</p>
+<blockquote>
+<div><p>“&lt;div&gt;n”,
+“&lt;style scoped&gt;n”,
+”    .dataframe tbody tr th:only-of-type {n”,
+”        vertical-align: middle;n”,
+”    }n”,
+“n”,
+”    .dataframe tbody tr th {n”,
+”        vertical-align: top;n”,
+”    }n”,
+“n”,
+”    .dataframe thead th {n”,
+”        text-align: right;n”,
+”    }n”,
+“&lt;/style&gt;n”,
+“&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;n”,
+”  &lt;thead&gt;n”,
+”    &lt;tr style=&quot;text-align: right;&quot;&gt;n”,
+”      &lt;th&gt;&lt;/th&gt;n”,
+”      &lt;th&gt;first_name&lt;/th&gt;n”,
+”      &lt;th&gt;last_name&lt;/th&gt;n”,
+”      &lt;th&gt;employee_status&lt;/th&gt;n”,
+”      &lt;th&gt;subject&lt;/th&gt;n”,
+”      &lt;th&gt;hire_date&lt;/th&gt;n”,
+”      &lt;th&gt;percent_allocated&lt;/th&gt;n”,
+”      &lt;th&gt;full_time&lt;/th&gt;n”,
+”      &lt;th&gt;certification&lt;/th&gt;n”,
+”      &lt;th&gt;certification_1&lt;/th&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/thead&gt;n”,
+”  &lt;tbody&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;0&lt;/th&gt;n”,
+”      &lt;td&gt;Jason&lt;/td&gt;n”,
+”      &lt;td&gt;Bourne&lt;/td&gt;n”,
+”      &lt;td&gt;Teacher&lt;/td&gt;n”,
+”      &lt;td&gt;PE&lt;/td&gt;n”,
+”      &lt;td&gt;2008-08-30&lt;/td&gt;n”,
+”      &lt;td&gt;0.75&lt;/td&gt;n”,
+”      &lt;td&gt;Yes&lt;/td&gt;n”,
+”      &lt;td&gt;Physical ed&lt;/td&gt;n”,
+”      &lt;td&gt;Theater&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;1&lt;/th&gt;n”,
+”      &lt;td&gt;Jason&lt;/td&gt;n”,
+”      &lt;td&gt;Bourne&lt;/td&gt;n”,
+”      &lt;td&gt;Teacher&lt;/td&gt;n”,
+”      &lt;td&gt;Drafting&lt;/td&gt;n”,
+”      &lt;td&gt;2008-08-30&lt;/td&gt;n”,
+”      &lt;td&gt;0.25&lt;/td&gt;n”,
+”      &lt;td&gt;Yes&lt;/td&gt;n”,
+”      &lt;td&gt;Physical ed&lt;/td&gt;n”,
+”      &lt;td&gt;Theater&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;2&lt;/th&gt;n”,
+”      &lt;td&gt;Alicia&lt;/td&gt;n”,
+”      &lt;td&gt;Keys&lt;/td&gt;n”,
+”      &lt;td&gt;Teacher&lt;/td&gt;n”,
+”      &lt;td&gt;Music&lt;/td&gt;n”,
+”      &lt;td&gt;2001-08-15&lt;/td&gt;n”,
+”      &lt;td&gt;1.00&lt;/td&gt;n”,
+”      &lt;td&gt;Yes&lt;/td&gt;n”,
+”      &lt;td&gt;Instr. music&lt;/td&gt;n”,
+”      &lt;td&gt;Vocal music&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;3&lt;/th&gt;n”,
+”      &lt;td&gt;Ada&lt;/td&gt;n”,
+”      &lt;td&gt;Lovelace&lt;/td&gt;n”,
+”      &lt;td&gt;Teacher&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;1975-05-01&lt;/td&gt;n”,
+”      &lt;td&gt;1.00&lt;/td&gt;n”,
+”      &lt;td&gt;Yes&lt;/td&gt;n”,
+”      &lt;td&gt;PENDING&lt;/td&gt;n”,
+”      &lt;td&gt;Computers&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;4&lt;/th&gt;n”,
+”      &lt;td&gt;Desus&lt;/td&gt;n”,
+”      &lt;td&gt;Nice&lt;/td&gt;n”,
+”      &lt;td&gt;Administration&lt;/td&gt;n”,
+”      &lt;td&gt;Dean&lt;/td&gt;n”,
+”      &lt;td&gt;2013-06-06&lt;/td&gt;n”,
+”      &lt;td&gt;1.00&lt;/td&gt;n”,
+”      &lt;td&gt;Yes&lt;/td&gt;n”,
+”      &lt;td&gt;PENDING&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;5&lt;/th&gt;n”,
+”      &lt;td&gt;Chien-Shiung&lt;/td&gt;n”,
+”      &lt;td&gt;Wu&lt;/td&gt;n”,
+”      &lt;td&gt;Teacher&lt;/td&gt;n”,
+”      &lt;td&gt;Physics&lt;/td&gt;n”,
+”      &lt;td&gt;1930-03-20&lt;/td&gt;n”,
+”      &lt;td&gt;0.50&lt;/td&gt;n”,
+”      &lt;td&gt;Yes&lt;/td&gt;n”,
+”      &lt;td&gt;Science 6-12&lt;/td&gt;n”,
+”      &lt;td&gt;Physics&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;6&lt;/th&gt;n”,
+”      &lt;td&gt;Chien-Shiung&lt;/td&gt;n”,
+”      &lt;td&gt;Wu&lt;/td&gt;n”,
+”      &lt;td&gt;Teacher&lt;/td&gt;n”,
+”      &lt;td&gt;Chemistry&lt;/td&gt;n”,
+”      &lt;td&gt;1930-03-20&lt;/td&gt;n”,
+”      &lt;td&gt;0.50&lt;/td&gt;n”,
+”      &lt;td&gt;Yes&lt;/td&gt;n”,
+”      &lt;td&gt;Science 6-12&lt;/td&gt;n”,
+”      &lt;td&gt;Physics&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;7&lt;/th&gt;n”,
+”      &lt;td&gt;James&lt;/td&gt;n”,
+”      &lt;td&gt;Joyce&lt;/td&gt;n”,
+”      &lt;td&gt;Teacher&lt;/td&gt;n”,
+”      &lt;td&gt;English&lt;/td&gt;n”,
+”      &lt;td&gt;1990-05-01&lt;/td&gt;n”,
+”      &lt;td&gt;0.50&lt;/td&gt;n”,
+”      &lt;td&gt;No&lt;/td&gt;n”,
+”      &lt;td&gt;English 6-12&lt;/td&gt;n”,
+”      &lt;td&gt;English 6-12&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;8&lt;/th&gt;n”,
+”      &lt;td&gt;Hedy&lt;/td&gt;n”,
+”      &lt;td&gt;Lamarr&lt;/td&gt;n”,
+”      &lt;td&gt;Teacher&lt;/td&gt;n”,
+”      &lt;td&gt;Science&lt;/td&gt;n”,
+”      &lt;td&gt;1976-06-08&lt;/td&gt;n”,
+”      &lt;td&gt;0.50&lt;/td&gt;n”,
+”      &lt;td&gt;No&lt;/td&gt;n”,
+”      &lt;td&gt;PENDING&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;9&lt;/th&gt;n”,
+”      &lt;td&gt;Carlos&lt;/td&gt;n”,
+”      &lt;td&gt;Boozer&lt;/td&gt;n”,
+”      &lt;td&gt;Coach&lt;/td&gt;n”,
+”      &lt;td&gt;Basketball&lt;/td&gt;n”,
+”      &lt;td&gt;2015-08-05&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;No&lt;/td&gt;n”,
+”      &lt;td&gt;Physical ed&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;10&lt;/th&gt;n”,
+”      &lt;td&gt;Young&lt;/td&gt;n”,
+”      &lt;td&gt;Boozer&lt;/td&gt;n”,
+”      &lt;td&gt;Coach&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;1995-01-01&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;No&lt;/td&gt;n”,
+”      &lt;td&gt;Political sci.&lt;/td&gt;n”,
+”      &lt;td&gt;Political sci.&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;11&lt;/th&gt;n”,
+”      &lt;td&gt;Micheal&lt;/td&gt;n”,
+”      &lt;td&gt;Larsen&lt;/td&gt;n”,
+”      &lt;td&gt;Teacher&lt;/td&gt;n”,
+”      &lt;td&gt;English&lt;/td&gt;n”,
+”      &lt;td&gt;2009-09-15&lt;/td&gt;n”,
+”      &lt;td&gt;0.80&lt;/td&gt;n”,
+”      &lt;td&gt;No&lt;/td&gt;n”,
+”      &lt;td&gt;Vocal music&lt;/td&gt;n”,
+”      &lt;td&gt;English&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/tbody&gt;n”,
+“&lt;/table&gt;n”,
+“&lt;/div&gt;”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+“metadata”: {},
+“execution_count”: 8</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“metadata”: {}</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“source”: [</p>
+<blockquote>
+<div><p>“We have a cleaned dataframe!”</p>
+</div></blockquote>
+<p>],
+“metadata”: {}</p>
+</div></blockquote>
+<p>}</p>
+</dd>
+</dl>
+<p>],
+“metadata”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“kernelspec”: {</dt><dd><p>“name”: “python3”,
+“display_name”: “Python 3.8.10 64-bit (‘base’: conda)”</p>
+</dd>
+</dl>
+<p>},
+“language_info”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“codemirror_mode”: {</dt><dd><p>“name”: “ipython”,
+“version”: 3</p>
+</dd>
+</dl>
+<p>},
+“file_extension”: “.py”,
+“mimetype”: “text/x-python”,
+“name”: “python”,
+“nbconvert_exporter”: “python”,
+“pygments_lexer”: “ipython3”,
+“version”: “3.8.10”</p>
+</div></blockquote>
+<p>},
+“interpreter”: {</p>
+<blockquote>
+<div><p>“hash”: “98b0a9b7b4eaaa670588a142fd0a9b87eaafe866f1db4228be72b4211d12040f”</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>},
+“nbformat”: 4,
+“nbformat_minor”: 4</p>
+</dd>
+</dl>
+<p>}</p>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo_title.svg" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../authors.html">Contributors</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../notebooks.html">Examples</a><ul>
+      <li>Previous: <a href="case_when.html" title="previous chapter">&lt;no title&gt;</a></li>
+      <li>Next: <a href="expand_grid.html" title="next chapter">&lt;no title&gt;</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, PyJanitor devs.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/notebooks/dirty_data.ipynb.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

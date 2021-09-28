@@ -1,0 +1,6 @@
+﻿janitor.conditional\_join
+=========================
+
+.. currentmodule:: janitor
+
+.. autofunction:: conditional_join

@@ -1,0 +1,426 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>&lt;no title&gt; &#8212; pyjanitor  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="&lt;no title&gt;" href="inflating_converting_currency.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="french_trains.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <dl>
+<dt>{</dt><dd><dl>
+<dt>“cells”: [</dt><dd><dl>
+<dt>{</dt><dd><p>“cell_type”: “markdown”,
+“metadata”: {},
+“source”: [</p>
+<blockquote>
+<div><p>“# Groupby_agg : Shortcut for assigning a groupby-transform to a new column.”</p>
+</div></blockquote>
+<p>]</p>
+</dd>
+</dl>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“metadata”: {},
+“source”: [</p>
+<blockquote>
+<div><p>“## Background”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“metadata”: {},
+“source”: [</p>
+<blockquote>
+<div><p>“This notebook serves to show how to use the groupby_agg method from pyjanitor’s general functions submodule.n”,
+“n”,
+“The groupby_agg method allows us to add the result of an aggregation from a grouping, as a new column, back to the dataframe. n”,
+“n”,
+“Currently in pandas, to append a column back to a dataframe, you do it in three steps: n”,
+“1. Groupby a column or columnsn”,
+“2. Apply the transform method with an aggregate function on the grouping, and finallyn”,
+“3. Assign the result of the transform to a new column in the dataframe. n”,
+“n”,
+“The groupby_agg allows you to replicate the same process in one step and with sensible arguments. The example below illustrates this function”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 1,
+“metadata”: {},
+“outputs”: [],
+“source”: [</p>
+<blockquote>
+<div><p>“# load modulesn”,
+“import pandas as pdn”,
+“import numpy as npn”,
+“from janitor import groupby_agg”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 2,
+“metadata”: {},
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><p>“output_type”: “execute_result”,
+“data”: {</p>
+<blockquote>
+<div><p>“text/plain”: ”   item  MRP  number_soldn0  shoe  220          100n1  shoe  450           40n2   bag  320           56n3  shoe  200           38n4   bag  305           25”,
+“text/html”: “&lt;div&gt;n&lt;style scoped&gt;n    .dataframe tbody tr th:only-of-type {n        vertical-align: middle;n    }nn    .dataframe tbody tr th {n        vertical-align: top;n    }nn    .dataframe thead th {n        text-align: right;n    }n&lt;/style&gt;n&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;n  &lt;thead&gt;n    &lt;tr style=&quot;text-align: right;&quot;&gt;n      &lt;th&gt;&lt;/th&gt;n      &lt;th&gt;item&lt;/th&gt;n      &lt;th&gt;MRP&lt;/th&gt;n      &lt;th&gt;number_sold&lt;/th&gt;n    &lt;/tr&gt;n  &lt;/thead&gt;n  &lt;tbody&gt;n    &lt;tr&gt;n      &lt;th&gt;0&lt;/th&gt;n      &lt;td&gt;shoe&lt;/td&gt;n      &lt;td&gt;220&lt;/td&gt;n      &lt;td&gt;100&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;1&lt;/th&gt;n      &lt;td&gt;shoe&lt;/td&gt;n      &lt;td&gt;450&lt;/td&gt;n      &lt;td&gt;40&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;2&lt;/th&gt;n      &lt;td&gt;bag&lt;/td&gt;n      &lt;td&gt;320&lt;/td&gt;n      &lt;td&gt;56&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;3&lt;/th&gt;n      &lt;td&gt;shoe&lt;/td&gt;n      &lt;td&gt;200&lt;/td&gt;n      &lt;td&gt;38&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;4&lt;/th&gt;n      &lt;td&gt;bag&lt;/td&gt;n      &lt;td&gt;305&lt;/td&gt;n      &lt;td&gt;25&lt;/td&gt;n    &lt;/tr&gt;n  &lt;/tbody&gt;n&lt;/table&gt;n&lt;/div&gt;”</p>
+</div></blockquote>
+<p>},
+“metadata”: {},
+“execution_count”: 2</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“source”: [</p>
+<blockquote>
+<div><p>“data = {n”,
+”    ‘item’: [‘shoe’, ‘shoe’, ‘bag’, ‘shoe’, ‘bag’],n”,
+”    ‘MRP’: [220, 450, 320, 200, 305],n”,
+”    ‘number_sold’: [100, 40, 56, 38, 25]n”,
+“}n”,
+“n”,
+“df = pd.DataFrame(data)n”,
+“n”,
+“df”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“metadata”: {},
+“source”: [</p>
+<blockquote>
+<div><p>“## Use grouby_agg to find average price for each item and append column to dataframe”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 3,
+“metadata”: {},
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><p>“output_type”: “execute_result”,
+“data”: {</p>
+<blockquote>
+<div><p>“text/plain”: ”   item  MRP  number_sold  Avg_MRPn0  shoe  220          100    290.0n1  shoe  450           40    290.0n2   bag  320           56    312.5n3  shoe  200           38    290.0n4   bag  305           25    312.5”,
+“text/html”: “&lt;div&gt;n&lt;style scoped&gt;n    .dataframe tbody tr th:only-of-type {n        vertical-align: middle;n    }nn    .dataframe tbody tr th {n        vertical-align: top;n    }nn    .dataframe thead th {n        text-align: right;n    }n&lt;/style&gt;n&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;n  &lt;thead&gt;n    &lt;tr style=&quot;text-align: right;&quot;&gt;n      &lt;th&gt;&lt;/th&gt;n      &lt;th&gt;item&lt;/th&gt;n      &lt;th&gt;MRP&lt;/th&gt;n      &lt;th&gt;number_sold&lt;/th&gt;n      &lt;th&gt;Avg_MRP&lt;/th&gt;n    &lt;/tr&gt;n  &lt;/thead&gt;n  &lt;tbody&gt;n    &lt;tr&gt;n      &lt;th&gt;0&lt;/th&gt;n      &lt;td&gt;shoe&lt;/td&gt;n      &lt;td&gt;220&lt;/td&gt;n      &lt;td&gt;100&lt;/td&gt;n      &lt;td&gt;290.0&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;1&lt;/th&gt;n      &lt;td&gt;shoe&lt;/td&gt;n      &lt;td&gt;450&lt;/td&gt;n      &lt;td&gt;40&lt;/td&gt;n      &lt;td&gt;290.0&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;2&lt;/th&gt;n      &lt;td&gt;bag&lt;/td&gt;n      &lt;td&gt;320&lt;/td&gt;n      &lt;td&gt;56&lt;/td&gt;n      &lt;td&gt;312.5&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;3&lt;/th&gt;n      &lt;td&gt;shoe&lt;/td&gt;n      &lt;td&gt;200&lt;/td&gt;n      &lt;td&gt;38&lt;/td&gt;n      &lt;td&gt;290.0&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;4&lt;/th&gt;n      &lt;td&gt;bag&lt;/td&gt;n      &lt;td&gt;305&lt;/td&gt;n      &lt;td&gt;25&lt;/td&gt;n      &lt;td&gt;312.5&lt;/td&gt;n    &lt;/tr&gt;n  &lt;/tbody&gt;n&lt;/table&gt;n&lt;/div&gt;”</p>
+</div></blockquote>
+<p>},
+“metadata”: {},
+“execution_count”: 3</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“source”: [</p>
+<blockquote>
+<div><p>“df = df.groupby_agg(n”,
+”    by=’item’,n”,
+”    agg=’mean’,n”,
+”    agg_column_name=’MRP’,n”,
+”    new_column_name=’Avg_MRP’n”,
+“)n”,
+“n”,
+“df”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“metadata”: {},
+“source”: [</p>
+<blockquote>
+<div><p>“Null cells are retained as well : “</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 4,
+“metadata”: {},
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><p>“output_type”: “execute_result”,
+“data”: {</p>
+<blockquote>
+<div><p>“text/plain”: ”    name   type  num  nullsn0  black  chair    4    1.0n1  black  chair    5    1.0n2  black   sofa   12    NaNn3    red   sofa    4    NaNn4    red  plate    3    3.0”,
+“text/html”: “&lt;div&gt;n&lt;style scoped&gt;n    .dataframe tbody tr th:only-of-type {n        vertical-align: middle;n    }nn    .dataframe tbody tr th {n        vertical-align: top;n    }nn    .dataframe thead th {n        text-align: right;n    }n&lt;/style&gt;n&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;n  &lt;thead&gt;n    &lt;tr style=&quot;text-align: right;&quot;&gt;n      &lt;th&gt;&lt;/th&gt;n      &lt;th&gt;name&lt;/th&gt;n      &lt;th&gt;type&lt;/th&gt;n      &lt;th&gt;num&lt;/th&gt;n      &lt;th&gt;nulls&lt;/th&gt;n    &lt;/tr&gt;n  &lt;/thead&gt;n  &lt;tbody&gt;n    &lt;tr&gt;n      &lt;th&gt;0&lt;/th&gt;n      &lt;td&gt;black&lt;/td&gt;n      &lt;td&gt;chair&lt;/td&gt;n      &lt;td&gt;4&lt;/td&gt;n      &lt;td&gt;1.0&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;1&lt;/th&gt;n      &lt;td&gt;black&lt;/td&gt;n      &lt;td&gt;chair&lt;/td&gt;n      &lt;td&gt;5&lt;/td&gt;n      &lt;td&gt;1.0&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;2&lt;/th&gt;n      &lt;td&gt;black&lt;/td&gt;n      &lt;td&gt;sofa&lt;/td&gt;n      &lt;td&gt;12&lt;/td&gt;n      &lt;td&gt;NaN&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;3&lt;/th&gt;n      &lt;td&gt;red&lt;/td&gt;n      &lt;td&gt;sofa&lt;/td&gt;n      &lt;td&gt;4&lt;/td&gt;n      &lt;td&gt;NaN&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;4&lt;/th&gt;n      &lt;td&gt;red&lt;/td&gt;n      &lt;td&gt;plate&lt;/td&gt;n      &lt;td&gt;3&lt;/td&gt;n      &lt;td&gt;3.0&lt;/td&gt;n    &lt;/tr&gt;n  &lt;/tbody&gt;n&lt;/table&gt;n&lt;/div&gt;”</p>
+</div></blockquote>
+<p>},
+“metadata”: {},
+“execution_count”: 4</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“source”: [</p>
+<blockquote>
+<div><p>“df = pd.DataFrame(n”,
+”        {n”,
+”            &quot;name&quot;: (&quot;black&quot;, &quot;black&quot;, &quot;black&quot;, &quot;red&quot;, &quot;red&quot;),n”,
+”            &quot;type&quot;: (&quot;chair&quot;, &quot;chair&quot;, &quot;sofa&quot;, &quot;sofa&quot;, &quot;plate&quot;),n”,
+”            &quot;num&quot;: (4, 5, 12, 4, 3),n”,
+”            &quot;nulls&quot;: (1, 1, np.nan, np.nan, 3),n”,
+”        }n”,
+”    )n”,
+“n”,
+“df”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 5,
+“metadata”: {},
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><p>“output_type”: “execute_result”,
+“data”: {</p>
+<blockquote>
+<div><p>“text/plain”: ”    name   type  num  nulls  countern0  black  chair    4    1.0        2n1  black  chair    5    1.0        2n2  black   sofa   12    NaN        2n3    red   sofa    4    NaN        2n4    red  plate    3    3.0        1”,
+“text/html”: “&lt;div&gt;n&lt;style scoped&gt;n    .dataframe tbody tr th:only-of-type {n        vertical-align: middle;n    }nn    .dataframe tbody tr th {n        vertical-align: top;n    }nn    .dataframe thead th {n        text-align: right;n    }n&lt;/style&gt;n&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;n  &lt;thead&gt;n    &lt;tr style=&quot;text-align: right;&quot;&gt;n      &lt;th&gt;&lt;/th&gt;n      &lt;th&gt;name&lt;/th&gt;n      &lt;th&gt;type&lt;/th&gt;n      &lt;th&gt;num&lt;/th&gt;n      &lt;th&gt;nulls&lt;/th&gt;n      &lt;th&gt;counter&lt;/th&gt;n    &lt;/tr&gt;n  &lt;/thead&gt;n  &lt;tbody&gt;n    &lt;tr&gt;n      &lt;th&gt;0&lt;/th&gt;n      &lt;td&gt;black&lt;/td&gt;n      &lt;td&gt;chair&lt;/td&gt;n      &lt;td&gt;4&lt;/td&gt;n      &lt;td&gt;1.0&lt;/td&gt;n      &lt;td&gt;2&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;1&lt;/th&gt;n      &lt;td&gt;black&lt;/td&gt;n      &lt;td&gt;chair&lt;/td&gt;n      &lt;td&gt;5&lt;/td&gt;n      &lt;td&gt;1.0&lt;/td&gt;n      &lt;td&gt;2&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;2&lt;/th&gt;n      &lt;td&gt;black&lt;/td&gt;n      &lt;td&gt;sofa&lt;/td&gt;n      &lt;td&gt;12&lt;/td&gt;n      &lt;td&gt;NaN&lt;/td&gt;n      &lt;td&gt;2&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;3&lt;/th&gt;n      &lt;td&gt;red&lt;/td&gt;n      &lt;td&gt;sofa&lt;/td&gt;n      &lt;td&gt;4&lt;/td&gt;n      &lt;td&gt;NaN&lt;/td&gt;n      &lt;td&gt;2&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;4&lt;/th&gt;n      &lt;td&gt;red&lt;/td&gt;n      &lt;td&gt;plate&lt;/td&gt;n      &lt;td&gt;3&lt;/td&gt;n      &lt;td&gt;3.0&lt;/td&gt;n      &lt;td&gt;1&lt;/td&gt;n    &lt;/tr&gt;n  &lt;/tbody&gt;n&lt;/table&gt;n&lt;/div&gt;”</p>
+</div></blockquote>
+<p>},
+“metadata”: {},
+“execution_count”: 5</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“source”: [</p>
+<blockquote>
+<div><p>“filtered_df = df.groupby_agg(by=[‘nulls’],n”,
+”                             agg=’size’,n”,
+”                             agg_column_name=’type’,n”,
+”                             new_column_name=’counter’n”,
+”                             )n”,
+“filtered_df”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“metadata”: {},
+“source”: [</p>
+<blockquote>
+<div><p>“The groupby_agg method can be extended for different purposes. One of these is groupwise filtering, where only groups that meet a condition are retained. Let’s explore this with an example:”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 6,
+“metadata”: {},
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><p>“output_type”: “execute_result”,
+“data”: {</p>
+<blockquote>
+<div><p>“text/plain”: ”    name   type  num  nulls  countern0  black  chair    4    1.0        2n1  black  chair    5    1.0        2”,
+“text/html”: “&lt;div&gt;n&lt;style scoped&gt;n    .dataframe tbody tr th:only-of-type {n        vertical-align: middle;n    }nn    .dataframe tbody tr th {n        vertical-align: top;n    }nn    .dataframe thead th {n        text-align: right;n    }n&lt;/style&gt;n&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;n  &lt;thead&gt;n    &lt;tr style=&quot;text-align: right;&quot;&gt;n      &lt;th&gt;&lt;/th&gt;n      &lt;th&gt;name&lt;/th&gt;n      &lt;th&gt;type&lt;/th&gt;n      &lt;th&gt;num&lt;/th&gt;n      &lt;th&gt;nulls&lt;/th&gt;n      &lt;th&gt;counter&lt;/th&gt;n    &lt;/tr&gt;n  &lt;/thead&gt;n  &lt;tbody&gt;n    &lt;tr&gt;n      &lt;th&gt;0&lt;/th&gt;n      &lt;td&gt;black&lt;/td&gt;n      &lt;td&gt;chair&lt;/td&gt;n      &lt;td&gt;4&lt;/td&gt;n      &lt;td&gt;1.0&lt;/td&gt;n      &lt;td&gt;2&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;1&lt;/th&gt;n      &lt;td&gt;black&lt;/td&gt;n      &lt;td&gt;chair&lt;/td&gt;n      &lt;td&gt;5&lt;/td&gt;n      &lt;td&gt;1.0&lt;/td&gt;n      &lt;td&gt;2&lt;/td&gt;n    &lt;/tr&gt;n  &lt;/tbody&gt;n&lt;/table&gt;n&lt;/div&gt;”</p>
+</div></blockquote>
+<p>},
+“metadata”: {},
+“execution_count”: 6</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“source”: [</p>
+<blockquote>
+<div><p>“filtered_df = (df.groupby_agg(by=[‘name’, ‘type’],n”,
+”                             agg=’size’,n”,
+”                             agg_column_name=’type’,n”,
+”                             new_column_name=’counter’n”,
+”                             )n”,
+”                .query(‘counter &gt; 1’))n”,
+“filtered_df”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: null,
+“metadata”: {},
+“outputs”: [],
+“source”: []</p>
+</div></blockquote>
+<p>}</p>
+</dd>
+</dl>
+<p>],
+“metadata”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“kernelspec”: {</dt><dd><p>“display_name”: “Python 3”,
+“language”: “python”,
+“name”: “python3”</p>
+</dd>
+</dl>
+<p>},
+“language_info”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“codemirror_mode”: {</dt><dd><p>“name”: “ipython”,
+“version”: 3</p>
+</dd>
+</dl>
+<p>},
+“file_extension”: “.py”,
+“mimetype”: “text/x-python”,
+“name”: “python”,
+“nbconvert_exporter”: “python”,
+“pygments_lexer”: “ipython3”,
+“version”: “3.7.6”</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>},
+“nbformat”: 4,
+“nbformat_minor”: 4</p>
+</dd>
+</dl>
+<p>}</p>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo_title.svg" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../authors.html">Contributors</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../notebooks.html">Examples</a><ul>
+      <li>Previous: <a href="french_trains.html" title="previous chapter">&lt;no title&gt;</a></li>
+      <li>Next: <a href="inflating_converting_currency.html" title="next chapter">&lt;no title&gt;</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, PyJanitor devs.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/notebooks/groupby_agg.ipynb.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

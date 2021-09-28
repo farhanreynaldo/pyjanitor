@@ -1,0 +1,6 @@
+﻿janitor.case\_when
+==================
+
+.. currentmodule:: janitor
+
+.. autofunction:: case_when

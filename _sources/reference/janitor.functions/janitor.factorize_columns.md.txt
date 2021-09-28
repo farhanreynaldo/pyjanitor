@@ -1,0 +1,6 @@
+﻿janitor.factorize\_columns
+==========================
+
+.. currentmodule:: janitor
+
+.. autofunction:: factorize_columns

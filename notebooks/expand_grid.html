@@ -1,0 +1,411 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>&lt;no title&gt; &#8212; pyjanitor  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="&lt;no title&gt;" href="french_trains.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="dirty_data.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <dl>
+<dt>{</dt><dd><dl>
+<dt>“cells”: [</dt><dd><dl>
+<dt>{</dt><dd><p>“cell_type”: “markdown”,
+“metadata”: {},
+“source”: [</p>
+<blockquote>
+<div><p>“# Expand_grid : Create a dataframe from all combinations of inputs.”</p>
+</div></blockquote>
+<p>]</p>
+</dd>
+</dl>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“metadata”: {},
+“source”: [</p>
+<blockquote>
+<div><p>“## Background n”,
+“n”,
+“This notebook serves to show examples of how expand_grid works. Expand_grid aims to offer similar functionality to R’s [expand_grid](<a class="reference external" href="https://tidyr.tidyverse.org/reference/expand_grid.html">https://tidyr.tidyverse.org/reference/expand_grid.html</a>) function.&lt;br&gt;&lt;br&gt;n”,
+“Expand_grid creates a dataframe from a combination of all inputs. &lt;br&gt;&lt;br&gt;One requirement is that a dictionary be provided. If a dataframe is provided, a key must be provided as well.n”,
+“n”,
+“Some of the examples used here are from tidyr’s expand_grid page and from Pandas’ cookbook.n”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 1,
+“metadata”: {},
+“outputs”: [],
+“source”: [</p>
+<blockquote>
+<div><p>“import pandas as pdn”,
+“import numpy as npn”,
+“from janitor import expand_grid”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 2,
+“metadata”: {},
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><dl class="simple">
+<dt>“data”: {</dt><dd><p>“text/html”: “&lt;div&gt;n&lt;style scoped&gt;n    .dataframe tbody tr th:only-of-type {n        vertical-align: middle;n    }nn    .dataframe tbody tr th {n        vertical-align: top;n    }nn    .dataframe thead th {n        text-align: right;n    }n&lt;/style&gt;n&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;n  &lt;thead&gt;n    &lt;tr style=&quot;text-align: right;&quot;&gt;n      &lt;th&gt;&lt;/th&gt;n      &lt;th&gt;x&lt;/th&gt;n      &lt;th&gt;y&lt;/th&gt;n    &lt;/tr&gt;n  &lt;/thead&gt;n  &lt;tbody&gt;n    &lt;tr&gt;n      &lt;th&gt;0&lt;/th&gt;n      &lt;td&gt;1&lt;/td&gt;n      &lt;td&gt;1&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;1&lt;/th&gt;n      &lt;td&gt;1&lt;/td&gt;n      &lt;td&gt;2&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;2&lt;/th&gt;n      &lt;td&gt;2&lt;/td&gt;n      &lt;td&gt;1&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;3&lt;/th&gt;n      &lt;td&gt;2&lt;/td&gt;n      &lt;td&gt;2&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;4&lt;/th&gt;n      &lt;td&gt;3&lt;/td&gt;n      &lt;td&gt;1&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;5&lt;/th&gt;n      &lt;td&gt;3&lt;/td&gt;n      &lt;td&gt;2&lt;/td&gt;n    &lt;/tr&gt;n  &lt;/tbody&gt;n&lt;/table&gt;n&lt;/div&gt;”,
+“text/plain”: ”   x  yn0  1  1n1  1  2n2  2  1n3  2  2n4  3  1n5  3  2”</p>
+</dd>
+</dl>
+<p>},
+“execution_count”: 2,
+“metadata”: {},
+“output_type”: “execute_result”</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“source”: [</p>
+<blockquote>
+<div><p>“data = {&quot;x&quot;:[1,2,3], &quot;y&quot;:[1,2]}n”,
+“n”,
+“result = expand_grid(others = data)n”,
+“n”,
+“result”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 3,
+“metadata”: {},
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><dl class="simple">
+<dt>“data”: {</dt><dd><p>“text/html”: “&lt;div&gt;n&lt;style scoped&gt;n    .dataframe tbody tr th:only-of-type {n        vertical-align: middle;n    }nn    .dataframe tbody tr th {n        vertical-align: top;n    }nn    .dataframe thead th {n        text-align: right;n    }n&lt;/style&gt;n&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;n  &lt;thead&gt;n    &lt;tr style=&quot;text-align: right;&quot;&gt;n      &lt;th&gt;&lt;/th&gt;n      &lt;th&gt;l1&lt;/th&gt;n      &lt;th&gt;l2&lt;/th&gt;n    &lt;/tr&gt;n  &lt;/thead&gt;n  &lt;tbody&gt;n    &lt;tr&gt;n      &lt;th&gt;0&lt;/th&gt;n      &lt;td&gt;a&lt;/td&gt;n      &lt;td&gt;A&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;1&lt;/th&gt;n      &lt;td&gt;a&lt;/td&gt;n      &lt;td&gt;B&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;2&lt;/th&gt;n      &lt;td&gt;a&lt;/td&gt;n      &lt;td&gt;C&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;3&lt;/th&gt;n      &lt;td&gt;a&lt;/td&gt;n      &lt;td&gt;D&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;4&lt;/th&gt;n      &lt;td&gt;a&lt;/td&gt;n      &lt;td&gt;E&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;5&lt;/th&gt;n      &lt;td&gt;b&lt;/td&gt;n      &lt;td&gt;A&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;6&lt;/th&gt;n      &lt;td&gt;b&lt;/td&gt;n      &lt;td&gt;B&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;7&lt;/th&gt;n      &lt;td&gt;b&lt;/td&gt;n      &lt;td&gt;C&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;8&lt;/th&gt;n      &lt;td&gt;b&lt;/td&gt;n      &lt;td&gt;D&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;9&lt;/th&gt;n      &lt;td&gt;b&lt;/td&gt;n      &lt;td&gt;E&lt;/td&gt;n    &lt;/tr&gt;n  &lt;/tbody&gt;n&lt;/table&gt;n&lt;/div&gt;”,
+“text/plain”: ”  l1 l2n0  a  An1  a  Bn2  a  Cn3  a  Dn4  a  En5  b  An6  b  Bn7  b  Cn8  b  Dn9  b  E”</p>
+</dd>
+</dl>
+<p>},
+“execution_count”: 3,
+“metadata”: {},
+“output_type”: “execute_result”</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“source”: [</p>
+<blockquote>
+<div><p>“#combination of lettersn”,
+“n”,
+“data = {&quot;l1&quot;:list(&quot;abcde&quot;), &quot;l2&quot; : list(&quot;ABCDE&quot;)}n”,
+“n”,
+“result = expand_grid(others = data)n”,
+“n”,
+“result.head(10)”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 4,
+“metadata”: {},
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><dl class="simple">
+<dt>“data”: {</dt><dd><p>“text/html”: “&lt;div&gt;n&lt;style scoped&gt;n    .dataframe tbody tr th:only-of-type {n        vertical-align: middle;n    }nn    .dataframe tbody tr th {n        vertical-align: top;n    }nn    .dataframe thead th {n        text-align: right;n    }n&lt;/style&gt;n&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;n  &lt;thead&gt;n    &lt;tr style=&quot;text-align: right;&quot;&gt;n      &lt;th&gt;&lt;/th&gt;n      &lt;th&gt;height&lt;/th&gt;n      &lt;th&gt;weight&lt;/th&gt;n      &lt;th&gt;sex&lt;/th&gt;n    &lt;/tr&gt;n  &lt;/thead&gt;n  &lt;tbody&gt;n    &lt;tr&gt;n      &lt;th&gt;0&lt;/th&gt;n      &lt;td&gt;60&lt;/td&gt;n      &lt;td&gt;100&lt;/td&gt;n      &lt;td&gt;Male&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;1&lt;/th&gt;n      &lt;td&gt;60&lt;/td&gt;n      &lt;td&gt;100&lt;/td&gt;n      &lt;td&gt;Female&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;2&lt;/th&gt;n      &lt;td&gt;60&lt;/td&gt;n      &lt;td&gt;140&lt;/td&gt;n      &lt;td&gt;Male&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;3&lt;/th&gt;n      &lt;td&gt;60&lt;/td&gt;n      &lt;td&gt;140&lt;/td&gt;n      &lt;td&gt;Female&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;4&lt;/th&gt;n      &lt;td&gt;60&lt;/td&gt;n      &lt;td&gt;180&lt;/td&gt;n      &lt;td&gt;Male&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;5&lt;/th&gt;n      &lt;td&gt;60&lt;/td&gt;n      &lt;td&gt;180&lt;/td&gt;n      &lt;td&gt;Female&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;6&lt;/th&gt;n      &lt;td&gt;70&lt;/td&gt;n      &lt;td&gt;100&lt;/td&gt;n      &lt;td&gt;Male&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;7&lt;/th&gt;n      &lt;td&gt;70&lt;/td&gt;n      &lt;td&gt;100&lt;/td&gt;n      &lt;td&gt;Female&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;8&lt;/th&gt;n      &lt;td&gt;70&lt;/td&gt;n      &lt;td&gt;140&lt;/td&gt;n      &lt;td&gt;Male&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;9&lt;/th&gt;n      &lt;td&gt;70&lt;/td&gt;n      &lt;td&gt;140&lt;/td&gt;n      &lt;td&gt;Female&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;10&lt;/th&gt;n      &lt;td&gt;70&lt;/td&gt;n      &lt;td&gt;180&lt;/td&gt;n      &lt;td&gt;Male&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;11&lt;/th&gt;n      &lt;td&gt;70&lt;/td&gt;n      &lt;td&gt;180&lt;/td&gt;n      &lt;td&gt;Female&lt;/td&gt;n    &lt;/tr&gt;n  &lt;/tbody&gt;n&lt;/table&gt;n&lt;/div&gt;”,
+“text/plain”: ”    height  weight     sexn0       60     100    Malen1       60     100  Femalen2       60     140    Malen3       60     140  Femalen4       60     180    Malen5       60     180  Femalen6       70     100    Malen7       70     100  Femalen8       70     140    Malen9       70     140  Femalen10      70     180    Malen11      70     180  Female”</p>
+</dd>
+</dl>
+<p>},
+“execution_count”: 4,
+“metadata”: {},
+“output_type”: “execute_result”</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“source”: [</p>
+<blockquote>
+<div><p>“n”,
+“data = {‘height’: [60, 70],n”,
+”        ‘weight’: [100, 140, 180],n”,
+”        ‘sex’: [‘Male’, ‘Female’]}n”,
+“n”,
+“result = expand_grid(others = data)n”,
+“n”,
+“result”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 5,
+“metadata”: {},
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><dl class="simple">
+<dt>“data”: {</dt><dd><p>“text/html”: “&lt;div&gt;n&lt;style scoped&gt;n    .dataframe tbody tr th:only-of-type {n        vertical-align: middle;n    }nn    .dataframe tbody tr th {n        vertical-align: top;n    }nn    .dataframe thead th {n        text-align: right;n    }n&lt;/style&gt;n&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;n  &lt;thead&gt;n    &lt;tr style=&quot;text-align: right;&quot;&gt;n      &lt;th&gt;&lt;/th&gt;n      &lt;th&gt;x1_0&lt;/th&gt;n      &lt;th&gt;x1_1&lt;/th&gt;n      &lt;th&gt;x2_0&lt;/th&gt;n      &lt;th&gt;x2_1&lt;/th&gt;n    &lt;/tr&gt;n  &lt;/thead&gt;n  &lt;tbody&gt;n    &lt;tr&gt;n      &lt;th&gt;0&lt;/th&gt;n      &lt;td&gt;1&lt;/td&gt;n      &lt;td&gt;3&lt;/td&gt;n      &lt;td&gt;5&lt;/td&gt;n      &lt;td&gt;7&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;1&lt;/th&gt;n      &lt;td&gt;1&lt;/td&gt;n      &lt;td&gt;3&lt;/td&gt;n      &lt;td&gt;6&lt;/td&gt;n      &lt;td&gt;8&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;2&lt;/th&gt;n      &lt;td&gt;2&lt;/td&gt;n      &lt;td&gt;4&lt;/td&gt;n      &lt;td&gt;5&lt;/td&gt;n      &lt;td&gt;7&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;3&lt;/th&gt;n      &lt;td&gt;2&lt;/td&gt;n      &lt;td&gt;4&lt;/td&gt;n      &lt;td&gt;6&lt;/td&gt;n      &lt;td&gt;8&lt;/td&gt;n    &lt;/tr&gt;n  &lt;/tbody&gt;n&lt;/table&gt;n&lt;/div&gt;”,
+“text/plain”: ”   x1_0  x1_1  x2_0  x2_1n0     1     3     5     7n1     1     3     6     8n2     2     4     5     7n3     2     4     6     8”</p>
+</dd>
+</dl>
+<p>},
+“execution_count”: 5,
+“metadata”: {},
+“output_type”: “execute_result”</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“source”: [</p>
+<blockquote>
+<div><p>“#A dictionary of arraysn”,
+“#Arrays can only have dimensions of 1 or 2n”,
+“n”,
+“data = {&quot;x1&quot;:np.array([[1,3],[2,4]]), n”,
+”        &quot;x2&quot;:np.array([[5,7],[6,8]])}n”,
+“n”,
+“result = expand_grid(others=data)n”,
+“n”,
+“result”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 6,
+“metadata”: {},
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><dl class="simple">
+<dt>“data”: {</dt><dd><p>“text/html”: “&lt;div&gt;n&lt;style scoped&gt;n    .dataframe tbody tr th:only-of-type {n        vertical-align: middle;n    }nn    .dataframe tbody tr th {n        vertical-align: top;n    }nn    .dataframe thead th {n        text-align: right;n    }n&lt;/style&gt;n&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;n  &lt;thead&gt;n    &lt;tr style=&quot;text-align: right;&quot;&gt;n      &lt;th&gt;&lt;/th&gt;n      &lt;th&gt;df_x&lt;/th&gt;n      &lt;th&gt;df_y&lt;/th&gt;n      &lt;th&gt;z&lt;/th&gt;n    &lt;/tr&gt;n  &lt;/thead&gt;n  &lt;tbody&gt;n    &lt;tr&gt;n      &lt;th&gt;0&lt;/th&gt;n      &lt;td&gt;1&lt;/td&gt;n      &lt;td&gt;2&lt;/td&gt;n      &lt;td&gt;1&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;1&lt;/th&gt;n      &lt;td&gt;1&lt;/td&gt;n      &lt;td&gt;2&lt;/td&gt;n      &lt;td&gt;2&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;2&lt;/th&gt;n      &lt;td&gt;1&lt;/td&gt;n      &lt;td&gt;2&lt;/td&gt;n      &lt;td&gt;3&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;3&lt;/th&gt;n      &lt;td&gt;2&lt;/td&gt;n      &lt;td&gt;1&lt;/td&gt;n      &lt;td&gt;1&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;4&lt;/th&gt;n      &lt;td&gt;2&lt;/td&gt;n      &lt;td&gt;1&lt;/td&gt;n      &lt;td&gt;2&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;5&lt;/th&gt;n      &lt;td&gt;2&lt;/td&gt;n      &lt;td&gt;1&lt;/td&gt;n      &lt;td&gt;3&lt;/td&gt;n    &lt;/tr&gt;n  &lt;/tbody&gt;n&lt;/table&gt;n&lt;/div&gt;”,
+“text/plain”: ”   df_x  df_y  zn0     1     2  1n1     1     2  2n2     1     2  3n3     2     1  1n4     2     1  2n5     2     1  3”</p>
+</dd>
+</dl>
+<p>},
+“execution_count”: 6,
+“metadata”: {},
+“output_type”: “execute_result”</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“source”: [</p>
+<blockquote>
+<div><p>“#This shows how to method chain expand_gridn”,
+“#to an existing dataframen”,
+“n”,
+“df = pd.DataFrame({&quot;x&quot;:[1,2], &quot;y&quot;:[2,1]})n”,
+“data = {&quot;z&quot;:[1,2,3]}n”,
+“n”,
+“#a key has to be passed in for the dataframen”,
+“#this is added to the column name of the dataframen”,
+“n”,
+“result = df.expand_grid(df_key=&quot;df&quot;,others = data)n”,
+“n”,
+“result”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 7,
+“metadata”: {},
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><dl class="simple">
+<dt>“data”: {</dt><dd><p>“text/html”: “&lt;div&gt;n&lt;style scoped&gt;n    .dataframe tbody tr th:only-of-type {n        vertical-align: middle;n    }nn    .dataframe tbody tr th {n        vertical-align: top;n    }nn    .dataframe thead th {n        text-align: right;n    }n&lt;/style&gt;n&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;n  &lt;thead&gt;n    &lt;tr style=&quot;text-align: right;&quot;&gt;n      &lt;th&gt;&lt;/th&gt;n      &lt;th&gt;df1_x&lt;/th&gt;n      &lt;th&gt;df1_y&lt;/th&gt;n      &lt;th&gt;df2_x&lt;/th&gt;n      &lt;th&gt;df2_y&lt;/th&gt;n      &lt;th&gt;df3_x&lt;/th&gt;n      &lt;th&gt;df3_y&lt;/th&gt;n    &lt;/tr&gt;n  &lt;/thead&gt;n  &lt;tbody&gt;n    &lt;tr&gt;n      &lt;th&gt;0&lt;/th&gt;n      &lt;td&gt;1&lt;/td&gt;n      &lt;td&gt;2&lt;/td&gt;n      &lt;td&gt;1&lt;/td&gt;n      &lt;td&gt;3&lt;/td&gt;n      &lt;td&gt;2&lt;/td&gt;n      &lt;td&gt;a&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;1&lt;/th&gt;n      &lt;td&gt;1&lt;/td&gt;n      &lt;td&gt;2&lt;/td&gt;n      &lt;td&gt;1&lt;/td&gt;n      &lt;td&gt;3&lt;/td&gt;n      &lt;td&gt;3&lt;/td&gt;n      &lt;td&gt;b&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;2&lt;/th&gt;n      &lt;td&gt;1&lt;/td&gt;n      &lt;td&gt;2&lt;/td&gt;n      &lt;td&gt;2&lt;/td&gt;n      &lt;td&gt;2&lt;/td&gt;n      &lt;td&gt;2&lt;/td&gt;n      &lt;td&gt;a&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;3&lt;/th&gt;n      &lt;td&gt;1&lt;/td&gt;n      &lt;td&gt;2&lt;/td&gt;n      &lt;td&gt;2&lt;/td&gt;n      &lt;td&gt;2&lt;/td&gt;n      &lt;td&gt;3&lt;/td&gt;n      &lt;td&gt;b&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;4&lt;/th&gt;n      &lt;td&gt;1&lt;/td&gt;n      &lt;td&gt;2&lt;/td&gt;n      &lt;td&gt;3&lt;/td&gt;n      &lt;td&gt;1&lt;/td&gt;n      &lt;td&gt;2&lt;/td&gt;n      &lt;td&gt;a&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;5&lt;/th&gt;n      &lt;td&gt;1&lt;/td&gt;n      &lt;td&gt;2&lt;/td&gt;n      &lt;td&gt;3&lt;/td&gt;n      &lt;td&gt;1&lt;/td&gt;n      &lt;td&gt;3&lt;/td&gt;n      &lt;td&gt;b&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;6&lt;/th&gt;n      &lt;td&gt;2&lt;/td&gt;n      &lt;td&gt;1&lt;/td&gt;n      &lt;td&gt;1&lt;/td&gt;n      &lt;td&gt;3&lt;/td&gt;n      &lt;td&gt;2&lt;/td&gt;n      &lt;td&gt;a&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;7&lt;/th&gt;n      &lt;td&gt;2&lt;/td&gt;n      &lt;td&gt;1&lt;/td&gt;n      &lt;td&gt;1&lt;/td&gt;n      &lt;td&gt;3&lt;/td&gt;n      &lt;td&gt;3&lt;/td&gt;n      &lt;td&gt;b&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;8&lt;/th&gt;n      &lt;td&gt;2&lt;/td&gt;n      &lt;td&gt;1&lt;/td&gt;n      &lt;td&gt;2&lt;/td&gt;n      &lt;td&gt;2&lt;/td&gt;n      &lt;td&gt;2&lt;/td&gt;n      &lt;td&gt;a&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;9&lt;/th&gt;n      &lt;td&gt;2&lt;/td&gt;n      &lt;td&gt;1&lt;/td&gt;n      &lt;td&gt;2&lt;/td&gt;n      &lt;td&gt;2&lt;/td&gt;n      &lt;td&gt;3&lt;/td&gt;n      &lt;td&gt;b&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;10&lt;/th&gt;n      &lt;td&gt;2&lt;/td&gt;n      &lt;td&gt;1&lt;/td&gt;n      &lt;td&gt;3&lt;/td&gt;n      &lt;td&gt;1&lt;/td&gt;n      &lt;td&gt;2&lt;/td&gt;n      &lt;td&gt;a&lt;/td&gt;n    &lt;/tr&gt;n    &lt;tr&gt;n      &lt;th&gt;11&lt;/th&gt;n      &lt;td&gt;2&lt;/td&gt;n      &lt;td&gt;1&lt;/td&gt;n      &lt;td&gt;3&lt;/td&gt;n      &lt;td&gt;1&lt;/td&gt;n      &lt;td&gt;3&lt;/td&gt;n      &lt;td&gt;b&lt;/td&gt;n    &lt;/tr&gt;n  &lt;/tbody&gt;n&lt;/table&gt;n&lt;/div&gt;”,
+“text/plain”: ”    df1_x  df1_y  df2_x  df2_y  df3_x df3_yn0       1      2      1      3      2     an1       1      2      1      3      3     bn2       1      2      2      2      2     an3       1      2      2      2      3     bn4       1      2      3      1      2     an5       1      2      3      1      3     bn6       2      1      1      3      2     an7       2      1      1      3      3     bn8       2      1      2      2      2     an9       2      1      2      2      3     bn10      2      1      3      1      2     an11      2      1      3      1      3     b”</p>
+</dd>
+</dl>
+<p>},
+“execution_count”: 7,
+“metadata”: {},
+“output_type”: “execute_result”</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“source”: [</p>
+<blockquote>
+<div><p>“n”,
+“# expand_grid can work on multiple dataframesn”,
+“# Ensure that there are keysn”,
+“# for each dataframe in the dictionaryn”,
+“n”,
+“df1 = pd.DataFrame({&quot;x&quot;:range(1,3), &quot;y&quot;:[2,1]})n”,
+“df2 = pd.DataFrame({&quot;x&quot;:[1,2,3],&quot;y&quot;:[3,2,1]})n”,
+“df3 = pd.DataFrame({&quot;x&quot;:[2,3],&quot;y&quot;:[&quot;a&quot;,&quot;b&quot;]})n”,
+“n”,
+“data = {&quot;df1&quot;:df1, &quot;df2&quot;:df2, &quot;df3&quot;:df3}n”,
+“n”,
+“result = expand_grid(others=data)n”,
+“n”,
+“result”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>}</p>
+</dd>
+</dl>
+<p>],
+“metadata”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“kernelspec”: {</dt><dd><p>“display_name”: “Python 3”,
+“name”: “python3”</p>
+</dd>
+</dl>
+<p>},
+“language_info”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“codemirror_mode”: {</dt><dd><p>“name”: “ipython”,
+“version”: 3</p>
+</dd>
+</dl>
+<p>},
+“file_extension”: “.py”,
+“mimetype”: “text/x-python”,
+“name”: “python”,
+“nbconvert_exporter”: “python”,
+“pygments_lexer”: “ipython3”,
+“version”: “3.7.7-final”</p>
+</div></blockquote>
+<p>},
+“orig_nbformat”: 2</p>
+</div></blockquote>
+<p>},
+“nbformat”: 4,
+“nbformat_minor”: 2</p>
+</dd>
+</dl>
+<p>}</p>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo_title.svg" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../authors.html">Contributors</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../notebooks.html">Examples</a><ul>
+      <li>Previous: <a href="dirty_data.html" title="previous chapter">&lt;no title&gt;</a></li>
+      <li>Next: <a href="french_trains.html" title="next chapter">&lt;no title&gt;</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, PyJanitor devs.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/notebooks/expand_grid.ipynb.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

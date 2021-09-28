@@ -1,0 +1,1446 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>&lt;no title&gt; &#8212; pyjanitor  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="&lt;no title&gt;" href="dirty_data.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="board_games.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <dl>
+<dt>{</dt><dd><dl>
+<dt>“cells”: [</dt><dd><dl>
+<dt>{</dt><dd><p>“cell_type”: “markdown”,
+“source”: [</p>
+<blockquote>
+<div><p>“# Multiple Conditions with case_when”</p>
+</div></blockquote>
+<p>],
+“metadata”: {}</p>
+</dd>
+</dl>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 1,
+“source”: [</p>
+<blockquote>
+<div><p>“import pandas as pdn”,
+“import janitor”</p>
+</div></blockquote>
+<p>],
+“outputs”: [],
+“metadata”: {}</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 2,
+“source”: [</p>
+<blockquote>
+<div><p>“# <a class="reference external" href="https://stackoverflow.com/q/19913659/7175713n">https://stackoverflow.com/q/19913659/7175713n</a>”,
+“df = pd.DataFrame({‘col1’: list(‘ABBC’), ‘col2’: list(‘ZZXY’)})n”,
+“n”,
+“df”</p>
+</div></blockquote>
+<p>],
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><p>“output_type”: “execute_result”,
+“data”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“text/plain”: [</dt><dd><p>”  col1 col2n”,
+“0    A    Zn”,
+“1    B    Zn”,
+“2    B    Xn”,
+“3    C    Y”</p>
+</dd>
+</dl>
+<p>],
+“text/html”: [</p>
+<blockquote>
+<div><p>“&lt;div&gt;n”,
+“&lt;style scoped&gt;n”,
+”    .dataframe tbody tr th:only-of-type {n”,
+”        vertical-align: middle;n”,
+”    }n”,
+“n”,
+”    .dataframe tbody tr th {n”,
+”        vertical-align: top;n”,
+”    }n”,
+“n”,
+”    .dataframe thead th {n”,
+”        text-align: right;n”,
+”    }n”,
+“&lt;/style&gt;n”,
+“&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;n”,
+”  &lt;thead&gt;n”,
+”    &lt;tr style=&quot;text-align: right;&quot;&gt;n”,
+”      &lt;th&gt;&lt;/th&gt;n”,
+”      &lt;th&gt;col1&lt;/th&gt;n”,
+”      &lt;th&gt;col2&lt;/th&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/thead&gt;n”,
+”  &lt;tbody&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;0&lt;/th&gt;n”,
+”      &lt;td&gt;A&lt;/td&gt;n”,
+”      &lt;td&gt;Z&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;1&lt;/th&gt;n”,
+”      &lt;td&gt;B&lt;/td&gt;n”,
+”      &lt;td&gt;Z&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;2&lt;/th&gt;n”,
+”      &lt;td&gt;B&lt;/td&gt;n”,
+”      &lt;td&gt;X&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;3&lt;/th&gt;n”,
+”      &lt;td&gt;C&lt;/td&gt;n”,
+”      &lt;td&gt;Y&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/tbody&gt;n”,
+“&lt;/table&gt;n”,
+“&lt;/div&gt;”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+“metadata”: {},
+“execution_count”: 2</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“metadata”: {}</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“source”: [</p>
+<blockquote>
+<div><p>“- Single Condition:”</p>
+</div></blockquote>
+<p>],
+“metadata”: {}</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 3,
+“source”: [</p>
+<blockquote>
+<div><p>“df.case_when(n”,
+”    df.col1 == &quot;Z&quot;,  # conditionn”,
+”    &quot;green&quot;,         # value if Truen”,
+”    &quot;red&quot;,           # value if Falsen”,
+”    column_name = &quot;color&quot;n”,
+”    )”</p>
+</div></blockquote>
+<p>],
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><p>“output_type”: “execute_result”,
+“data”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“text/plain”: [</dt><dd><p>”  col1 col2 colorn”,
+“0    A    Z   redn”,
+“1    B    Z   redn”,
+“2    B    X   redn”,
+“3    C    Y   red”</p>
+</dd>
+</dl>
+<p>],
+“text/html”: [</p>
+<blockquote>
+<div><p>“&lt;div&gt;n”,
+“&lt;style scoped&gt;n”,
+”    .dataframe tbody tr th:only-of-type {n”,
+”        vertical-align: middle;n”,
+”    }n”,
+“n”,
+”    .dataframe tbody tr th {n”,
+”        vertical-align: top;n”,
+”    }n”,
+“n”,
+”    .dataframe thead th {n”,
+”        text-align: right;n”,
+”    }n”,
+“&lt;/style&gt;n”,
+“&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;n”,
+”  &lt;thead&gt;n”,
+”    &lt;tr style=&quot;text-align: right;&quot;&gt;n”,
+”      &lt;th&gt;&lt;/th&gt;n”,
+”      &lt;th&gt;col1&lt;/th&gt;n”,
+”      &lt;th&gt;col2&lt;/th&gt;n”,
+”      &lt;th&gt;color&lt;/th&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/thead&gt;n”,
+”  &lt;tbody&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;0&lt;/th&gt;n”,
+”      &lt;td&gt;A&lt;/td&gt;n”,
+”      &lt;td&gt;Z&lt;/td&gt;n”,
+”      &lt;td&gt;red&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;1&lt;/th&gt;n”,
+”      &lt;td&gt;B&lt;/td&gt;n”,
+”      &lt;td&gt;Z&lt;/td&gt;n”,
+”      &lt;td&gt;red&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;2&lt;/th&gt;n”,
+”      &lt;td&gt;B&lt;/td&gt;n”,
+”      &lt;td&gt;X&lt;/td&gt;n”,
+”      &lt;td&gt;red&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;3&lt;/th&gt;n”,
+”      &lt;td&gt;C&lt;/td&gt;n”,
+”      &lt;td&gt;Y&lt;/td&gt;n”,
+”      &lt;td&gt;red&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/tbody&gt;n”,
+“&lt;/table&gt;n”,
+“&lt;/div&gt;”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+“metadata”: {},
+“execution_count”: 3</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“metadata”: {}</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“source”: [</p>
+<blockquote>
+<div><p>“- Multiple Conditions:”</p>
+</div></blockquote>
+<p>],
+“metadata”: {}</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 4,
+“source”: [</p>
+<blockquote>
+<div><p>“df.case_when(n”,
+”    df.col2.eq(&quot;Z&quot;) &amp; df.col1.eq(&quot;A&quot;), &quot;yellow&quot;,  # first condition and valuen”,
+”    df.col2.eq(&quot;Z&quot;) &amp; df.col1.eq(&quot;B&quot;), &quot;blue&quot;,    # second condition and valuen”,
+”    df.col1.eq(&quot;B&quot;), &quot;purple&quot;,                    # third condition and value n”,
+”    &quot;black&quot;,                                      # default if no condition is Truen”,
+”    column_name = &quot;color&quot;n”,
+”    )”</p>
+</div></blockquote>
+<p>],
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><p>“output_type”: “execute_result”,
+“data”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“text/plain”: [</dt><dd><p>”  col1 col2   colorn”,
+“0    A    Z  yellown”,
+“1    B    Z    bluen”,
+“2    B    X  purplen”,
+“3    C    Y   black”</p>
+</dd>
+</dl>
+<p>],
+“text/html”: [</p>
+<blockquote>
+<div><p>“&lt;div&gt;n”,
+“&lt;style scoped&gt;n”,
+”    .dataframe tbody tr th:only-of-type {n”,
+”        vertical-align: middle;n”,
+”    }n”,
+“n”,
+”    .dataframe tbody tr th {n”,
+”        vertical-align: top;n”,
+”    }n”,
+“n”,
+”    .dataframe thead th {n”,
+”        text-align: right;n”,
+”    }n”,
+“&lt;/style&gt;n”,
+“&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;n”,
+”  &lt;thead&gt;n”,
+”    &lt;tr style=&quot;text-align: right;&quot;&gt;n”,
+”      &lt;th&gt;&lt;/th&gt;n”,
+”      &lt;th&gt;col1&lt;/th&gt;n”,
+”      &lt;th&gt;col2&lt;/th&gt;n”,
+”      &lt;th&gt;color&lt;/th&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/thead&gt;n”,
+”  &lt;tbody&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;0&lt;/th&gt;n”,
+”      &lt;td&gt;A&lt;/td&gt;n”,
+”      &lt;td&gt;Z&lt;/td&gt;n”,
+”      &lt;td&gt;yellow&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;1&lt;/th&gt;n”,
+”      &lt;td&gt;B&lt;/td&gt;n”,
+”      &lt;td&gt;Z&lt;/td&gt;n”,
+”      &lt;td&gt;blue&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;2&lt;/th&gt;n”,
+”      &lt;td&gt;B&lt;/td&gt;n”,
+”      &lt;td&gt;X&lt;/td&gt;n”,
+”      &lt;td&gt;purple&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;3&lt;/th&gt;n”,
+”      &lt;td&gt;C&lt;/td&gt;n”,
+”      &lt;td&gt;Y&lt;/td&gt;n”,
+”      &lt;td&gt;black&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/tbody&gt;n”,
+“&lt;/table&gt;n”,
+“&lt;/div&gt;”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+“metadata”: {},
+“execution_count”: 4</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“metadata”: {}</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“source”: [</p>
+<blockquote>
+<div><p>“Anonymous functions (lambda) are supported as well:”</p>
+</div></blockquote>
+<p>],
+“metadata”: {}</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 5,
+“source”: [</p>
+<blockquote>
+<div><p>“# <a class="reference external" href="https://stackoverflow.com/q/43391591/7175713n">https://stackoverflow.com/q/43391591/7175713n</a>”,
+“raw_data = {‘age1’: [23,45,21],’age2’: [10,20,50]}n”,
+“df = pd.DataFrame(raw_data, columns = [‘age1’,’age2’])n”,
+“df”</p>
+</div></blockquote>
+<p>],
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><p>“output_type”: “execute_result”,
+“data”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“text/plain”: [</dt><dd><p>”   age1  age2n”,
+“0    23    10n”,
+“1    45    20n”,
+“2    21    50”</p>
+</dd>
+</dl>
+<p>],
+“text/html”: [</p>
+<blockquote>
+<div><p>“&lt;div&gt;n”,
+“&lt;style scoped&gt;n”,
+”    .dataframe tbody tr th:only-of-type {n”,
+”        vertical-align: middle;n”,
+”    }n”,
+“n”,
+”    .dataframe tbody tr th {n”,
+”        vertical-align: top;n”,
+”    }n”,
+“n”,
+”    .dataframe thead th {n”,
+”        text-align: right;n”,
+”    }n”,
+“&lt;/style&gt;n”,
+“&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;n”,
+”  &lt;thead&gt;n”,
+”    &lt;tr style=&quot;text-align: right;&quot;&gt;n”,
+”      &lt;th&gt;&lt;/th&gt;n”,
+”      &lt;th&gt;age1&lt;/th&gt;n”,
+”      &lt;th&gt;age2&lt;/th&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/thead&gt;n”,
+”  &lt;tbody&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;0&lt;/th&gt;n”,
+”      &lt;td&gt;23&lt;/td&gt;n”,
+”      &lt;td&gt;10&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;1&lt;/th&gt;n”,
+”      &lt;td&gt;45&lt;/td&gt;n”,
+”      &lt;td&gt;20&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;2&lt;/th&gt;n”,
+”      &lt;td&gt;21&lt;/td&gt;n”,
+”      &lt;td&gt;50&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/tbody&gt;n”,
+“&lt;/table&gt;n”,
+“&lt;/div&gt;”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+“metadata”: {},
+“execution_count”: 5</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“metadata”: {}</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 6,
+“source”: [</p>
+<blockquote>
+<div><p>“df.case_when(n”,
+”    lambda df: (df.age1 - df.age2) &gt; 0,   # conditionn”,
+”    lambda df: df.age1 - df.age2,         # value if Truen”,
+”    lambda df: df.age2 - df.age1,         # default if Falsen”,
+”    column_name = &quot;diff&quot;n”,
+“)”</p>
+</div></blockquote>
+<p>],
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><p>“output_type”: “execute_result”,
+“data”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“text/plain”: [</dt><dd><p>”   age1  age2  diffn”,
+“0    23    10    13n”,
+“1    45    20    25n”,
+“2    21    50    29”</p>
+</dd>
+</dl>
+<p>],
+“text/html”: [</p>
+<blockquote>
+<div><p>“&lt;div&gt;n”,
+“&lt;style scoped&gt;n”,
+”    .dataframe tbody tr th:only-of-type {n”,
+”        vertical-align: middle;n”,
+”    }n”,
+“n”,
+”    .dataframe tbody tr th {n”,
+”        vertical-align: top;n”,
+”    }n”,
+“n”,
+”    .dataframe thead th {n”,
+”        text-align: right;n”,
+”    }n”,
+“&lt;/style&gt;n”,
+“&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;n”,
+”  &lt;thead&gt;n”,
+”    &lt;tr style=&quot;text-align: right;&quot;&gt;n”,
+”      &lt;th&gt;&lt;/th&gt;n”,
+”      &lt;th&gt;age1&lt;/th&gt;n”,
+”      &lt;th&gt;age2&lt;/th&gt;n”,
+”      &lt;th&gt;diff&lt;/th&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/thead&gt;n”,
+”  &lt;tbody&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;0&lt;/th&gt;n”,
+”      &lt;td&gt;23&lt;/td&gt;n”,
+”      &lt;td&gt;10&lt;/td&gt;n”,
+”      &lt;td&gt;13&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;1&lt;/th&gt;n”,
+”      &lt;td&gt;45&lt;/td&gt;n”,
+”      &lt;td&gt;20&lt;/td&gt;n”,
+”      &lt;td&gt;25&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;2&lt;/th&gt;n”,
+”      &lt;td&gt;21&lt;/td&gt;n”,
+”      &lt;td&gt;50&lt;/td&gt;n”,
+”      &lt;td&gt;29&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/tbody&gt;n”,
+“&lt;/table&gt;n”,
+“&lt;/div&gt;”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+“metadata”: {},
+“execution_count”: 6</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“metadata”: {}</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“source”: [</p>
+<blockquote>
+<div><p>“data types are preserved; under the hood it uses [pd.Series.mask](<a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.Series.mask.html">https://pandas.pydata.org/docs/reference/api/pandas.Series.mask.html</a>):”</p>
+</div></blockquote>
+<p>],
+“metadata”: {}</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 7,
+“source”: [</p>
+<blockquote>
+<div><p>“df = df.astype(‘Int64’)n”,
+“df.dtypes”</p>
+</div></blockquote>
+<p>],
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><p>“output_type”: “execute_result”,
+“data”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“text/plain”: [</dt><dd><p>“age1    Int64n”,
+“age2    Int64n”,
+“dtype: object”</p>
+</dd>
+</dl>
+<p>]</p>
+</div></blockquote>
+<p>},
+“metadata”: {},
+“execution_count”: 7</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“metadata”: {}</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 8,
+“source”: [</p>
+<blockquote>
+<div><p>“result = df.case_when(n”,
+”            lambda df: (df.age1 - df.age2) &gt; 0,   n”,
+”            lambda df: df.age1 - df.age2,         n”,
+”            lambda df: df.age2 - df.age1,         n”,
+”            column_name = &quot;diff&quot;n”,
+“)n”,
+“n”,
+“result”</p>
+</div></blockquote>
+<p>],
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><p>“output_type”: “execute_result”,
+“data”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“text/plain”: [</dt><dd><p>”   age1  age2  diffn”,
+“0    23    10    13n”,
+“1    45    20    25n”,
+“2    21    50    29”</p>
+</dd>
+</dl>
+<p>],
+“text/html”: [</p>
+<blockquote>
+<div><p>“&lt;div&gt;n”,
+“&lt;style scoped&gt;n”,
+”    .dataframe tbody tr th:only-of-type {n”,
+”        vertical-align: middle;n”,
+”    }n”,
+“n”,
+”    .dataframe tbody tr th {n”,
+”        vertical-align: top;n”,
+”    }n”,
+“n”,
+”    .dataframe thead th {n”,
+”        text-align: right;n”,
+”    }n”,
+“&lt;/style&gt;n”,
+“&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;n”,
+”  &lt;thead&gt;n”,
+”    &lt;tr style=&quot;text-align: right;&quot;&gt;n”,
+”      &lt;th&gt;&lt;/th&gt;n”,
+”      &lt;th&gt;age1&lt;/th&gt;n”,
+”      &lt;th&gt;age2&lt;/th&gt;n”,
+”      &lt;th&gt;diff&lt;/th&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/thead&gt;n”,
+”  &lt;tbody&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;0&lt;/th&gt;n”,
+”      &lt;td&gt;23&lt;/td&gt;n”,
+”      &lt;td&gt;10&lt;/td&gt;n”,
+”      &lt;td&gt;13&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;1&lt;/th&gt;n”,
+”      &lt;td&gt;45&lt;/td&gt;n”,
+”      &lt;td&gt;20&lt;/td&gt;n”,
+”      &lt;td&gt;25&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;2&lt;/th&gt;n”,
+”      &lt;td&gt;21&lt;/td&gt;n”,
+”      &lt;td&gt;50&lt;/td&gt;n”,
+”      &lt;td&gt;29&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/tbody&gt;n”,
+“&lt;/table&gt;n”,
+“&lt;/div&gt;”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+“metadata”: {},
+“execution_count”: 8</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“metadata”: {}</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 9,
+“source”: [</p>
+<blockquote>
+<div><p>“result.dtypes”</p>
+</div></blockquote>
+<p>],
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><p>“output_type”: “execute_result”,
+“data”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“text/plain”: [</dt><dd><p>“age1    Int64n”,
+“age2    Int64n”,
+“diff    Int64n”,
+“dtype: object”</p>
+</dd>
+</dl>
+<p>]</p>
+</div></blockquote>
+<p>},
+“metadata”: {},
+“execution_count”: 9</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“metadata”: {}</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“source”: [</p>
+<blockquote>
+<div><p>“The conditions can be a string, as long as they can be evaluated with <cite>pd.eval</cite> on the DataFrame, and return a boolean array:”</p>
+</div></blockquote>
+<p>],
+“metadata”: {}</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 10,
+“source”: [</p>
+<blockquote>
+<div><p>“# <a class="reference external" href="https://stackoverflow.com/q/54653356/7175713n">https://stackoverflow.com/q/54653356/7175713n</a>”,
+“data = {‘name’: [‘Jason’, ‘Molly’, ‘Tina’, ‘Jake’, ‘Amy’], n”,
+”        ‘age’: [42, 52, 36, 24, 73], n”,
+”        ‘preTestScore’: [4, 24, 31, 2, 3],n”,
+”        ‘postTestScore’: [25, 94, 57, 62, 70]}n”,
+“df = pd.DataFrame(data, columns = [‘name’, ‘age’, ‘preTestScore’, ‘postTestScore’])n”,
+“df”</p>
+</div></blockquote>
+<p>],
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><p>“output_type”: “execute_result”,
+“data”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“text/plain”: [</dt><dd><p>”    name  age  preTestScore  postTestScoren”,
+“0  Jason   42             4             25n”,
+“1  Molly   52            24             94n”,
+“2   Tina   36            31             57n”,
+“3   Jake   24             2             62n”,
+“4    Amy   73             3             70”</p>
+</dd>
+</dl>
+<p>],
+“text/html”: [</p>
+<blockquote>
+<div><p>“&lt;div&gt;n”,
+“&lt;style scoped&gt;n”,
+”    .dataframe tbody tr th:only-of-type {n”,
+”        vertical-align: middle;n”,
+”    }n”,
+“n”,
+”    .dataframe tbody tr th {n”,
+”        vertical-align: top;n”,
+”    }n”,
+“n”,
+”    .dataframe thead th {n”,
+”        text-align: right;n”,
+”    }n”,
+“&lt;/style&gt;n”,
+“&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;n”,
+”  &lt;thead&gt;n”,
+”    &lt;tr style=&quot;text-align: right;&quot;&gt;n”,
+”      &lt;th&gt;&lt;/th&gt;n”,
+”      &lt;th&gt;name&lt;/th&gt;n”,
+”      &lt;th&gt;age&lt;/th&gt;n”,
+”      &lt;th&gt;preTestScore&lt;/th&gt;n”,
+”      &lt;th&gt;postTestScore&lt;/th&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/thead&gt;n”,
+”  &lt;tbody&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;0&lt;/th&gt;n”,
+”      &lt;td&gt;Jason&lt;/td&gt;n”,
+”      &lt;td&gt;42&lt;/td&gt;n”,
+”      &lt;td&gt;4&lt;/td&gt;n”,
+”      &lt;td&gt;25&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;1&lt;/th&gt;n”,
+”      &lt;td&gt;Molly&lt;/td&gt;n”,
+”      &lt;td&gt;52&lt;/td&gt;n”,
+”      &lt;td&gt;24&lt;/td&gt;n”,
+”      &lt;td&gt;94&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;2&lt;/th&gt;n”,
+”      &lt;td&gt;Tina&lt;/td&gt;n”,
+”      &lt;td&gt;36&lt;/td&gt;n”,
+”      &lt;td&gt;31&lt;/td&gt;n”,
+”      &lt;td&gt;57&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;3&lt;/th&gt;n”,
+”      &lt;td&gt;Jake&lt;/td&gt;n”,
+”      &lt;td&gt;24&lt;/td&gt;n”,
+”      &lt;td&gt;2&lt;/td&gt;n”,
+”      &lt;td&gt;62&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;4&lt;/th&gt;n”,
+”      &lt;td&gt;Amy&lt;/td&gt;n”,
+”      &lt;td&gt;73&lt;/td&gt;n”,
+”      &lt;td&gt;3&lt;/td&gt;n”,
+”      &lt;td&gt;70&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/tbody&gt;n”,
+“&lt;/table&gt;n”,
+“&lt;/div&gt;”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+“metadata”: {},
+“execution_count”: 10</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“metadata”: {}</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 11,
+“source”: [</p>
+<blockquote>
+<div><p>“df.case_when(n”,
+”    &quot;age &lt; 10&quot;, &quot;baby&quot;,n”,
+”    &quot;10 &lt;= age &lt; 20&quot;, &quot;kid&quot;,n”,
+”    &quot;20 &lt;= age &lt; 30&quot;, &quot;young&quot;, n”,
+”    &quot;30 &lt;= age &lt; 50&quot;, &quot;mature&quot;,n”,
+”    &quot;grandpa&quot;,n”,
+”    column_name = &quot;elderly&quot;n”,
+“)”</p>
+</div></blockquote>
+<p>],
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><p>“output_type”: “execute_result”,
+“data”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“text/plain”: [</dt><dd><p>”    name  age  preTestScore  postTestScore  elderlyn”,
+“0  Jason   42             4             25   maturen”,
+“1  Molly   52            24             94  grandpan”,
+“2   Tina   36            31             57   maturen”,
+“3   Jake   24             2             62    youngn”,
+“4    Amy   73             3             70  grandpa”</p>
+</dd>
+</dl>
+<p>],
+“text/html”: [</p>
+<blockquote>
+<div><p>“&lt;div&gt;n”,
+“&lt;style scoped&gt;n”,
+”    .dataframe tbody tr th:only-of-type {n”,
+”        vertical-align: middle;n”,
+”    }n”,
+“n”,
+”    .dataframe tbody tr th {n”,
+”        vertical-align: top;n”,
+”    }n”,
+“n”,
+”    .dataframe thead th {n”,
+”        text-align: right;n”,
+”    }n”,
+“&lt;/style&gt;n”,
+“&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;n”,
+”  &lt;thead&gt;n”,
+”    &lt;tr style=&quot;text-align: right;&quot;&gt;n”,
+”      &lt;th&gt;&lt;/th&gt;n”,
+”      &lt;th&gt;name&lt;/th&gt;n”,
+”      &lt;th&gt;age&lt;/th&gt;n”,
+”      &lt;th&gt;preTestScore&lt;/th&gt;n”,
+”      &lt;th&gt;postTestScore&lt;/th&gt;n”,
+”      &lt;th&gt;elderly&lt;/th&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/thead&gt;n”,
+”  &lt;tbody&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;0&lt;/th&gt;n”,
+”      &lt;td&gt;Jason&lt;/td&gt;n”,
+”      &lt;td&gt;42&lt;/td&gt;n”,
+”      &lt;td&gt;4&lt;/td&gt;n”,
+”      &lt;td&gt;25&lt;/td&gt;n”,
+”      &lt;td&gt;mature&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;1&lt;/th&gt;n”,
+”      &lt;td&gt;Molly&lt;/td&gt;n”,
+”      &lt;td&gt;52&lt;/td&gt;n”,
+”      &lt;td&gt;24&lt;/td&gt;n”,
+”      &lt;td&gt;94&lt;/td&gt;n”,
+”      &lt;td&gt;grandpa&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;2&lt;/th&gt;n”,
+”      &lt;td&gt;Tina&lt;/td&gt;n”,
+”      &lt;td&gt;36&lt;/td&gt;n”,
+”      &lt;td&gt;31&lt;/td&gt;n”,
+”      &lt;td&gt;57&lt;/td&gt;n”,
+”      &lt;td&gt;mature&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;3&lt;/th&gt;n”,
+”      &lt;td&gt;Jake&lt;/td&gt;n”,
+”      &lt;td&gt;24&lt;/td&gt;n”,
+”      &lt;td&gt;2&lt;/td&gt;n”,
+”      &lt;td&gt;62&lt;/td&gt;n”,
+”      &lt;td&gt;young&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;4&lt;/th&gt;n”,
+”      &lt;td&gt;Amy&lt;/td&gt;n”,
+”      &lt;td&gt;73&lt;/td&gt;n”,
+”      &lt;td&gt;3&lt;/td&gt;n”,
+”      &lt;td&gt;70&lt;/td&gt;n”,
+”      &lt;td&gt;grandpa&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/tbody&gt;n”,
+“&lt;/table&gt;n”,
+“&lt;/div&gt;”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+“metadata”: {},
+“execution_count”: 11</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“metadata”: {}</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“source”: [</p>
+<blockquote>
+<div><p>“When multiple conditions are satisfied, the first one is used:”</p>
+</div></blockquote>
+<p>],
+“metadata”: {}</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 12,
+“source”: [</p>
+<blockquote>
+<div><p>“df = range(3, 30, 3)n”,
+“df = pd.DataFrame(df, columns = [‘odd’])n”,
+“df”</p>
+</div></blockquote>
+<p>],
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><p>“output_type”: “execute_result”,
+“data”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“text/plain”: [</dt><dd><p>”   oddn”,
+“0    3n”,
+“1    6n”,
+“2    9n”,
+“3   12n”,
+“4   15n”,
+“5   18n”,
+“6   21n”,
+“7   24n”,
+“8   27”</p>
+</dd>
+</dl>
+<p>],
+“text/html”: [</p>
+<blockquote>
+<div><p>“&lt;div&gt;n”,
+“&lt;style scoped&gt;n”,
+”    .dataframe tbody tr th:only-of-type {n”,
+”        vertical-align: middle;n”,
+”    }n”,
+“n”,
+”    .dataframe tbody tr th {n”,
+”        vertical-align: top;n”,
+”    }n”,
+“n”,
+”    .dataframe thead th {n”,
+”        text-align: right;n”,
+”    }n”,
+“&lt;/style&gt;n”,
+“&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;n”,
+”  &lt;thead&gt;n”,
+”    &lt;tr style=&quot;text-align: right;&quot;&gt;n”,
+”      &lt;th&gt;&lt;/th&gt;n”,
+”      &lt;th&gt;odd&lt;/th&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/thead&gt;n”,
+”  &lt;tbody&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;0&lt;/th&gt;n”,
+”      &lt;td&gt;3&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;1&lt;/th&gt;n”,
+”      &lt;td&gt;6&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;2&lt;/th&gt;n”,
+”      &lt;td&gt;9&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;3&lt;/th&gt;n”,
+”      &lt;td&gt;12&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;4&lt;/th&gt;n”,
+”      &lt;td&gt;15&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;5&lt;/th&gt;n”,
+”      &lt;td&gt;18&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;6&lt;/th&gt;n”,
+”      &lt;td&gt;21&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;7&lt;/th&gt;n”,
+”      &lt;td&gt;24&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;8&lt;/th&gt;n”,
+”      &lt;td&gt;27&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/tbody&gt;n”,
+“&lt;/table&gt;n”,
+“&lt;/div&gt;”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+“metadata”: {},
+“execution_count”: 12</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“metadata”: {}</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 13,
+“source”: [</p>
+<blockquote>
+<div><p>“df.case_when(n”,
+”    df.odd % 9 == 0, n”,
+”    &quot;divisible by 9&quot;,n”,
+”    &quot;divisible by 3&quot;,n”,
+”    column_name = &quot;div_by_3_or_9&quot;n”,
+“)”</p>
+</div></blockquote>
+<p>],
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><p>“output_type”: “execute_result”,
+“data”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“text/plain”: [</dt><dd><p>”   odd   div_by_3_or_9n”,
+“0    3  divisible by 3n”,
+“1    6  divisible by 3n”,
+“2    9  divisible by 9n”,
+“3   12  divisible by 3n”,
+“4   15  divisible by 3n”,
+“5   18  divisible by 9n”,
+“6   21  divisible by 3n”,
+“7   24  divisible by 3n”,
+“8   27  divisible by 9”</p>
+</dd>
+</dl>
+<p>],
+“text/html”: [</p>
+<blockquote>
+<div><p>“&lt;div&gt;n”,
+“&lt;style scoped&gt;n”,
+”    .dataframe tbody tr th:only-of-type {n”,
+”        vertical-align: middle;n”,
+”    }n”,
+“n”,
+”    .dataframe tbody tr th {n”,
+”        vertical-align: top;n”,
+”    }n”,
+“n”,
+”    .dataframe thead th {n”,
+”        text-align: right;n”,
+”    }n”,
+“&lt;/style&gt;n”,
+“&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;n”,
+”  &lt;thead&gt;n”,
+”    &lt;tr style=&quot;text-align: right;&quot;&gt;n”,
+”      &lt;th&gt;&lt;/th&gt;n”,
+”      &lt;th&gt;odd&lt;/th&gt;n”,
+”      &lt;th&gt;div_by_3_or_9&lt;/th&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/thead&gt;n”,
+”  &lt;tbody&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;0&lt;/th&gt;n”,
+”      &lt;td&gt;3&lt;/td&gt;n”,
+”      &lt;td&gt;divisible by 3&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;1&lt;/th&gt;n”,
+”      &lt;td&gt;6&lt;/td&gt;n”,
+”      &lt;td&gt;divisible by 3&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;2&lt;/th&gt;n”,
+”      &lt;td&gt;9&lt;/td&gt;n”,
+”      &lt;td&gt;divisible by 9&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;3&lt;/th&gt;n”,
+”      &lt;td&gt;12&lt;/td&gt;n”,
+”      &lt;td&gt;divisible by 3&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;4&lt;/th&gt;n”,
+”      &lt;td&gt;15&lt;/td&gt;n”,
+”      &lt;td&gt;divisible by 3&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;5&lt;/th&gt;n”,
+”      &lt;td&gt;18&lt;/td&gt;n”,
+”      &lt;td&gt;divisible by 9&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;6&lt;/th&gt;n”,
+”      &lt;td&gt;21&lt;/td&gt;n”,
+”      &lt;td&gt;divisible by 3&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;7&lt;/th&gt;n”,
+”      &lt;td&gt;24&lt;/td&gt;n”,
+”      &lt;td&gt;divisible by 3&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;8&lt;/th&gt;n”,
+”      &lt;td&gt;27&lt;/td&gt;n”,
+”      &lt;td&gt;divisible by 9&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/tbody&gt;n”,
+“&lt;/table&gt;n”,
+“&lt;/div&gt;”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+“metadata”: {},
+“execution_count”: 13</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“metadata”: {}</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“source”: [</p>
+<blockquote>
+<div><p>“lines 2, 5 and 8 are divisible by 3; however, because the <em>first</em> condition tests if it is divisible by 9, that outcome is used instead.”</p>
+</div></blockquote>
+<p>],
+“metadata”: {}</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“source”: [</p>
+<blockquote>
+<div><p>“If <cite>column_name</cite> exists in the DataFrame, then that column’s values will be replaced with the outcome of <cite>case_when</cite>:”</p>
+</div></blockquote>
+<p>],
+“metadata”: {}</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 14,
+“source”: [</p>
+<blockquote>
+<div><p>“df.case_when(n”,
+”    df.odd % 9 == 0, n”,
+”    &quot;divisible by 9&quot;,n”,
+”    &quot;divisible by 3&quot;,n”,
+”    column_name = &quot;odd&quot;n”,
+“)”</p>
+</div></blockquote>
+<p>],
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><p>“output_type”: “execute_result”,
+“data”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“text/plain”: [</dt><dd><p>”              oddn”,
+“0  divisible by 3n”,
+“1  divisible by 3n”,
+“2  divisible by 9n”,
+“3  divisible by 3n”,
+“4  divisible by 3n”,
+“5  divisible by 9n”,
+“6  divisible by 3n”,
+“7  divisible by 3n”,
+“8  divisible by 9”</p>
+</dd>
+</dl>
+<p>],
+“text/html”: [</p>
+<blockquote>
+<div><p>“&lt;div&gt;n”,
+“&lt;style scoped&gt;n”,
+”    .dataframe tbody tr th:only-of-type {n”,
+”        vertical-align: middle;n”,
+”    }n”,
+“n”,
+”    .dataframe tbody tr th {n”,
+”        vertical-align: top;n”,
+”    }n”,
+“n”,
+”    .dataframe thead th {n”,
+”        text-align: right;n”,
+”    }n”,
+“&lt;/style&gt;n”,
+“&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;n”,
+”  &lt;thead&gt;n”,
+”    &lt;tr style=&quot;text-align: right;&quot;&gt;n”,
+”      &lt;th&gt;&lt;/th&gt;n”,
+”      &lt;th&gt;odd&lt;/th&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/thead&gt;n”,
+”  &lt;tbody&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;0&lt;/th&gt;n”,
+”      &lt;td&gt;divisible by 3&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;1&lt;/th&gt;n”,
+”      &lt;td&gt;divisible by 3&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;2&lt;/th&gt;n”,
+”      &lt;td&gt;divisible by 9&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;3&lt;/th&gt;n”,
+”      &lt;td&gt;divisible by 3&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;4&lt;/th&gt;n”,
+”      &lt;td&gt;divisible by 3&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;5&lt;/th&gt;n”,
+”      &lt;td&gt;divisible by 9&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;6&lt;/th&gt;n”,
+”      &lt;td&gt;divisible by 3&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;7&lt;/th&gt;n”,
+”      &lt;td&gt;divisible by 3&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;8&lt;/th&gt;n”,
+”      &lt;td&gt;divisible by 9&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/tbody&gt;n”,
+“&lt;/table&gt;n”,
+“&lt;/div&gt;”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+“metadata”: {},
+“execution_count”: 14</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“metadata”: {}</p>
+</div></blockquote>
+<p>}</p>
+</dd>
+</dl>
+<p>],
+“metadata”: {</p>
+<blockquote>
+<div><p>“orig_nbformat”: 4,
+“language_info”: {</p>
+<blockquote>
+<div><p>“name”: “python”,
+“version”: “3.8.10”,
+“mimetype”: “text/x-python”,
+“codemirror_mode”: {</p>
+<blockquote>
+<div><p>“name”: “ipython”,
+“version”: 3</p>
+</div></blockquote>
+<p>},
+“pygments_lexer”: “ipython3”,
+“nbconvert_exporter”: “python”,
+“file_extension”: “.py”</p>
+</div></blockquote>
+<p>},
+“kernelspec”: {</p>
+<blockquote>
+<div><p>“name”: “python3”,
+“display_name”: “Python 3.8.10 64-bit (‘base’: conda)”</p>
+</div></blockquote>
+<p>},
+“interpreter”: {</p>
+<blockquote>
+<div><p>“hash”: “98b0a9b7b4eaaa670588a142fd0a9b87eaafe866f1db4228be72b4211d12040f”</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>},
+“nbformat”: 4,
+“nbformat_minor”: 2</p>
+</dd>
+</dl>
+<p>}</p>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo_title.svg" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../authors.html">Contributors</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../notebooks.html">Examples</a><ul>
+      <li>Previous: <a href="board_games.html" title="previous chapter">&lt;no title&gt;</a></li>
+      <li>Next: <a href="dirty_data.html" title="next chapter">&lt;no title&gt;</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, PyJanitor devs.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/notebooks/case_when.ipynb.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

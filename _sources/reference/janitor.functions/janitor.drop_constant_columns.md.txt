@@ -1,0 +1,6 @@
+﻿janitor.drop\_constant\_columns
+===============================
+
+.. currentmodule:: janitor
+
+.. autofunction:: drop_constant_columns

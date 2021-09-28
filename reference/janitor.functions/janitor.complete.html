@@ -1,0 +1,346 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>janitor.complete &#8212; pyjanitor  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="janitor.pivot_longer" href="janitor.pivot_longer.html" />
+    <link rel="prev" title="janitor.groupby_topk" href="janitor.groupby_topk.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="janitor-complete">
+<h1>janitor.complete<a class="headerlink" href="#janitor-complete" title="Permalink to this headline">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="janitor.complete">
+<span class="sig-prename descclassname"><span class="pre">janitor.</span></span><span class="sig-name descname"><span class="pre">complete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.3.3)"><span class="pre">pandas.core.frame.DataFrame</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">columns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">by</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><span class="pre">list</span></a><span class="p"><span class="pre">,</span> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.3.3)"><span class="pre">pandas.core.frame.DataFrame</span></a></span></span><a class="reference internal" href="../../_modules/janitor/functions.html#complete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#janitor.complete" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function turns implicit missing values into explicit missing values.</p>
+<p>It is modeled after tidyr’s <cite>complete</cite> function, and is a wrapper around
+<cite>expand_grid</cite>, <cite>pd.DataFrame.reindex</cite>, <cite>pd.DataFrame.join</cite>
+and <cite>pd.DataFrame.fillna</cite>.</p>
+<p>Combinations of column names or a list/tuple of column names, or even a
+dictionary of column names and new values are possible.</p>
+<p>It can also handle duplicated data.</p>
+<p><a class="reference external" href="https://tidyr.tidyverse.org/reference/complete.html#examples">Source</a></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">janitor</span> <span class="k">as</span> <span class="nn">jn</span>
+
+    <span class="n">group</span>       <span class="n">item_id</span>     <span class="n">item_name</span>   <span class="n">value1</span>  <span class="n">value2</span>
+<span class="mi">0</span>       <span class="mi">1</span>           <span class="mi">1</span>           <span class="n">a</span>       <span class="mi">1</span>       <span class="mi">4</span>
+<span class="mi">1</span>       <span class="mi">2</span>           <span class="mi">2</span>           <span class="n">b</span>       <span class="mi">2</span>       <span class="mi">5</span>
+<span class="mi">2</span>       <span class="mi">1</span>           <span class="mi">2</span>           <span class="n">b</span>       <span class="mi">3</span>       <span class="mi">6</span>
+</pre></div>
+</div>
+<p>Find all the unique combinations of <cite>group</cite>, <cite>item_id</cite>, and <cite>item_name</cite>,
+including combinations not present in the data:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">complete</span><span class="p">(</span><span class="s1">&#39;group&#39;</span><span class="p">,</span> <span class="s1">&#39;item_id&#39;</span><span class="p">,</span> <span class="s1">&#39;item_name&#39;</span><span class="p">)</span>
+
+      <span class="n">group</span>     <span class="n">item_id</span>     <span class="n">item_name</span>   <span class="n">value1</span>  <span class="n">value2</span>
+<span class="mi">0</span>       <span class="mi">1</span>           <span class="mi">1</span>           <span class="n">a</span>       <span class="mf">1.0</span>     <span class="mf">4.0</span>
+<span class="mi">1</span>       <span class="mi">1</span>           <span class="mi">1</span>           <span class="n">b</span>       <span class="n">NaN</span>     <span class="n">NaN</span>
+<span class="mi">2</span>       <span class="mi">1</span>           <span class="mi">2</span>           <span class="n">a</span>       <span class="n">NaN</span>     <span class="n">NaN</span>
+<span class="mi">3</span>       <span class="mi">1</span>           <span class="mi">2</span>           <span class="n">b</span>       <span class="mf">3.0</span>     <span class="mf">6.0</span>
+<span class="mi">4</span>       <span class="mi">2</span>           <span class="mi">1</span>           <span class="n">a</span>       <span class="n">NaN</span>     <span class="n">NaN</span>
+<span class="mi">5</span>       <span class="mi">2</span>           <span class="mi">1</span>           <span class="n">b</span>       <span class="n">NaN</span>     <span class="n">NaN</span>
+<span class="mi">6</span>       <span class="mi">2</span>           <span class="mi">2</span>           <span class="n">a</span>       <span class="n">NaN</span>     <span class="n">NaN</span>
+<span class="mi">7</span>       <span class="mi">2</span>           <span class="mi">2</span>           <span class="n">b</span>       <span class="mf">2.0</span>     <span class="mf">5.0</span>
+</pre></div>
+</div>
+<p>To expose just the missing values based only on the existing data,
+<cite>item_id</cite> and <cite>item_name</cite> column names can be wrapped in a list/tuple,
+while <cite>group</cite> is passed in as a separate variable:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">complete</span><span class="p">(</span><span class="s2">&quot;group&quot;</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;item_id&quot;</span><span class="p">,</span> <span class="s2">&quot;item_name&quot;</span><span class="p">))</span>
+    <span class="n">group</span>       <span class="n">item_id</span>     <span class="n">item_name</span>   <span class="n">value1</span>     <span class="n">value2</span>
+<span class="mi">0</span>       <span class="mi">1</span>           <span class="mi">1</span>           <span class="n">a</span>         <span class="mf">1.0</span>       <span class="mf">4.0</span>
+<span class="mi">1</span>       <span class="mi">1</span>           <span class="mi">2</span>           <span class="n">b</span>         <span class="mf">3.0</span>       <span class="mf">6.0</span>
+<span class="mi">2</span>       <span class="mi">2</span>           <span class="mi">1</span>           <span class="n">a</span>         <span class="n">NaN</span>       <span class="n">NaN</span>
+<span class="mi">3</span>       <span class="mi">2</span>           <span class="mi">2</span>           <span class="n">b</span>         <span class="mf">2.0</span>       <span class="mf">5.0</span>
+</pre></div>
+</div>
+<p>Let’s look at another example:</p>
+<p><a class="reference external" href="http://imachordata.com/2016/02/05/you-complete-me/">Source Data</a></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="n">Year</span>      <span class="n">Taxon</span>         <span class="n">Abundance</span>
+<span class="mi">0</span>   <span class="mi">1999</span>    <span class="n">Saccharina</span>         <span class="mi">4</span>
+<span class="mi">1</span>   <span class="mi">2000</span>    <span class="n">Saccharina</span>         <span class="mi">5</span>
+<span class="mi">2</span>   <span class="mi">2004</span>    <span class="n">Saccharina</span>         <span class="mi">2</span>
+<span class="mi">3</span>   <span class="mi">1999</span>     <span class="n">Agarum</span>            <span class="mi">1</span>
+<span class="mi">4</span>   <span class="mi">2004</span>     <span class="n">Agarum</span>            <span class="mi">8</span>
+</pre></div>
+</div>
+<p>Note that Year 2000 and Agarum pairing is missing. Let’s make it
+explicit:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">complete</span><span class="p">(</span><span class="s1">&#39;Year&#39;</span><span class="p">,</span> <span class="s1">&#39;Taxon&#39;</span><span class="p">)</span>
+
+   <span class="n">Year</span>      <span class="n">Taxon</span>     <span class="n">Abundance</span>
+<span class="mi">0</span>  <span class="mi">1999</span>     <span class="n">Agarum</span>         <span class="mf">1.0</span>
+<span class="mi">1</span>  <span class="mi">1999</span>     <span class="n">Saccharina</span>     <span class="mf">4.0</span>
+<span class="mi">2</span>  <span class="mi">2000</span>     <span class="n">Agarum</span>         <span class="n">NaN</span>
+<span class="mi">3</span>  <span class="mi">2000</span>     <span class="n">Saccharina</span>     <span class="mf">5.0</span>
+<span class="mi">4</span>  <span class="mi">2004</span>     <span class="n">Agarum</span>         <span class="mf">8.0</span>
+<span class="mi">5</span>  <span class="mi">2004</span>     <span class="n">Saccharina</span>     <span class="mf">2.0</span>
+</pre></div>
+</div>
+<p>The null value can be replaced with the Pandas <cite>fillna</cite> argument:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">complete</span><span class="p">(</span><span class="s1">&#39;Year&#39;</span><span class="p">,</span> <span class="s1">&#39;Taxon&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+   <span class="n">Year</span>      <span class="n">Taxon</span>     <span class="n">Abundance</span>
+<span class="mi">0</span>  <span class="mi">1999</span>     <span class="n">Agarum</span>         <span class="mf">1.0</span>
+<span class="mi">1</span>  <span class="mi">1999</span>     <span class="n">Saccharina</span>     <span class="mf">4.0</span>
+<span class="mi">2</span>  <span class="mi">2000</span>     <span class="n">Agarum</span>         <span class="mf">0.0</span>
+<span class="mi">3</span>  <span class="mi">2000</span>     <span class="n">Saccharina</span>     <span class="mf">5.0</span>
+<span class="mi">4</span>  <span class="mi">2004</span>     <span class="n">Agarum</span>         <span class="mf">8.0</span>
+<span class="mi">5</span>  <span class="mi">2004</span>     <span class="n">Saccharina</span>     <span class="mf">2.0</span>
+</pre></div>
+</div>
+<p>What if we wanted the explicit missing values for all the years from
+1999 to 2004? Easy - simply pass a dictionary pairing the column name
+with the new values:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">new_year_values</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">year</span><span class="p">:</span> <span class="nb">range</span><span class="p">(</span><span class="n">year</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">year</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">complete</span><span class="p">({</span><span class="s2">&quot;Year&quot;</span><span class="p">:</span> <span class="n">new_year_values</span><span class="p">},</span> <span class="s2">&quot;Taxon&quot;</span><span class="p">)</span>
+
+    <span class="n">Year</span>       <span class="n">Taxon</span>  <span class="n">Abundance</span>
+<span class="mi">0</span>   <span class="mi">1999</span>      <span class="n">Agarum</span>        <span class="mf">1.0</span>
+<span class="mi">1</span>   <span class="mi">1999</span>  <span class="n">Saccharina</span>        <span class="mf">4.0</span>
+<span class="mi">2</span>   <span class="mi">2000</span>      <span class="n">Agarum</span>        <span class="n">NaN</span>
+<span class="mi">3</span>   <span class="mi">2000</span>  <span class="n">Saccharina</span>        <span class="mf">5.0</span>
+<span class="mi">4</span>   <span class="mi">2001</span>      <span class="n">Agarum</span>        <span class="n">NaN</span>
+<span class="mi">5</span>   <span class="mi">2001</span>  <span class="n">Saccharina</span>        <span class="n">NaN</span>
+<span class="mi">6</span>   <span class="mi">2002</span>      <span class="n">Agarum</span>        <span class="n">NaN</span>
+<span class="mi">7</span>   <span class="mi">2002</span>  <span class="n">Saccharina</span>        <span class="n">NaN</span>
+<span class="mi">8</span>   <span class="mi">2003</span>      <span class="n">Agarum</span>        <span class="n">NaN</span>
+<span class="mi">9</span>   <span class="mi">2003</span>  <span class="n">Saccharina</span>        <span class="n">NaN</span>
+<span class="mi">10</span>  <span class="mi">2004</span>      <span class="n">Agarum</span>        <span class="mf">8.0</span>
+<span class="mi">11</span>  <span class="mi">2004</span>  <span class="n">Saccharina</span>        <span class="mf">2.0</span>
+</pre></div>
+</div>
+<p>It is also possible to expose missing values within a groupby,
+by using the <cite>by</cite> parameter:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="n">state</span>  <span class="n">year</span>  <span class="n">value</span>
+<span class="mi">0</span>    <span class="n">CA</span>  <span class="mi">2010</span>      <span class="mi">1</span>
+<span class="mi">1</span>    <span class="n">CA</span>  <span class="mi">2013</span>      <span class="mi">3</span>
+<span class="mi">2</span>    <span class="n">HI</span>  <span class="mi">2010</span>      <span class="mi">1</span>
+<span class="mi">3</span>    <span class="n">HI</span>  <span class="mi">2012</span>      <span class="mi">2</span>
+<span class="mi">4</span>    <span class="n">HI</span>  <span class="mi">2016</span>      <span class="mi">3</span>
+<span class="mi">5</span>    <span class="n">NY</span>  <span class="mi">2009</span>      <span class="mi">2</span>
+<span class="mi">6</span>    <span class="n">NY</span>  <span class="mi">2013</span>      <span class="mi">5</span>
+</pre></div>
+</div>
+<p>Let’s get all the missing years per state:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">complete</span><span class="p">(</span>
+    <span class="p">{</span><span class="s1">&#39;year&#39;</span><span class="p">:</span> <span class="n">new_year_values</span><span class="p">},</span>
+    <span class="n">by</span><span class="o">=</span><span class="s1">&#39;state&#39;</span>
+<span class="p">)</span>
+
+    <span class="n">state</span>  <span class="n">year</span>  <span class="n">value</span>
+<span class="mi">0</span>     <span class="n">CA</span>  <span class="mi">2010</span>    <span class="mf">1.0</span>
+<span class="mi">1</span>     <span class="n">CA</span>  <span class="mi">2011</span>    <span class="n">NaN</span>
+<span class="mi">2</span>     <span class="n">CA</span>  <span class="mi">2012</span>    <span class="n">NaN</span>
+<span class="mi">3</span>     <span class="n">CA</span>  <span class="mi">2013</span>    <span class="mf">3.0</span>
+<span class="mi">4</span>     <span class="n">HI</span>  <span class="mi">2010</span>    <span class="mf">1.0</span>
+<span class="mi">5</span>     <span class="n">HI</span>  <span class="mi">2011</span>    <span class="n">NaN</span>
+<span class="mi">6</span>     <span class="n">HI</span>  <span class="mi">2012</span>    <span class="mf">2.0</span>
+<span class="mi">7</span>     <span class="n">HI</span>  <span class="mi">2013</span>    <span class="n">NaN</span>
+<span class="mi">8</span>     <span class="n">HI</span>  <span class="mi">2014</span>    <span class="n">NaN</span>
+<span class="mi">9</span>     <span class="n">HI</span>  <span class="mi">2015</span>    <span class="n">NaN</span>
+<span class="mi">10</span>    <span class="n">HI</span>  <span class="mi">2016</span>    <span class="mf">3.0</span>
+<span class="mi">11</span>    <span class="n">NY</span>  <span class="mi">2009</span>    <span class="mf">2.0</span>
+<span class="mi">12</span>    <span class="n">NY</span>  <span class="mi">2010</span>    <span class="n">NaN</span>
+<span class="mi">13</span>    <span class="n">NY</span>  <span class="mi">2011</span>    <span class="n">NaN</span>
+<span class="mi">14</span>    <span class="n">NY</span>  <span class="mi">2012</span>    <span class="n">NaN</span>
+<span class="mi">15</span>    <span class="n">NY</span>  <span class="mi">2013</span>    <span class="mf">5.0</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>MultiIndex columns are not supported.</p>
+</div>
+<p>Functional usage syntax:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">janitor</span> <span class="k">as</span> <span class="nn">jn</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">jn</span><span class="o">.</span><span class="n">complete</span><span class="p">(</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">,</span>
+    <span class="n">column_label</span><span class="p">,</span>
+    <span class="p">(</span><span class="n">column1</span><span class="p">,</span> <span class="n">column2</span><span class="p">,</span> <span class="o">...</span><span class="p">),</span>
+    <span class="p">{</span><span class="n">column1</span><span class="p">:</span> <span class="n">new_values</span><span class="p">,</span> <span class="o">...</span><span class="p">},</span>
+    <span class="n">by</span> <span class="o">=</span> <span class="n">label</span><span class="o">/</span><span class="n">list_of_labels</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Method chaining syntax:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">complete</span><span class="p">(</span>
+        <span class="n">column_label</span><span class="p">,</span>
+        <span class="p">(</span><span class="n">column1</span><span class="p">,</span> <span class="n">column2</span><span class="p">,</span> <span class="o">...</span><span class="p">),</span>
+        <span class="p">{</span><span class="n">column1</span><span class="p">:</span> <span class="n">new_values</span><span class="p">,</span> <span class="o">...</span><span class="p">},</span>
+        <span class="n">by</span> <span class="o">=</span> <span class="n">label</span><span class="o">/</span><span class="n">list_of_labels</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> – A pandas dataframe.</p></li>
+<li><p><strong>*columns</strong> – <p>This is a sequence containing the columns to be
+completed. It could be column labels (string type),
+a list/tuple of column labels, or a dictionary that pairs
+column labels with new values.</p>
+</p></li>
+<li><p><strong>by</strong> – label or list of labels to group by.
+The explicit missing values are returned per group.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A pandas dataframe with modified column(s).</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – if entry in <cite>*columns</cite> is not a
+str/dict/list/tuple.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – if entry in <cite>*columns</cite> is a dict/list/tuple
+and is empty.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/logo_title.svg" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../notebooks.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">API Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../biology.html">Biology</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chemistry.html">Chemistry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../engineering.html">Engineering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../finance.html">Finance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ml.html">Machine Learning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../timeseries.html">Time Series</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../general_functions.html">General Functions</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../general_functions.html#modify-columns">Modify columns</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../general_functions.html#modify-values">Modify values</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../general_functions.html#filtering">Filtering</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../general_functions.html#preprocessing">Preprocessing</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../general_functions.html#other">Other</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="janitor.then.html">janitor.then</a></li>
+<li class="toctree-l4"><a class="reference internal" href="janitor.also.html">janitor.also</a></li>
+<li class="toctree-l4"><a class="reference internal" href="janitor.shuffle.html">janitor.shuffle</a></li>
+<li class="toctree-l4"><a class="reference internal" href="janitor.count_cumulative_unique.html">janitor.count_cumulative_unique</a></li>
+<li class="toctree-l4"><a class="reference internal" href="janitor.sort_naturally.html">janitor.sort_naturally</a></li>
+<li class="toctree-l4"><a class="reference internal" href="janitor.expand_grid.html">janitor.expand_grid</a></li>
+<li class="toctree-l4"><a class="reference internal" href="janitor.flag_nulls.html">janitor.flag_nulls</a></li>
+<li class="toctree-l4"><a class="reference internal" href="janitor.move.html">janitor.move</a></li>
+<li class="toctree-l4"><a class="reference internal" href="janitor.toset.html">janitor.toset</a></li>
+<li class="toctree-l4"><a class="reference internal" href="janitor.unionize_dataframe_categories.html">janitor.unionize_dataframe_categories</a></li>
+<li class="toctree-l4"><a class="reference internal" href="janitor.groupby_topk.html">janitor.groupby_topk</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">janitor.complete</a></li>
+<li class="toctree-l4"><a class="reference internal" href="janitor.pivot_longer.html">janitor.pivot_longer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="janitor.pivot_wider.html">janitor.pivot_wider</a></li>
+<li class="toctree-l4"><a class="reference internal" href="janitor.conditional_join.html">janitor.conditional_join</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../pyspark.html">General PySpark Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../xarray.html">General XArray Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../authors.html">Contributors</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">API Documentation</a><ul>
+  <li><a href="../general_functions.html">General Functions</a><ul>
+      <li>Previous: <a href="janitor.groupby_topk.html" title="previous chapter">janitor.groupby_topk</a></li>
+      <li>Next: <a href="janitor.pivot_longer.html" title="next chapter">janitor.pivot_longer</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, PyJanitor devs.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../_sources/reference/janitor.functions/janitor.complete.md.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

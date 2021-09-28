@@ -1,0 +1,260 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>janitor.groupby_agg &#8212; pyjanitor  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="janitor.join_apply" href="janitor.join_apply.html" />
+    <link rel="prev" title="janitor.currency_column_to_numeric" href="janitor.currency_column_to_numeric.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="janitor-groupby-agg">
+<h1>janitor.groupby_agg<a class="headerlink" href="#janitor-groupby-agg" title="Permalink to this headline">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="janitor.groupby_agg">
+<span class="sig-prename descclassname"><span class="pre">janitor.</span></span><span class="sig-name descname"><span class="pre">groupby_agg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.3.3)"><span class="pre">pandas.core.frame.DataFrame</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">by</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">,</span> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_column_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">agg_column_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">agg</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Callable</span><span class="p"><span class="pre">,</span> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dropna</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><span class="pre">bool</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.3.3)"><span class="pre">pandas.core.frame.DataFrame</span></a></span></span><a class="reference internal" href="../../_modules/janitor/functions.html#groupby_agg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#janitor.groupby_agg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shortcut for assigning a groupby-transform to a new column.</p>
+<p>This method does not mutate the original DataFrame.</p>
+<p>Without this function, we would have to write a verbose line:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="o">...=</span><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="o">...</span><span class="p">)[</span><span class="o">...</span><span class="p">]</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="o">...</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Now, this function can be method-chained:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">janitor</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">groupby_agg</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;group&#39;</span><span class="p">,</span>
+                                   <span class="n">agg</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span>
+                                   <span class="n">agg_column_name</span><span class="o">=</span><span class="s2">&quot;col1&quot;</span>
+                                   <span class="n">new_column_name</span><span class="o">=</span><span class="s1">&#39;col1_mean_by_group&#39;</span><span class="p">,</span>
+                                   <span class="n">dropna</span> <span class="o">=</span> <span class="kc">True</span><span class="o">/</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Examples:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">janitor</span> <span class="k">as</span> <span class="nn">jn</span>
+
+    <span class="n">group</span>  <span class="n">var1</span>
+<span class="mi">0</span>      <span class="mi">1</span>     <span class="mi">1</span>
+<span class="mi">1</span>      <span class="mi">1</span>     <span class="mi">1</span>
+<span class="mi">2</span>      <span class="mi">1</span>     <span class="mi">1</span>
+<span class="mi">3</span>      <span class="mi">1</span>     <span class="mi">1</span>
+<span class="mi">4</span>      <span class="mi">1</span>     <span class="mi">2</span>
+<span class="mi">5</span>      <span class="mi">2</span>     <span class="mi">1</span>
+<span class="mi">6</span>      <span class="mi">2</span>     <span class="mi">2</span>
+<span class="mi">7</span>      <span class="mi">2</span>     <span class="mi">2</span>
+<span class="mi">8</span>      <span class="mi">2</span>     <span class="mi">2</span>
+<span class="mi">9</span>      <span class="mi">2</span>     <span class="mi">3</span>
+</pre></div>
+</div>
+<p>Let’s get the count per <cite>group</cite> and <cite>var1</cite>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">groupby_agg</span><span class="p">(</span>
+    <span class="n">by</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;group&#39;</span><span class="p">,</span> <span class="s1">&#39;var1&#39;</span><span class="p">],</span>
+    <span class="n">agg</span> <span class="o">=</span> <span class="s1">&#39;size&#39;</span><span class="p">,</span>
+    <span class="n">agg_column_name</span> <span class="o">=</span> <span class="s1">&#39;var1&#39;</span><span class="p">,</span>
+    <span class="n">new_column_name</span> <span class="o">=</span> <span class="s1">&#39;count&#39;</span>
+<span class="p">)</span>
+
+    <span class="n">group</span>  <span class="n">var1</span>  <span class="n">size</span>
+<span class="mi">0</span>      <span class="mi">1</span>     <span class="mi">1</span>     <span class="mi">4</span>
+<span class="mi">1</span>      <span class="mi">1</span>     <span class="mi">1</span>     <span class="mi">4</span>
+<span class="mi">2</span>      <span class="mi">1</span>     <span class="mi">1</span>     <span class="mi">4</span>
+<span class="mi">3</span>      <span class="mi">1</span>     <span class="mi">1</span>     <span class="mi">4</span>
+<span class="mi">4</span>      <span class="mi">1</span>     <span class="mi">2</span>     <span class="mi">1</span>
+<span class="mi">5</span>      <span class="mi">2</span>     <span class="mi">1</span>     <span class="mi">1</span>
+<span class="mi">6</span>      <span class="mi">2</span>     <span class="mi">2</span>     <span class="mi">3</span>
+<span class="mi">7</span>      <span class="mi">2</span>     <span class="mi">2</span>     <span class="mi">3</span>
+<span class="mi">8</span>      <span class="mi">2</span>     <span class="mi">2</span>     <span class="mi">3</span>
+<span class="mi">9</span>      <span class="mi">2</span>     <span class="mi">3</span>     <span class="mi">1</span>
+</pre></div>
+</div>
+<p>If the data has null values,
+you can include the null values by passing <cite>False</cite> to <cite>dropna</cite>;
+this feature was introduced in Pandas 1.1:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">name</span>   <span class="nb">type</span>  <span class="n">num</span>  <span class="n">nulls</span>
+<span class="mi">0</span>  <span class="n">black</span>  <span class="n">chair</span>    <span class="mi">4</span>    <span class="mf">1.0</span>
+<span class="mi">1</span>  <span class="n">black</span>  <span class="n">chair</span>    <span class="mi">5</span>    <span class="mf">1.0</span>
+<span class="mi">2</span>  <span class="n">black</span>   <span class="n">sofa</span>   <span class="mi">12</span>    <span class="n">NaN</span>
+<span class="mi">3</span>    <span class="n">red</span>   <span class="n">sofa</span>    <span class="mi">4</span>    <span class="n">NaN</span>
+<span class="mi">4</span>    <span class="n">red</span>  <span class="n">plate</span>    <span class="mi">3</span>    <span class="mf">3.0</span>
+</pre></div>
+</div>
+<p>Let’s get the count, including the null values,
+grouping on <cite>nulls</cite> column:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">groupby_agg</span><span class="p">(</span>
+    <span class="n">by</span><span class="o">=</span><span class="s2">&quot;nulls&quot;</span><span class="p">,</span>
+    <span class="n">new_column_name</span><span class="o">=</span><span class="s2">&quot;num_count&quot;</span><span class="p">,</span>
+    <span class="n">agg_column_name</span><span class="o">=</span><span class="s2">&quot;num&quot;</span><span class="p">,</span>
+    <span class="n">agg</span><span class="o">=</span><span class="s2">&quot;size&quot;</span><span class="p">,</span>
+    <span class="n">dropna</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span>
+
+    <span class="n">name</span>   <span class="nb">type</span>  <span class="n">num</span>  <span class="n">nulls</span>  <span class="n">num_count</span>
+<span class="mi">0</span>  <span class="n">black</span>  <span class="n">chair</span>    <span class="mi">4</span>    <span class="mf">1.0</span>          <span class="mi">2</span>
+<span class="mi">1</span>  <span class="n">black</span>  <span class="n">chair</span>    <span class="mi">5</span>    <span class="mf">1.0</span>          <span class="mi">2</span>
+<span class="mi">2</span>  <span class="n">black</span>   <span class="n">sofa</span>   <span class="mi">12</span>    <span class="n">NaN</span>          <span class="mi">2</span>
+<span class="mi">3</span>    <span class="n">red</span>   <span class="n">sofa</span>    <span class="mi">4</span>    <span class="n">NaN</span>          <span class="mi">2</span>
+<span class="mi">4</span>    <span class="n">red</span>  <span class="n">plate</span>    <span class="mi">3</span>    <span class="mf">3.0</span>          <span class="mi">1</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> – A pandas DataFrame.</p></li>
+<li><p><strong>by</strong> – Column(s) to groupby on, either a <cite>str</cite> or
+a <cite>list</cite> of <cite>str</cite></p></li>
+<li><p><strong>new_column_name</strong> – Name of the aggregation output column.</p></li>
+<li><p><strong>agg_column_name</strong> – Name of the column to aggregate over.</p></li>
+<li><p><strong>agg</strong> – How to aggregate.</p></li>
+<li><p><strong>dropna</strong> – Whether or not to include null values,
+if present in the <cite>by</cite> column(s). Default is True.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A pandas DataFrame.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/logo_title.svg" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../notebooks.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">API Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../biology.html">Biology</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chemistry.html">Chemistry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../engineering.html">Engineering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../finance.html">Finance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ml.html">Machine Learning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../timeseries.html">Time Series</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../general_functions.html">General Functions</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../general_functions.html#modify-columns">Modify columns</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="janitor.expand_column.html">janitor.expand_column</a></li>
+<li class="toctree-l4"><a class="reference internal" href="janitor.concatenate_columns.html">janitor.concatenate_columns</a></li>
+<li class="toctree-l4"><a class="reference internal" href="janitor.deconcatenate_column.html">janitor.deconcatenate_column</a></li>
+<li class="toctree-l4"><a class="reference internal" href="janitor.remove_columns.html">janitor.remove_columns</a></li>
+<li class="toctree-l4"><a class="reference internal" href="janitor.add_column.html">janitor.add_column</a></li>
+<li class="toctree-l4"><a class="reference internal" href="janitor.add_columns.html">janitor.add_columns</a></li>
+<li class="toctree-l4"><a class="reference internal" href="janitor.transform_column.html">janitor.transform_column</a></li>
+<li class="toctree-l4"><a class="reference internal" href="janitor.transform_columns.html">janitor.transform_columns</a></li>
+<li class="toctree-l4"><a class="reference internal" href="janitor.rename_column.html">janitor.rename_column</a></li>
+<li class="toctree-l4"><a class="reference internal" href="janitor.rename_columns.html">janitor.rename_columns</a></li>
+<li class="toctree-l4"><a class="reference internal" href="janitor.reorder_columns.html">janitor.reorder_columns</a></li>
+<li class="toctree-l4"><a class="reference internal" href="janitor.collapse_levels.html">janitor.collapse_levels</a></li>
+<li class="toctree-l4"><a class="reference internal" href="janitor.change_type.html">janitor.change_type</a></li>
+<li class="toctree-l4"><a class="reference internal" href="janitor.limit_column_characters.html">janitor.limit_column_characters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="janitor.row_to_names.html">janitor.row_to_names</a></li>
+<li class="toctree-l4"><a class="reference internal" href="janitor.clean_names.html">janitor.clean_names</a></li>
+<li class="toctree-l4"><a class="reference internal" href="janitor.currency_column_to_numeric.html">janitor.currency_column_to_numeric</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">janitor.groupby_agg</a></li>
+<li class="toctree-l4"><a class="reference internal" href="janitor.join_apply.html">janitor.join_apply</a></li>
+<li class="toctree-l4"><a class="reference internal" href="janitor.drop_duplicate_columns.html">janitor.drop_duplicate_columns</a></li>
+<li class="toctree-l4"><a class="reference internal" href="janitor.process_text.html">janitor.process_text</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../general_functions.html#modify-values">Modify values</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../general_functions.html#filtering">Filtering</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../general_functions.html#preprocessing">Preprocessing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../general_functions.html#other">Other</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../pyspark.html">General PySpark Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../xarray.html">General XArray Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../authors.html">Contributors</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">API Documentation</a><ul>
+  <li><a href="../general_functions.html">General Functions</a><ul>
+      <li>Previous: <a href="janitor.currency_column_to_numeric.html" title="previous chapter">janitor.currency_column_to_numeric</a></li>
+      <li>Next: <a href="janitor.join_apply.html" title="next chapter">janitor.join_apply</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, PyJanitor devs.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../_sources/reference/janitor.functions/janitor.groupby_agg.md.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

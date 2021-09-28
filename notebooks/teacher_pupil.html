@@ -1,0 +1,700 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>&lt;no title&gt; &#8212; pyjanitor  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="&lt;no title&gt;" href="transform_column.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="sort_naturally.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <dl>
+<dt>{</dt><dd><dl>
+<dt>“cells”: [</dt><dd><dl>
+<dt>{</dt><dd><p>“cell_type”: “markdown”,
+“metadata”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“pycharm”: {</dt><dd><p>“metadata”: false,
+“name”: “#%% mdn”</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>},
+“source”: [</p>
+<blockquote>
+<div><p>“# Processing International Teacher Data”</p>
+</div></blockquote>
+<p>]</p>
+</dd>
+</dl>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“metadata”: {},
+“source”: [</p>
+<blockquote>
+<div><p>“## Backgroundn”,
+“n”,
+“This sample data comes from the UNESCO Institute of Statistics and can be found at [tidytuesdays’ github repo](<a class="reference external" href="https://github.com/rfordatascience/tidytuesday/tree/master/data/2019/2019-05-07">https://github.com/rfordatascience/tidytuesday/tree/master/data/2019/2019-05-07</a>). This subset of the the data collected by the UNESCO Institute of Statistics contains country-level data on the number of teachers, teacher-to-student ratios, and related figures.”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 2,
+“metadata”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“pycharm”: {</dt><dd><p>“is_executing”: false,
+“metadata”: false,
+“name”: “#%%n”</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>},
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><dl>
+<dt>“data”: {</dt><dd><dl class="simple">
+<dt>“text/html”: [</dt><dd><p>“&lt;div&gt;n”,
+“&lt;style scoped&gt;n”,
+”    .dataframe tbody tr th:only-of-type {n”,
+”        vertical-align: middle;n”,
+”    }n”,
+“n”,
+”    .dataframe tbody tr th {n”,
+”        vertical-align: top;n”,
+”    }n”,
+“n”,
+”    .dataframe thead th {n”,
+”        text-align: right;n”,
+”    }n”,
+“&lt;/style&gt;n”,
+“&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;n”,
+”  &lt;thead&gt;n”,
+”    &lt;tr style=&quot;text-align: right;&quot;&gt;n”,
+”      &lt;th&gt;&lt;/th&gt;n”,
+”      &lt;th&gt;EDULIT_IND&lt;/th&gt;n”,
+”      &lt;th&gt;Indicator&lt;/th&gt;n”,
+”      &lt;th&gt;LOCATION&lt;/th&gt;n”,
+”      &lt;th&gt;Country&lt;/th&gt;n”,
+”      &lt;th&gt;TIME&lt;/th&gt;n”,
+”      &lt;th&gt;Time&lt;/th&gt;n”,
+”      &lt;th&gt;Value&lt;/th&gt;n”,
+”      &lt;th&gt;Flag Codes&lt;/th&gt;n”,
+”      &lt;th&gt;Flags&lt;/th&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/thead&gt;n”,
+”  &lt;tbody&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;0&lt;/th&gt;n”,
+”      &lt;td&gt;PTRHC_2&lt;/td&gt;n”,
+”      &lt;td&gt;Pupil-teacher ratio in lower secondary educati…&lt;/td&gt;n”,
+”      &lt;td&gt;MRT&lt;/td&gt;n”,
+”      &lt;td&gt;Mauritania&lt;/td&gt;n”,
+”      &lt;td&gt;2013&lt;/td&gt;n”,
+”      &lt;td&gt;2013&lt;/td&gt;n”,
+”      &lt;td&gt;56.59395&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;1&lt;/th&gt;n”,
+”      &lt;td&gt;PTRHC_2&lt;/td&gt;n”,
+”      &lt;td&gt;Pupil-teacher ratio in lower secondary educati…&lt;/td&gt;n”,
+”      &lt;td&gt;MRT&lt;/td&gt;n”,
+”      &lt;td&gt;Mauritania&lt;/td&gt;n”,
+”      &lt;td&gt;2014&lt;/td&gt;n”,
+”      &lt;td&gt;2014&lt;/td&gt;n”,
+”      &lt;td&gt;51.94690&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;2&lt;/th&gt;n”,
+”      &lt;td&gt;PTRHC_2&lt;/td&gt;n”,
+”      &lt;td&gt;Pupil-teacher ratio in lower secondary educati…&lt;/td&gt;n”,
+”      &lt;td&gt;MRT&lt;/td&gt;n”,
+”      &lt;td&gt;Mauritania&lt;/td&gt;n”,
+”      &lt;td&gt;2015&lt;/td&gt;n”,
+”      &lt;td&gt;2015&lt;/td&gt;n”,
+”      &lt;td&gt;53.22717&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;3&lt;/th&gt;n”,
+”      &lt;td&gt;PTRHC_2&lt;/td&gt;n”,
+”      &lt;td&gt;Pupil-teacher ratio in lower secondary educati…&lt;/td&gt;n”,
+”      &lt;td&gt;MRT&lt;/td&gt;n”,
+”      &lt;td&gt;Mauritania&lt;/td&gt;n”,
+”      &lt;td&gt;2016&lt;/td&gt;n”,
+”      &lt;td&gt;2016&lt;/td&gt;n”,
+”      &lt;td&gt;38.18923&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;4&lt;/th&gt;n”,
+”      &lt;td&gt;PTRHC_1&lt;/td&gt;n”,
+”      &lt;td&gt;Pupil-teacher ratio in primary education (head…&lt;/td&gt;n”,
+”      &lt;td&gt;COD&lt;/td&gt;n”,
+”      &lt;td&gt;Democratic Republic of the Congo&lt;/td&gt;n”,
+”      &lt;td&gt;2012&lt;/td&gt;n”,
+”      &lt;td&gt;2012&lt;/td&gt;n”,
+”      &lt;td&gt;34.74758&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/tbody&gt;n”,
+“&lt;/table&gt;n”,
+“&lt;/div&gt;”</p>
+</dd>
+</dl>
+<p>],
+“text/plain”: [</p>
+<blockquote>
+<div><p>”  EDULIT_IND                                          Indicator LOCATION  \n”,
+“0    PTRHC_2  Pupil-teacher ratio in lower secondary educati…      MRT   n”,
+“1    PTRHC_2  Pupil-teacher ratio in lower secondary educati…      MRT   n”,
+“2    PTRHC_2  Pupil-teacher ratio in lower secondary educati…      MRT   n”,
+“3    PTRHC_2  Pupil-teacher ratio in lower secondary educati…      MRT   n”,
+“4    PTRHC_1  Pupil-teacher ratio in primary education (head…      COD   n”,
+“n”,
+”                            Country  TIME  Time     Value Flag Codes Flags  n”,
+“0                        Mauritania  2013  2013  56.59395        NaN   NaN  n”,
+“1                        Mauritania  2014  2014  51.94690        NaN   NaN  n”,
+“2                        Mauritania  2015  2015  53.22717        NaN   NaN  n”,
+“3                        Mauritania  2016  2016  38.18923        NaN   NaN  n”,
+“4  Democratic Republic of the Congo  2012  2012  34.74758        NaN   NaN  “</p>
+</div></blockquote>
+<p>]</p>
+</dd>
+</dl>
+<p>},
+“execution_count”: 2,
+“metadata”: {},
+“output_type”: “execute_result”</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“source”: [</p>
+<blockquote>
+<div><p>“import janitorn”,
+“import pandas as pdn”,
+“import pandas_flavor as pfn”,
+“n”,
+“dirty_csv = (n”,
+”    &quot;<a class="reference external" href="https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-05-07/EDULIT_DS_06052019101747206.csv">https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-05-07/EDULIT_DS_06052019101747206.csv</a>&quot;n”,
+“)n”,
+“dirty_df = pd.read_csv(dirty_csv)n”,
+“dirty_df.head()n”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“metadata”: {},
+“source”: [</p>
+<blockquote>
+<div><p>“## Data Dictionaryn”,
+“n”,
+“Below is the data dictionary from the tidytuesday github repo.n”,
+“n”,
+“n”,
+“<a href="#id33"><span class="problematic" id="id34">|variable      |class     |description |\n&quot;,
+&quot;|</span></a>:—<a href="#id35"><span class="problematic" id="id36">|:---|</span></a>:———–<a href="#id37"><span class="problematic" id="id38">|\n&quot;,
+&quot;|edulit_ind    | character | Unique ID|</span></a>n”,
+“<a href="#id39"><span class="problematic" id="id40">|indicator     | character | Education level group (\&quot;Lower Secondary Education\&quot;, \&quot;Primary Education\&quot;, \&quot;Upper Secondary Education\&quot;, \&quot;Pre-Primary Education\&quot;, \&quot;Secondary Education\&quot;, \&quot;Tertiary Education\&quot;, \&quot;Post-Secondary Non-Tertiary Education\&quot;)|</span></a>n”,
+“<a href="#id41"><span class="problematic" id="id42">|country_code  | character |  Country code |\n&quot;,
+&quot;|country       | character | Country Full name|</span></a>n”,
+“<a href="#id43"><span class="problematic" id="id44">|year          | integer (date)    | Year |\n&quot;,
+&quot;|student_ratio | double    |Student to teacher ratio (lower = fewer students/teacher)|</span></a>n”,
+“<a href="#id1"><span class="problematic" id="id2">|</span></a>flag_codes    | character | Code to indicate some metadata about exceptions <a href="#id3"><span class="problematic" id="id4">|</span></a>n”,
+“<a href="#id5"><span class="problematic" id="id6">|</span></a>flags         | character | Metadata about exceptions <a href="#id7"><span class="problematic" id="id8">|</span></a>n”,
+“n”,
+“n”,
+“The indicator variable describles the education level for each observation. Let’s evaluate the actual values of the Indicator column in the data.”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 3,
+“metadata”: {},
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><dl>
+<dt>“data”: {</dt><dd><dl class="simple">
+<dt>“text/plain”: [</dt><dd><p>“{‘Pupil-teacher ratio in lower secondary education (headcount basis)’,n”,
+” ‘Pupil-teacher ratio in post-secondary non-tertiary education (headcount basis)’,n”,
+” ‘Pupil-teacher ratio in pre-primary education (headcount basis)’,n”,
+” ‘Pupil-teacher ratio in primary education (headcount basis)’,n”,
+” ‘Pupil-teacher ratio in secondary education (headcount basis)’,n”,
+” ‘Pupil-teacher ratio in tertiary education (headcount basis)’,n”,
+” ‘Pupil-teacher ratio in upper secondary education (headcount basis)’}”</p>
+</dd>
+</dl>
+<p>]</p>
+</dd>
+</dl>
+<p>},
+“execution_count”: 3,
+“metadata”: {},
+“output_type”: “execute_result”</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“source”: [</p>
+<blockquote>
+<div><p>“# The set of unique values in the indicator columnn”,
+“set(dirty_df.Indicator)”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“metadata”: {},
+“source”: [</p>
+<blockquote>
+<div><p>“Notice that strings in the dataframe each contain &quot;Pupil-teach ratio in&quot; &amp; &quot;(headcount basis)&quot;. We don’t need all of this text to analyze the data. n”,
+“n”,
+” need some custom functions to clean up the strings. We’ll need a function that removes a substring, given a pattern, from values in columns. Another function that removes trailing and leading characters from a value in a column. And finally, a function to make the first letter in each string upper case.”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“metadata”: {},
+“source”: [</p>
+<blockquote>
+<div><p>“## Data Cleaning”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 4,
+“metadata”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“pycharm”: {</dt><dd><p>“is_executing”: false,
+“metadata”: false,
+“name”: “#%%n”</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>},
+“outputs”: [],
+“source”: [</p>
+<blockquote>
+<div><p>“&#64;pf.register_dataframe_methodn”,
+“def str_remove(df, column_name: str, pat: str, <a href="#id9"><span class="problematic" id="id10">*</span></a>args, <a href="#id11"><span class="problematic" id="id12">**</span></a>kwargs):n”,
+”    &quot;&quot;&quot;Remove a substring, given its pattern from a string value, in a given column&quot;&quot;&quot;n”,
+”    df[column_name] = df[column_name].str.replace(pat, ‘’, <a href="#id13"><span class="problematic" id="id14">*</span></a>args, <a href="#id15"><span class="problematic" id="id16">**</span></a>kwargs)n”,
+”    return dfn”,
+“n”,
+“n”,
+“&#64;pf.register_dataframe_methodn”,
+“def str_trim(df, column_name: str, <a href="#id17"><span class="problematic" id="id18">*</span></a>args, <a href="#id19"><span class="problematic" id="id20">**</span></a>kwargs):n”,
+”    &quot;&quot;&quot;Remove trailing and leading characters, in a given column&quot;&quot;&quot;n”,
+”    df[column_name] = df[column_name].str.strip(<a href="#id21"><span class="problematic" id="id22">*</span></a>args, <a href="#id23"><span class="problematic" id="id24">**</span></a>kwargs)n”,
+”    return dfn”,
+“n”,
+“n”,
+“&#64;pf.register_dataframe_methodn”,
+“def str_title(df, column_name: str, <a href="#id25"><span class="problematic" id="id26">*</span></a>args, <a href="#id27"><span class="problematic" id="id28">**</span></a>kwargs):n”,
+”    &quot;&quot;&quot;Make the first letter in each word upper case&quot;&quot;&quot;n”,
+”    df[column_name] = df[column_name].str.title(<a href="#id29"><span class="problematic" id="id30">*</span></a>args, <a href="#id31"><span class="problematic" id="id32">**</span></a>kwargs)n”,
+”    return dfn”,
+“n”,
+“n”,
+“&#64;pf.register_dataframe_methodn”,
+“def drop_duplicated_column(df, column_name: str, column_order: int=0):n”,
+”    &quot;&quot;&quot;Remove duplicated columns and retain only a column given its order.n”,
+”    Order 0 is to remove the first column, Order 1 is to remove the second column, and etc&quot;&quot;&quot;n”,
+“n”,
+”    cols = list(df.columns)n”,
+”    col_indexes = [n”,
+”        col_idx for col_idx,n”,
+”        col_name in enumerate(cols) if col_name == column_namen”,
+”    ]n”,
+“n”,
+”    # given that a column could be duplicated, user could opt based on its ordern”,
+”    removed_col_idx = col_indexes[column_order]n”,
+”    # get the column indexes without column that is being removedn”,
+”    filtered_cols = [n”,
+”        c_i for c_i,n”,
+”        c_v in enumerate(cols) if c_i != removed_col_idxn”,
+”    ]n”,
+”    return df.iloc[:, filtered_cols]n”,
+“n”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“metadata”: {},
+“source”: [</p>
+<blockquote>
+<div><p>“Note in the next example how we are able to chain our manipulations of the data into one process without losing our ability to explain what we are doing. The is the preferred framework for using pyjanitor”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 5,
+“metadata”: {},
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><dl>
+<dt>“data”: {</dt><dd><dl class="simple">
+<dt>“text/html”: [</dt><dd><p>“&lt;div&gt;n”,
+“&lt;style scoped&gt;n”,
+”    .dataframe tbody tr th:only-of-type {n”,
+”        vertical-align: middle;n”,
+”    }n”,
+“n”,
+”    .dataframe tbody tr th {n”,
+”        vertical-align: top;n”,
+”    }n”,
+“n”,
+”    .dataframe thead th {n”,
+”        text-align: right;n”,
+”    }n”,
+“&lt;/style&gt;n”,
+“&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;n”,
+”  &lt;thead&gt;n”,
+”    &lt;tr style=&quot;text-align: right;&quot;&gt;n”,
+”      &lt;th&gt;&lt;/th&gt;n”,
+”      &lt;th&gt;edulit_ind&lt;/th&gt;n”,
+”      &lt;th&gt;indicator&lt;/th&gt;n”,
+”      &lt;th&gt;country_code&lt;/th&gt;n”,
+”      &lt;th&gt;country&lt;/th&gt;n”,
+”      &lt;th&gt;year&lt;/th&gt;n”,
+”      &lt;th&gt;student_ratio&lt;/th&gt;n”,
+”      &lt;th&gt;flag_codes&lt;/th&gt;n”,
+”      &lt;th&gt;flags&lt;/th&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/thead&gt;n”,
+”  &lt;tbody&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;0&lt;/th&gt;n”,
+”      &lt;td&gt;PTRHC_2&lt;/td&gt;n”,
+”      &lt;td&gt;Lower Secondary Education&lt;/td&gt;n”,
+”      &lt;td&gt;MRT&lt;/td&gt;n”,
+”      &lt;td&gt;Mauritania&lt;/td&gt;n”,
+”      &lt;td&gt;2013&lt;/td&gt;n”,
+”      &lt;td&gt;56.59395&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;1&lt;/th&gt;n”,
+”      &lt;td&gt;PTRHC_2&lt;/td&gt;n”,
+”      &lt;td&gt;Lower Secondary Education&lt;/td&gt;n”,
+”      &lt;td&gt;MRT&lt;/td&gt;n”,
+”      &lt;td&gt;Mauritania&lt;/td&gt;n”,
+”      &lt;td&gt;2014&lt;/td&gt;n”,
+”      &lt;td&gt;51.94690&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;2&lt;/th&gt;n”,
+”      &lt;td&gt;PTRHC_2&lt;/td&gt;n”,
+”      &lt;td&gt;Lower Secondary Education&lt;/td&gt;n”,
+”      &lt;td&gt;MRT&lt;/td&gt;n”,
+”      &lt;td&gt;Mauritania&lt;/td&gt;n”,
+”      &lt;td&gt;2015&lt;/td&gt;n”,
+”      &lt;td&gt;53.22717&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;3&lt;/th&gt;n”,
+”      &lt;td&gt;PTRHC_2&lt;/td&gt;n”,
+”      &lt;td&gt;Lower Secondary Education&lt;/td&gt;n”,
+”      &lt;td&gt;MRT&lt;/td&gt;n”,
+”      &lt;td&gt;Mauritania&lt;/td&gt;n”,
+”      &lt;td&gt;2016&lt;/td&gt;n”,
+”      &lt;td&gt;38.18923&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;4&lt;/th&gt;n”,
+”      &lt;td&gt;PTRHC_1&lt;/td&gt;n”,
+”      &lt;td&gt;Primary Education&lt;/td&gt;n”,
+”      &lt;td&gt;COD&lt;/td&gt;n”,
+”      &lt;td&gt;Democratic Republic of the Congo&lt;/td&gt;n”,
+”      &lt;td&gt;2012&lt;/td&gt;n”,
+”      &lt;td&gt;34.74758&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”      &lt;td&gt;NaN&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/tbody&gt;n”,
+“&lt;/table&gt;n”,
+“&lt;/div&gt;”</p>
+</dd>
+</dl>
+<p>],
+“text/plain”: [</p>
+<blockquote>
+<div><p>”  edulit_ind                  indicator country_code  \n”,
+“0    PTRHC_2  Lower Secondary Education          MRT   n”,
+“1    PTRHC_2  Lower Secondary Education          MRT   n”,
+“2    PTRHC_2  Lower Secondary Education          MRT   n”,
+“3    PTRHC_2  Lower Secondary Education          MRT   n”,
+“4    PTRHC_1          Primary Education          COD   n”,
+“n”,
+”                            country  year  student_ratio flag_codes flags  n”,
+“0                        Mauritania  2013       56.59395        NaN   NaN  n”,
+“1                        Mauritania  2014       51.94690        NaN   NaN  n”,
+“2                        Mauritania  2015       53.22717        NaN   NaN  n”,
+“3                        Mauritania  2016       38.18923        NaN   NaN  n”,
+“4  Democratic Republic of the Congo  2012       34.74758        NaN   NaN  “</p>
+</div></blockquote>
+<p>]</p>
+</dd>
+</dl>
+<p>},
+“execution_count”: 5,
+“metadata”: {},
+“output_type”: “execute_result”</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“source”: [</p>
+<blockquote>
+<div><p>“py_clean_df = (n”,
+”    dirty_dfn”,
+”    .clean_names()n”,
+”    # modify string valuesn”,
+”    .str_remove(&quot;indicator&quot;, &quot;Pupil-teacher ratio in&quot;)n”,
+”    .str_remove(&quot;indicator&quot;, &quot;(headcount basis)&quot;)n”,
+”    .str_remove(&quot;indicator&quot;, &quot;\\(\\)&quot;)n”,
+”    .str_trim(&quot;indicator&quot;)n”,
+”    .str_trim(&quot;country&quot;)n”,
+”    .str_title(&quot;indicator&quot;)n”,
+”    # remove <cite>time</cite> column (which is duplicated). The second <cite>time</cite> is being removedn”,
+”    .drop_duplicated_column(&quot;time&quot;, 1)n”,
+”    # renaming columnsn”,
+”    .rename_column(&quot;location&quot;, &quot;country_code&quot;)n”,
+”    .rename_column(&quot;value&quot;, &quot;student_ratio&quot;)n”,
+”    .rename_column(&quot;time&quot;, &quot;year&quot;)n”,
+“)n”,
+“n”,
+“py_clean_df.head()”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 6,
+“metadata”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“pycharm”: {</dt><dd><p>“is_executing”: false,
+“metadata”: false,
+“name”: “#%%n”</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>},
+“outputs”: [],
+“source”: [</p>
+<blockquote>
+<div><p>“# ensure that the output from janitor is similar with the clean r’s janitorn”,
+“r_clean_csv = (n”,
+”    &quot;<a class="reference external" href="https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-05-07/student_teacher_ratio.csv">https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-05-07/student_teacher_ratio.csv</a>&quot;n”,
+“)n”,
+“r_clean_df = pd.read_csv(r_clean_csv)n”,
+“n”,
+“pd.testing.assert_frame_equal(r_clean_df, py_clean_df)”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>}</p>
+</dd>
+</dl>
+<p>],
+“metadata”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“kernelspec”: {</dt><dd><p>“display_name”: “Python 3”,
+“language”: “python”,
+“name”: “python3”</p>
+</dd>
+</dl>
+<p>},
+“language_info”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“codemirror_mode”: {</dt><dd><p>“name”: “ipython”,
+“version”: 3</p>
+</dd>
+</dl>
+<p>},
+“file_extension”: “.py”,
+“mimetype”: “text/x-python”,
+“name”: “python”,
+“nbconvert_exporter”: “python”,
+“pygments_lexer”: “ipython3”,
+“version”: “3.7.6”</p>
+</div></blockquote>
+<p>},
+“stem_cell”: {</p>
+<blockquote>
+<div><p>“cell_type”: “raw”,
+“metadata”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“pycharm”: {</dt><dd><p>“metadata”: false</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>},
+“source”: “”</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>},
+“nbformat”: 4,
+“nbformat_minor”: 4</p>
+</dd>
+</dl>
+<p>}</p>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo_title.svg" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../authors.html">Contributors</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../notebooks.html">Examples</a><ul>
+      <li>Previous: <a href="sort_naturally.html" title="previous chapter">&lt;no title&gt;</a></li>
+      <li>Next: <a href="transform_column.html" title="next chapter">&lt;no title&gt;</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, PyJanitor devs.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/notebooks/teacher_pupil.ipynb.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
